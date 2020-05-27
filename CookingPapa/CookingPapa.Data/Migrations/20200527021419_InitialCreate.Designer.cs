@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CookingPapa.Data.Migrations
 {
     [DbContext(typeof(CookingpapaContext))]
-    [Migration("20200525192351_initialCreate")]
-    partial class initialCreate
+    [Migration("20200527021419_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
