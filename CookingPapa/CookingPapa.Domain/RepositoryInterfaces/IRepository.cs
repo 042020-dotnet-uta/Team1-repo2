@@ -6,7 +6,7 @@ namespace CookingPapa.Domain.RepositoryInterfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        TEntity Add(TEntity entity);
+        void Add(TEntity entity);
 
         TEntity Get(int id);
 

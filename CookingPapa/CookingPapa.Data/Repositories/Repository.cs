@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using CookingPapa.Domain.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CookingPapa.Data.Repositories
 {
@@ -15,19 +16,19 @@ namespace CookingPapa.Data.Repositories
             Context = context;
         }
 
-        public TEntity Add(TEntity entity)
+        public void Add(TEntity entity)
         {
-            throw new NotImplementedException();
+            Context.Set<TEntity>().Add(entity);
         }
 
         public TEntity Get(int id)
         {
-            throw new NotImplementedException();
+            return Context.Set<TEntity>().Find(id); //Use generic Set() method because generic repository has no DbSets to reference
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            throw new NotImplementedException();
+            return Context.Set<TEntity>().ToList(); //Use generic Set() method because generic repository has no DbSets to reference
         }
     }
 }
