@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.Text;
 using CookingPapa.Domain.Models;
 using CookingPapa.Domain.RepositoryInterfaces;
+using System.Threading.Tasks;
 
 namespace CookingPapa.Domain
 {
     public interface IUnitOfWork : IDisposable
     {
         #region Repository Constructors
-        IRepository<Cookbook> Cookbooks { get; }
-        IRepository<Recipe> Recipes { get; }
+        ICookbookRepository Cookbooks { get; }
+        IRecipeRepository Recipes { get; }
         IRepository<RecipeIngredient> RecipeIngredients { get; }
-        IRepository<RecipeIngredientGroups> RecipeIngredientGroups { get; }
+        IRecipeIngredientGroupRepository RecipeIngredientGroups { get; }
         IRepository<RecipeMeasurement> RecipeMeasurements { get; }
         IRepository<RecipeOrigin> RecipeOrigins { get; }
-        IRepository<RecipeReview> RecipeReviews { get; }
+        IReviewRepository RecipeReviews { get; }
         IRepository<User> Users { get; }
         #endregion
 
-        int Complete();
+        Task<int> Complete();
     }
 }

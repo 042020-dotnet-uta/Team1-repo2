@@ -4,6 +4,7 @@ using System.Text;
 using CookingPapa.Domain.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CookingPapa.Data.Repositories
 {
@@ -16,19 +17,19 @@ namespace CookingPapa.Data.Repositories
             Context = context;
         }
 
-        public void Add(TEntity entity)
+        public async void Add(TEntity entity)
         {
-            Context.Set<TEntity>().Add(entity);
+            await Context.Set<TEntity>().AddAsync(entity);
         }
 
-        public TEntity Get(int id)
+        public async Task<TEntity> Get(int id)
         {
-            return Context.Set<TEntity>().Find(id); //Use generic Set() method because generic repository has no DbSets to reference
+            return await Context.Set<TEntity>().FindAsync(id); //Use generic Set() method because generic repository has no DbSets to reference
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return Context.Set<TEntity>().ToList(); //Use generic Set() method because generic repository has no DbSets to reference
+            return await Context.Set<TEntity>().ToListAsync(); //Use generic Set() method because generic repository has no DbSets to reference
         }
     }
 }
