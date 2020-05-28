@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CookingPapa.Data;
 using CookingPapa.Domain.Models;
+using CookingPapa.Domain;
+using Microsoft.Extensions.Logging;
 
 namespace CookingPapa.Api.Controllers
 {
@@ -15,11 +17,13 @@ namespace CookingPapa.Api.Controllers
     public class CookbooksController : ControllerBase
     {
         //This part should be changed to the repository or business logic 
-        private readonly CookingpapaContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
 
-        public CookbooksController(CookingpapaContext context)
+        public CookbooksController(IUnitOfWork unitOfWork, ILogger<CookbooksController> logger)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         // GET: api/Cookbooks/5
@@ -27,7 +31,7 @@ namespace CookingPapa.Api.Controllers
         public async Task<ActionResult<Cookbook>> GetCookbook(int id)
         {
             //return the specific cook book with the list of recipes.
-            var cookbook = await _context.CookBook.FindAsync(id);
+            var cookbook = await _unitOfWork.Cookbooks.Get(id);
 
             if (cookbook == null)
             {
@@ -44,8 +48,8 @@ namespace CookingPapa.Api.Controllers
         public async Task<ActionResult<Cookbook>> PostCookbook(Cookbook cookbook)
         {
             //there should be a button that says add to cookbook that will send a post request here.
-            _context.CookBook.Add(cookbook);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Cookbooks.Add(cookbook);
+            //await _unitOfWork.SaveChangesAsync();
 
             return CreatedAtAction("GetCookbook", new { id = cookbook.Id }, cookbook);
         }
@@ -56,21 +60,22 @@ namespace CookingPapa.Api.Controllers
         {
             //there should be a remove from Cookbook button by the list of recipe under cookbook that
             //directs user here.
-            var cookbook = await _context.CookBook.FindAsync(id);
+            var cookbook = await _unitOfWork.Cookbooks.Get(id);
             if (cookbook == null)
             {
                 return NotFound();
             }
 
-            _context.CookBook.Remove(cookbook);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Cookbooks.Delete(id);
+            //await _context.SaveChangesAsync();
 
             return cookbook;
         }
 
         private bool CookbookExists(int id)
         {
-            return _context.CookBook.Any(e => e.Id == id);
+            var cookBook = _unitOfWork.Cookbooks.Get(id).Result;
+            return (cookBook == null);
         }
     }
 }

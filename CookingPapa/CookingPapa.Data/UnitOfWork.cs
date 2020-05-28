@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CookingPapa.Data
 {
-    class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly CookingpapaContext _context;
         public UnitOfWork(CookingpapaContext context)
