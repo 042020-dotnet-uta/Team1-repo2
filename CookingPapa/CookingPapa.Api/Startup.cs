@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using CookingPapa.Data;
+using CookingPapa.Domain;
 
 namespace CookingPapa.Api
 {
@@ -31,6 +32,17 @@ namespace CookingPapa.Api
             services.AddDbContext<CookingpapaContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("CookingPapa")));
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddLogging(logger =>
+            {
+                Host.CreateDefaultBuilder()
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

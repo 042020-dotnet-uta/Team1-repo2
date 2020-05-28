@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using CookingPapa.Data;
 using CookingPapa.Domain.Models;
 using CookingPapa.Domain.ViewModels;
+using CookingPapa.Domain;
+using Microsoft.Extensions.Logging;
 
 namespace CookingPapa.Api.Controllers
 {
@@ -16,11 +18,13 @@ namespace CookingPapa.Api.Controllers
     public class RecipesController : ControllerBase
     {
         //This part should be changed to the repository or business logic 
-        private readonly CookingpapaContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<RecipesController> _logger;
 
-        public RecipesController(CookingpapaContext context)
+        public RecipesController(IUnitOfWork unitOfWork, ILogger<RecipesController> logger)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         // GET: api/Recipes
@@ -29,7 +33,9 @@ namespace CookingPapa.Api.Controllers
         {
             //for searching all recipeVM
             //return all the recipeVM with all of its components without ratings
-            return await _context.Recipes.ToListAsync();
+            //return await _unitOfWork.Recipes.GetAll();
+            return null;
+
         }
 
         // GET: api/Recipes/5
@@ -38,7 +44,7 @@ namespace CookingPapa.Api.Controllers
         {
             //the list of recipeVM we are searching from need to include all the information
             //including origin, cook time, ingredient and reviews
-            var recipe = await _context.Recipes.FindAsync(id);
+            var recipe = await _unitOfWork.Recipes.Get(id);
 
             if (recipe == null)
             {
@@ -63,11 +69,11 @@ namespace CookingPapa.Api.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(recipeVM).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                //_context.Entry(recipeVM).State = EntityState.Modified;
+                //await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -103,21 +109,22 @@ namespace CookingPapa.Api.Controllers
         public async Task<ActionResult<Recipe>> DeleteRecipe(int id)
         {
             //delete recipe
-            var recipe = await _context.Recipes.FindAsync(id);
+            var recipe = await _unitOfWork.Recipes.Get(id);
             if (recipe == null)
             {
                 return NotFound();
             }
 
-            _context.Recipes.Remove(recipe);
-            await _context.SaveChangesAsync();
+            _unitOfWork.Recipes.Delete(id);
+            //await _context.SaveChangesAsync();
 
             return recipe;
         }
 
         private bool RecipeExists(int id)
         {
-            return _context.Recipes.Any(e => e.Id == id);
+            var recipe = _unitOfWork.Recipes.Get(id).Result;
+            return (recipe == null);
         }
     }
 }
