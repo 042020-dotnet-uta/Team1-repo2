@@ -5,6 +5,7 @@ using CookingPapa.Data.Repositories;
 using CookingPapa.Domain;
 using CookingPapa.Domain.Models;
 using CookingPapa.Domain.RepositoryInterfaces;
+using System.Threading.Tasks;
 
 namespace CookingPapa.Data
 {
@@ -14,37 +15,37 @@ namespace CookingPapa.Data
         public UnitOfWork(CookingpapaContext context)
         {
             _context = context;
-            Cookbooks = new Repository<Cookbook>(_context);
-            Recipes = new Repository<Recipe>(_context);
+            Cookbooks = new CookbookRepository(_context);
+            Recipes = new RecipeRepository(_context);
             RecipeIngredients = new Repository<RecipeIngredient>(_context);
-            RecipeIngredientGroups = new Repository<RecipeIngredientGroups>(_context);
+            RecipeIngredientGroups = new RecipeIngredientGroupRepository(_context);
             RecipeMeasurements = new Repository<RecipeMeasurement>(_context);
             RecipeOrigins = new Repository<RecipeOrigin>(_context);
-            RecipeReviews = new Repository<RecipeReview>(_context);
+            RecipeReviews = new ReviewRepository(_context);
             Users = new Repository<User>(_context);
         }
 
         #region Repository Constructors
-        public IRepository<Cookbook> Cookbooks { get; private set; }
+        public ICookbookRepository Cookbooks { get; private set; }
 
-        public IRepository<Recipe> Recipes { get; private set; }
+        public IRecipeRepository Recipes { get; private set; }
 
         public IRepository<RecipeIngredient> RecipeIngredients { get; private set; }
 
-        public IRepository<RecipeIngredientGroups> RecipeIngredientGroups { get; private set; }
+        public IRecipeIngredientGroupRepository RecipeIngredientGroups { get; private set; }
 
         public IRepository<RecipeMeasurement> RecipeMeasurements { get; private set; }
 
         public IRepository<RecipeOrigin> RecipeOrigins { get; private set; }
 
-        public IRepository<RecipeReview> RecipeReviews { get; private set; }
+        public IReviewRepository RecipeReviews { get; private set; }
 
         public IRepository<User> Users { get; private set; }
         #endregion
 
-        public int Complete()
+        public async Task<int> Complete()
         {
-            return _context.SaveChanges();
+            return await _context.SaveChangesAsync();
         }
 
         public void Dispose()

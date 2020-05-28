@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CookingPapa.Domain.RepositoryInterfaces
 {
@@ -8,8 +9,8 @@ namespace CookingPapa.Domain.RepositoryInterfaces
     {
         void Add(TEntity entity);
 
-        TEntity Get(int id);
+        Task<TEntity> Get(int id);
 
-        IEnumerable<TEntity> GetAll();
+        Task<IEnumerable<TEntity>> GetAll();
     }
 }
