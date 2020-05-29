@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using CookingPapa.Data;
 using CookingPapa.Domain;
+using CookingPapa.Domain.Business;
 
 namespace CookingPapa.Api
 {
@@ -33,6 +34,7 @@ namespace CookingPapa.Api
             options.UseSqlServer(Configuration.GetConnectionString("CookingPapa")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBusinessL, BusinessL>();
 
             services.AddLogging(logger =>
             {
