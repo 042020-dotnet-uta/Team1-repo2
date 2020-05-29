@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CookingPapa.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Cookbooks")]
     [ApiController]
     public class CookbooksController : ControllerBase
     {
@@ -26,48 +26,67 @@ namespace CookingPapa.Api.Controllers
             _logger = logger;
         }
 
-        // GET: api/Cookbooks/5
+        /// <summary>
+        /// GET: api/Cookbooks/1
+        /// For displaying a list of recipe under user cookbook
+        /// </summary>
+        /// <param name="id">This should be user Id to filter cookbook recipes</param>
+        /// <returns>Returns a list of cookbook recipe for the selected user</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cookbook>> GetCookbook(int id)
+        public async Task<ActionResult<IEnumerable<Cookbook>>> GetCookbook(int id)
         {
+            
             //return the specific cook book with the list of recipes.
-            var cookbook = await _unitOfWork.Cookbooks.Get(id);
-
+            var cookbook = _unitOfWork.Cookbooks.GetByUserEager(id).Result.ToList();
+            //if using deep link user enters id that does not exists
             if (cookbook == null)
             {
                 return NotFound();
             }
-
             return cookbook;
         }
-
         // POST: api/Cookbooks
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost("")]
         public async Task<ActionResult<Cookbook>> PostCookbook(Cookbook cookbook)
         {
-            //there should be a button that says add to cookbook that will send a post request here.
+/*            var checkIfExists = _unitOfWork.Cookbooks.GetByUserEager(cookbook.User.Id)
+                            .Result.ToList().Find(x => x.Recipe.Id == cookbook.Recipe.Id);
+                        if (checkIfExists == null)
+                        {
+*/              //there should be a button that says add to cookbook that will send a post request here.
+            cookbook.User = await _unitOfWork.Users.Get(cookbook.User.Id);
+            cookbook.Recipe = await _unitOfWork.Recipes.GetEager(cookbook.Recipe.Id);
             _unitOfWork.Cookbooks.Add(cookbook);
-            //await _unitOfWork.SaveChangesAsync();
+                await _unitOfWork.Complete();
+                return cookbook;
+            //}
+            //return NoContent();
 
-            return CreatedAtAction("GetCookbook", new { id = cookbook.Id }, cookbook);
+
+            //GetCook takes user id to filter out all the recipe in a cookbook,
+            //return CreatedAtAction("GetCookbook", new { id = cookbook.Id }, cookbook);
         }
-
-        // DELETE: api/Cookbooks/5
+        /// <summary>
+        /// DELETE: api/Cookbooks/1/5
+        /// For deleting a recipe from a user cookbook
+        /// </summary>
+        /// <param name="id">This should be cookbook id</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Cookbook>> DeleteCookbook(int id)
         {
             //there should be a remove from Cookbook button by the list of recipe under cookbook that
             //directs user here.
-            var cookbook = await _unitOfWork.Cookbooks.Get(id);
+            var cookbook = await _unitOfWork.Cookbooks.GetEager(id);
             if (cookbook == null)
             {
                 return NotFound();
             }
-
             _unitOfWork.Cookbooks.Delete(id);
             //await _context.SaveChangesAsync();
+            await _unitOfWork.Complete();
 
             return cookbook;
         }

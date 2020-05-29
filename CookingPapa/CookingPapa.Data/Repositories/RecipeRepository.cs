@@ -9,13 +9,24 @@ using System.Threading.Tasks;
 
 namespace CookingPapa.Data.Repositories
 {
+    /// <summary>
+    /// Repository for data access to the Recipe table.
+    /// </summary>
     public class RecipeRepository : Repository<Recipe>, IRecipeRepository
     {
+        /// <summary>
+        /// Constructor for the Recipe database table.
+        /// </summary>
+        /// <param name="context">The DbContext to be used to construct the repository.</param>
         public RecipeRepository(CookingpapaContext context) : base(context)
         {
 
         }
 
+        /// <summary>
+        /// Delete the entry at the given ID.
+        /// </summary>
+        /// <param name="id">The ID of the entity to be deleted.</param>
         public async void Delete(int id)
         {
             try
@@ -30,6 +41,11 @@ namespace CookingPapa.Data.Repositories
             }
         }
 
+        /// <summary>
+        /// Eager-loads the entity at the given ID.
+        /// </summary>
+        /// <param name="id">The ID of the entity to be fetched.</param>
+        /// <returns>Returns the entity with the given ID.</returns>
         public async Task<Recipe> GetEager(int id)
         {
             try
@@ -51,6 +67,10 @@ namespace CookingPapa.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Fetches all entities using eager loading.
+        /// </summary>
+        /// <returns>Returns an IEnumerable populated with the appropriate entities.</returns>
         public async Task<IEnumerable<Recipe>> GetAllEager()
         {
             try
@@ -72,6 +92,9 @@ namespace CookingPapa.Data.Repositories
 
         //add search by name
 
+        /// <summary>
+        /// Translates the DbContext from the generic repository into a more usable version in this repository.
+        /// </summary>
         public CookingpapaContext db
         {
             get { return Context as CookingpapaContext; }

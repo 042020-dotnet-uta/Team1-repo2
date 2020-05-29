@@ -14,7 +14,7 @@ using SQLitePCL;
 
 namespace CookingPapa.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Recipes")]
     [ApiController]
     public class RecipesController : ControllerBase
     {

@@ -9,13 +9,24 @@ using System.Linq;
 
 namespace CookingPapa.Data.Repositories
 {
+    /// <summary>
+    /// Repository for data access to the RecipeIngredientGroups database table.
+    /// </summary>
     class RecipeIngredientGroupRepository : Repository<RecipeIngredientGroups>, IRecipeIngredientGroupRepository
     {
+        /// <summary>
+        /// Constructor for the RecipeIngredientGroups repository.
+        /// </summary>
+        /// <param name="context">The DbContext to be used in the repository.</param>
         public RecipeIngredientGroupRepository(CookingpapaContext context) : base(context)
         {
 
         }
 
+        /// <summary>
+        /// Delete the entry at the given ID.
+        /// </summary>
+        /// <param name="id">The ID of the entity to be deleted.</param>
         public async void Delete(int id)
         {
             try
@@ -30,6 +41,11 @@ namespace CookingPapa.Data.Repositories
             }
         }
 
+        /// <summary>
+        /// Eager-loads the entity at the given ID.
+        /// </summary>
+        /// <param name="id">The ID of the entity to be fetched.</param>
+        /// <returns>Returns the entity with the given ID.</returns>
         public async Task<RecipeIngredientGroups> GetEager(int id)
         {
             try
@@ -52,6 +68,11 @@ namespace CookingPapa.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Fetches all entities with the given Recipe ID.
+        /// </summary>
+        /// <param name="id">The Recipe ID to filter by.</param>
+        /// <returns>Returns an IEnumerable populated with the appropriate entities.</returns>
         public async Task<IEnumerable<RecipeIngredientGroups>> GetByRecipeEager(int id)
         {
             try
@@ -75,6 +96,9 @@ namespace CookingPapa.Data.Repositories
 
         //add search by name?
 
+        /// <summary>
+        /// Translates the DbContext from the generic repository into a more usable version in this repository.
+        /// </summary>
         public CookingpapaContext db
         {
             get { return Context as CookingpapaContext; }

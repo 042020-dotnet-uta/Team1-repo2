@@ -9,13 +9,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CookingPapa.Data.Repositories
 {
+    /// <summary>
+    /// Data Access class for the Cookbook database table.
+    /// </summary>
     class CookbookRepository : Repository<Cookbook>, ICookbookRepository
     {
+        /// <summary>
+        /// Constructor for the Cookbook Repository.
+        /// </summary>
+        /// <param name="context">The DbContext to be used to build the repository.</param>
         public CookbookRepository(CookingpapaContext context) : base(context)
         {
 
         }
 
+        /// <summary>
+        /// Deletes the entity with the given ID from the table.
+        /// </summary>
+        /// <param name="id">The ID of the entity to be removed.</param>
         public async void Delete(int id)
         {
             try
@@ -30,6 +41,11 @@ namespace CookingPapa.Data.Repositories
             }
         }
 
+        /// <summary>
+        /// Eager-loads the entity at the given ID.
+        /// </summary>
+        /// <param name="id">The ID of the entity to be fetched.</param>
+        /// <returns>Returns the entity with the given ID.</returns>
         public async Task<Cookbook> GetEager(int id)
         {
             try
@@ -51,6 +67,11 @@ namespace CookingPapa.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Fetches all entities with the given User ID.
+        /// </summary>
+        /// <param name="id">The User ID to filter by.</param>
+        /// <returns>Returns an IEnumerable populated with the appropriate entities.</returns>
         public async Task<IEnumerable<Cookbook>> GetByUserEager(int id)
         {
             try
@@ -73,6 +94,9 @@ namespace CookingPapa.Data.Repositories
 
         //add search by name?
 
+        /// <summary>
+        /// Translates the DbContext from the generic repository into a more usable version in this repository.
+        /// </summary>
         public CookingpapaContext db
         {
             get { return Context as CookingpapaContext; }
