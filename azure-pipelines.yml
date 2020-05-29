@@ -20,10 +20,9 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-
 - task: SonarCloudPrepare@1
   inputs:
-    SonarCloud: 'Project2'
+    SonarCloud: 'Team1-P2 SonarCloud'
     organization: 'team1-p2'
     scannerMode: 'MSBuild'
     projectKey: '83eb8a219dce6a51ed0afaaa0d9c5c55fad2f582'
