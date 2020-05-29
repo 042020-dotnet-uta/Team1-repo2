@@ -10,5 +10,6 @@ namespace CookingPapa.Domain.Business
     public interface IBusinessL
     {
         Task<Cookbook> PostCookbook(PostCookbookVM cookbook);
+        Task<List<GetCookbookVM>> GetCookbook(int id);
     }
 }

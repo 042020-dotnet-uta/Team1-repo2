@@ -18,12 +18,9 @@ namespace CookingPapa.Api.Controllers
     [ApiController]
     public class CookbooksController : ControllerBase
     {
-        //This part should be changed to the repository or business logic 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBusinessL _businessL;
         private readonly ILogger _logger;
-
-
         public CookbooksController(IUnitOfWork unitOfWork, ILogger<CookbooksController> logger
             ,IBusinessL businessL)
         {
@@ -39,21 +36,25 @@ namespace CookingPapa.Api.Controllers
         /// <param name="id">This should be user Id to filter cookbook recipes</param>
         /// <returns>Returns a list of cookbook recipe for the selected user</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Cookbook>>> GetCookbook(int id)
+        public async Task<ActionResult<List<GetCookbookVM>>> GetCookbook(int id)
         {
-            
-            //return the specific cook book with the list of recipes.
-            var cookbook = _unitOfWork.Cookbooks.GetByUserEager(id).Result.ToList();
-            //if using deep link user enters id that does not exists
+
+            //returns list of recipes in the user cookbook.
+            var cookbook = await _businessL.GetCookbook(id);
             if (cookbook == null)
             {
                 return NotFound();
             }
             return cookbook;
         }
-        // POST: api/Cookbooks
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+
+        /// <summary>
+        /// POST: api/Cookbooks
+        /// Adds the selected recipe into user cookbook
+        /// </summary>
+        /// <param name="cookbook">Instance of PostCookbookVM returned from Angular that includes
+        /// user id and recipe id</param>
+        /// <returns>Returns information of the entries added</returns>
         [HttpPost("")]
         public async Task<ActionResult<Cookbook>> PostCookbook(PostCookbookVM cookbook)
         {
@@ -81,9 +82,7 @@ namespace CookingPapa.Api.Controllers
                 return NotFound();
             }
             _unitOfWork.Cookbooks.Delete(id);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.Complete();
-
             return cookbook;
         }
 
