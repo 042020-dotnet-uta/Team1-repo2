@@ -1,0 +1,74 @@
+trigger:
+  - master
+
+pr: 'none'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  sdkVersion: '3.1.x'
+  #workingDirectory: CookingPapa/Cookingpapa.web
+  solutionPath: '/CookingPapa/CookingPapa.sln'
+  buildConfiguration: 'Release'
+
+stages:
+  - stage: "Restore"
+    jobs:
+      - job: "restorejob"
+        steps:
+         - task: DotNetCoreCLI@2
+           inputs:
+             command: 'restore'
+             projects: '**/*.sln'
+             feedsToUse: 'select'
+  - stage: 'build'
+    jobs:
+      - job: 'buildjob'
+        steps:
+#configure sonar cloud settings
+          - task: SonarCloudPrepare@1
+            inputs:
+              SonarCloud: 'project1'
+              organization: 'team1-p2'
+              scannerMode: 'MSBuild'
+              projectKey: '83eb8a219dce6a51ed0afaaa0d9c5c55fad2f582'
+              projectName: 'Team1 P2'
+              extraProperties: |
+                sonar.exclusions=**/obj/**,**/*.dll
+                sonar.branch.name=$(Build.SourceBranchName)
+                sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+                sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
+          
+#build project
+          
+          - task: DotNetCoreCLI@2
+            displayName: 'dotnet build'
+            inputs:
+              projects: '**/*.csproj'
+
+#run tests
+          - task: DotNetCoreCLI@2
+            displayName: 'dotnet testing'
+            inputs:
+              command: 'test'
+              arguments: '--configuration $(BuildConfiguration)
+                /p:CollectCoverage=true 
+                /p:CoverletOutputFormat=opencover 
+                /p:Coverletoutput=$(Build.SourcesDirectory)/TestResults/Coverage 
+                --collect "Codecoverage"
+                --logger trx'
+              projects: '**/*UnitTests.csproj'
+              nobuild: true
+
+#publishes code coverage in azure devops
+          - task: PublishCodeCoverageResults@1
+            displayName: 'Publish Code Coverage'
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: '$(Build.SourcesDirectory)/**/*.xml'
+              reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
+          - task: SonarCloudAnalyze@1
+          - task: SonarCloudPublish@1
+            inputs:
+              pollingTimeoutSec: '300'
