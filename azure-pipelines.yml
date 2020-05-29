@@ -61,3 +61,22 @@ steps:
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: 
+      --configuration $(buildConfiguration)
+      --output $(Build.ArtifactStagingDirectory)/app
+    modifyOutputPath: false
+    zipAfterPublish: false
+- publish: $(Build.ArtifactStagingDirectory)/app
+  artifact: app
+  displayName: artifact publish app
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Free Trial(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
+    appType: 'webApp'
+    WebAppName: 'Team1-WebApi1'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/app'
