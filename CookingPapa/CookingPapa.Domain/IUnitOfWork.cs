@@ -7,19 +7,22 @@ using System.Threading.Tasks;
 
 namespace CookingPapa.Domain
 {
+    /// <summary>
+    /// Interface for the Unit of Work, the bridge between business logic and data access.
+    /// </summary>
     public interface IUnitOfWork : IDisposable
     {
         #region Repository Constructors
-        ICookbookRepository Cookbooks { get; }
-        IRecipeRepository Recipes { get; }
-        IRepository<RecipeIngredient> RecipeIngredients { get; }
-        IRecipeIngredientGroupRepository RecipeIngredientGroups { get; }
-        IRepository<RecipeMeasurement> RecipeMeasurements { get; }
-        IRepository<RecipeOrigin> RecipeOrigins { get; }
-        IReviewRepository RecipeReviews { get; }
-        IRepository<User> Users { get; }
+        ICookbookRepository Cookbooks { get; } //Holder for Cookbook repository
+        IRecipeRepository Recipes { get; } //Holder for Recipe repository
+        IRepository<RecipeIngredient> RecipeIngredients { get; } //Holder for RecipeIngredient repository
+        IRecipeIngredientGroupRepository RecipeIngredientGroups { get; } //Holder for RecipeIngredientGroup repository
+        IRepository<RecipeMeasurement> RecipeMeasurements { get; } //Holder for RecipeMeasurement repository
+        IRepository<RecipeOrigin> RecipeOrigins { get; } //Holder for RecipeOrigin repository
+        IReviewRepository RecipeReviews { get; } //Holder for RecipeReview repository
+        IRepository<User> Users { get; } //Holder for User repository
         #endregion
 
-        Task<int> Complete();
+        Task<int> Complete(); //Save changes made by the Unit of Work to the database
     }
 }

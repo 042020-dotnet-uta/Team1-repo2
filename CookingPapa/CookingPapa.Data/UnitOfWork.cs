@@ -9,9 +9,19 @@ using System.Threading.Tasks;
 
 namespace CookingPapa.Data
 {
+    /// <summary>
+    /// The Unit of Work serves as the bridge between data access and business logic.
+    /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
+        /// <summary>
+        /// Container for the DbContext.
+        /// </summary>
         private readonly CookingpapaContext _context;
+        /// <summary>
+        /// Constructors for the various repositories held by the Unit of Work, built from the same DbContext.
+        /// </summary>
+        /// <param name="context">The DbContext to be used when creating the repositories.</param>
         public UnitOfWork(CookingpapaContext context)
         {
             _context = context;
@@ -25,7 +35,7 @@ namespace CookingPapa.Data
             Users = new Repository<User>(_context);
         }
 
-        #region Repository Constructors
+        #region Repository Containers
         public ICookbookRepository Cookbooks { get; private set; }
 
         public IRecipeRepository Recipes { get; private set; }
@@ -43,11 +53,18 @@ namespace CookingPapa.Data
         public IRepository<User> Users { get; private set; }
         #endregion
 
+        /// <summary>
+        /// Saves any edits in the Unit of Work to the database.
+        /// </summary>
+        /// <returns>Returns integer detailing status.</returns>
         public async Task<int> Complete()
         {
             return await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Garbage collects the unit of work when finished.
+        /// </summary>
         public void Dispose()
         {
             _context.Dispose();
