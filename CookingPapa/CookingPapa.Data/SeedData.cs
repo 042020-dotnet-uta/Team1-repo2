@@ -203,6 +203,20 @@ namespace CookingPapa.Data
                 #endregion
 
                 #region Add CookBooks
+                var cookBook1 = new Cookbook
+                {
+                    User = user1,
+                    Recipe = recipe1
+                };
+                var cookBook2 = new Cookbook
+                {
+                    User = user1,
+                    Recipe = recipe2
+                };
+                context.AddRange(
+                    cookBook1,
+                    cookBook2
+                    );
                 #endregion
 
                 context.SaveChanges();
