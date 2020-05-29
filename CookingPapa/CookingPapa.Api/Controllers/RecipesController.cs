@@ -10,6 +10,7 @@ using CookingPapa.Domain.Models;
 using CookingPapa.Domain.ViewModels;
 using CookingPapa.Domain;
 using Microsoft.Extensions.Logging;
+using SQLitePCL;
 
 namespace CookingPapa.Api.Controllers
 {
@@ -33,8 +34,7 @@ namespace CookingPapa.Api.Controllers
         {
             //for searching all recipeVM
             //return all the recipeVM with all of its components without ratings
-            //return await _unitOfWork.Recipes.GetAll();
-            return null;
+            return _unitOfWork.Recipes.GetAllEager().Result.ToList();
 
         }
 
@@ -44,7 +44,7 @@ namespace CookingPapa.Api.Controllers
         {
             //the list of recipeVM we are searching from need to include all the information
             //including origin, cook time, ingredient and reviews
-            var recipe = await _unitOfWork.Recipes.Get(id);
+            var recipe = await _unitOfWork.Recipes.GetEager(id);
 
             if (recipe == null)
             {
@@ -69,11 +69,11 @@ namespace CookingPapa.Api.Controllers
                 return BadRequest();
             }
 
+            //_context.Entry(recipeVM).State = EntityState.Modified;
 
             try
             {
-                //_context.Entry(recipeVM).State = EntityState.Modified;
-                //await _context.SaveChangesAsync();
+                await _unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -116,7 +116,8 @@ namespace CookingPapa.Api.Controllers
             }
 
             _unitOfWork.Recipes.Delete(id);
-            //await _context.SaveChangesAsync();
+            var returnVal = await _unitOfWork.Complete();
+            //Check the return value?
 
             return recipe;
         }
