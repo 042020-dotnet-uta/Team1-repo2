@@ -9,6 +9,8 @@ using CookingPapa.Data;
 using CookingPapa.Domain.Models;
 using CookingPapa.Domain;
 using Microsoft.Extensions.Logging;
+using CookingPapa.Domain.ViewModels;
+using CookingPapa.Domain.Business;
 
 namespace CookingPapa.Api.Controllers
 {
@@ -18,11 +20,15 @@ namespace CookingPapa.Api.Controllers
     {
         //This part should be changed to the repository or business logic 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IBusinessL _businessL;
         private readonly ILogger _logger;
 
-        public CookbooksController(IUnitOfWork unitOfWork, ILogger<CookbooksController> logger)
+
+        public CookbooksController(IUnitOfWork unitOfWork, ILogger<CookbooksController> logger
+            ,IBusinessL businessL)
         {
             _unitOfWork = unitOfWork;
+            _businessL = businessL;
             _logger = logger;
         }
 
@@ -49,24 +55,14 @@ namespace CookingPapa.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("")]
-        public async Task<ActionResult<Cookbook>> PostCookbook(Cookbook cookbook)
+        public async Task<ActionResult<Cookbook>> PostCookbook(PostCookbookVM cookbook)
         {
-/*            var checkIfExists = _unitOfWork.Cookbooks.GetByUserEager(cookbook.User.Id)
-                            .Result.ToList().Find(x => x.Recipe.Id == cookbook.Recipe.Id);
-                        if (checkIfExists == null)
-                        {
-*/              //there should be a button that says add to cookbook that will send a post request here.
-            cookbook.User = await _unitOfWork.Users.Get(cookbook.User.Id);
-            cookbook.Recipe = await _unitOfWork.Recipes.GetEager(cookbook.Recipe.Id);
-            _unitOfWork.Cookbooks.Add(cookbook);
-                await _unitOfWork.Complete();
-                return cookbook;
-            //}
-            //return NoContent();
-
-
-            //GetCook takes user id to filter out all the recipe in a cookbook,
-            //return CreatedAtAction("GetCookbook", new { id = cookbook.Id }, cookbook);
+            var addedCookbook = await _businessL.PostCookbook(cookbook);
+            if (addedCookbook == null)
+            {
+                return NoContent();
+            }
+            return addedCookbook;
         }
         /// <summary>
         /// DELETE: api/Cookbooks/1/5
