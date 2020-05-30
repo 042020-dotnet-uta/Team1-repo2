@@ -73,10 +73,10 @@ steps:
   artifact: app
   displayName: artifact publish app
   
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Free Trial(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
-    appType: 'apiApp'
-    WebAppName: 'Team1-P2-Api'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/app'
+#- task: AzureRmWebAppDeployment@4
+ # inputs:
+  #  ConnectionType: 'AzureRM'
+   # azureSubscription: 'Free Trial(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
+    #appType: 'apiApp'
+    #WebAppName: 'Team1-P2-Api'
+    #packageForLinux: '$(Build.ArtifactStagingDirectory)/app'
