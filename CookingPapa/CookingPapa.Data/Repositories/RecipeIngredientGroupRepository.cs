@@ -68,6 +68,10 @@ namespace CookingPapa.Data.Repositories
             }
 
         }
+        public async void AddRange(List<RecipeIngredientGroups> recipeIngredientGroups)
+        {
+            await db.AddRangeAsync(recipeIngredientGroups);
+        }
 
         /// <summary>
         /// Fetches all entities with the given Recipe ID.

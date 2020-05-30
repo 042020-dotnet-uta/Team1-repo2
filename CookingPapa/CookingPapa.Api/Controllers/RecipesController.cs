@@ -60,7 +60,7 @@ namespace CookingPapa.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRecipe(int id, RecipeVM recipeVM)
+        public async Task<IActionResult> PutRecipe(int id, PostRecipeVM recipeVM)
         {
             //for editting a recipeVM angular will send over a recipeVM object with 
             //editted informations. Need to remember to add functionality to add and remove
@@ -96,14 +96,12 @@ namespace CookingPapa.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Recipe>> PostRecipe(RecipeVM recipeVM)
+        public async Task<ActionResult<Recipe>> PostRecipe(PostRecipeVM recipeVM)
         {
-            //For Creating a new Recipe will accept RecipeVM object from Angular
+            //For Creating a new Recipe will accept PostRecipeVM object from Angular
             //need to translate that object into query readable to update db
-            
-            
-
-            return CreatedAtAction("GetRecipe", new { id = recipeVM.RecipeId }, recipeVM);
+            var recipeCreated = await _businessL.PostRecipe(recipeVM);            
+            return CreatedAtAction("GetRecipe", new { id = recipeCreated.Id }, recipeCreated);
         }
 
         // DELETE: api/Recipes/5
