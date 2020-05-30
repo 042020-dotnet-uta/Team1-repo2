@@ -15,7 +15,7 @@ namespace CookingPapa.Domain.RepositoryInterfaces
         /// Delete the entry at the given ID.
         /// </summary>
         /// <param name="id">The ID of the entity to be deleted.</param>
-        void Delete(int id);
+        Task<Recipe> Delete(int? id);
 
         /// <summary>
         /// Eager-loads the entity at the given ID.

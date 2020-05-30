@@ -3,6 +3,8 @@ using CookingPapa.Domain.ViewModels;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Common;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -103,15 +105,24 @@ namespace CookingPapa.Domain.Business
             };           
             return RecipeDetails;
         }
-
         public async Task<Recipe> PostRecipe(PostRecipeVM recipeVM)
         {
             AddNewIngredientAndUnit(recipeVM);
-            RecipeOrigin recipeOrigin = new RecipeOrigin()
+
+            var recipeOrigins = await _unitOfWork.RecipeOrigins.GetAll();
+                
+            var recipeOrigin = recipeOrigins.ToList().Find(x => x.RecipeOriginName == recipeVM.RecipeOriginName); 
+            if (recipeOrigin == null)
             {
-                RecipeOriginName = recipeVM.RecipeOriginName
-            };
-            var user = await _unitOfWork.Users.Get(recipeVM.UserId);
+                recipeOrigin = new RecipeOrigin()
+                {
+                    RecipeOriginName = recipeVM.RecipeOriginName
+                };
+                _unitOfWork.RecipeOrigins.Add(recipeOrigin);
+            }
+
+            var user = _unitOfWork.Users.Get(recipeVM.UserId).Result;
+            await _unitOfWork.Complete();
             Recipe recipe = new Recipe()
             {
                 User = user,
@@ -121,33 +132,117 @@ namespace CookingPapa.Domain.Business
                 RecipeInstruction = recipeVM.RecipeInstruction
             };
             List<RecipeIngredientGroups> recipeIngredientGroups = new List<RecipeIngredientGroups>();
-            foreach(var x in recipeVM.recipeIngredientGroupVM)
+            var ingredientId = _unitOfWork.RecipeIngredients.GetAll().Result.ToList();
+            var measurementId = _unitOfWork.RecipeMeasurements.GetAll().Result.ToList();
+            foreach (var x in recipeVM.RecipeIngredientGroupVM)
             {
+                var ingredientIds = ingredientId.Find(y => y.RecipeIngredientName == x.IngredientName).Id;
+                var measurementIds = measurementId.Find(y => y.RecipeMeasurementName == x.MeasurementName).Id;
                 recipeIngredientGroups.Add(new RecipeIngredientGroups()
                 {
                     Recipe = recipe,
-                    RecipeIngredient = new RecipeIngredient() { RecipeIngredientName = x.IngredientName},
-                    RecipeMeasurement = new RecipeMeasurement() { RecipeMeasurementName = x.MeasurementName},
+                    RecipeIngredient = _unitOfWork.RecipeIngredients.Get(ingredientIds).Result,
+                    RecipeMeasurement = _unitOfWork.RecipeMeasurements.Get(measurementIds).Result,
                     RecipeIngredientAmount = x.IngredientAmount
                 });
             }
-            _unitOfWork.RecipeOrigins.Add(recipeOrigin);
             _unitOfWork.Recipes.Add(recipe);
             _unitOfWork.RecipeIngredientGroups.AddRange(recipeIngredientGroups);
             await _unitOfWork.Complete();
-            var newRecipe = _unitOfWork.Recipes.GetAll().Result.Last();
+            //var newRecipe = _unitOfWork.Recipes.GetAll().Result.Last();
+            return recipe;
+        }
+        public async Task<GetRecipeDetailVM> PutRecipe(PostRecipeVM recipeVM)
+        {
+            //var oldRecipe = await _unitOfWork.RecipeIngredientGroups.GetEager(recipeVM.RecipeId);
+            var updateRecipe = await PostRecipe(recipeVM);
+            var deletedRecipe = await DeleteRecipe((int)recipeVM.RecipeId);
+            var newRecipe = await GetRecipeDetail(updateRecipe.Id);
+            await _unitOfWork.Complete();
             return newRecipe;
         }
+        
+        public async Task<Recipe> DeleteRecipe(int id)
+        {
+            await _unitOfWork.RecipeIngredientGroups.DeleteAll(id);
+            var recipeDeleted = await _unitOfWork.Recipes.Delete(id);
+            return recipeDeleted;
+        }
 
+        public async Task<InformationVM> GetInformation()
+        {
+            var origins = await _unitOfWork.RecipeOrigins.GetAll();
+            var origins1 = origins.Select(x=>x.RecipeOriginName).ToList();
+            var ingredients = await _unitOfWork.RecipeIngredients.GetAll();
+            var ingredients1 = ingredients.Select(x=>x.RecipeIngredientName).ToList();
+            var units = await _unitOfWork.RecipeMeasurements.GetAll();
+            var units1 = units.Select(x=>x.RecipeMeasurementName).ToList();
+            var information = new InformationVM()
+            {
+                Origins = origins1,
+                Ingredients = ingredients1,
+                MeasurementUnits = units1
+            };
+            return information;
+        }
+
+        public async Task<RecipeReview> PutRecipeReview(RecipeReviewVM recipeReview)
+        {
+            var edittedReview = await functionForReview(recipeReview);
+            _unitOfWork.RecipeReviews.Update(edittedReview);
+            await _unitOfWork.Complete();
+            return edittedReview;
+        }
+
+        public async Task<RecipeReview> PostRecipeReview(RecipeReviewVM recipeReview)
+        {
+            var editReview = await functionForReview(recipeReview);
+            editReview = await _unitOfWork.RecipeReviews.Add(editReview);
+            await _unitOfWork.Complete();
+            return editReview;
+        }
+
+        public async Task<User> CreateUser(User user)
+        {
+            var listOfUsers = await _unitOfWork.Users.GetAll();
+            var checkUserName = listOfUsers.Select(x => x.Username).ToList().Find(x => x == user.Username);
+            if (checkUserName == null)
+            {
+                await _unitOfWork.Users.Add(user);
+                await _unitOfWork.Complete();
+                return user;
+            }
+            return null;
+        }
+
+
+
+
+
+
+        public async Task<RecipeReview> functionForReview(RecipeReviewVM recipeReview)
+        {
+            var user = await _unitOfWork.Users.Get(recipeReview.UserId);
+            var recipe = await _unitOfWork.Recipes.Get(recipeReview.RecipeId);
+            var edittedReview = new RecipeReview()
+            {
+                User = user,
+                Recipe = recipe,
+                Id = recipeReview.RecipeReviewId,
+                RecipeReviewRating = recipeReview.RecipeReviewRating,
+                RecipeReviewComment = recipeReview.RecipeReviewComment
+            };
+            return edittedReview;
+        }
         //Function used for post/put recipe.
         //checks all the ingredient user selected with the database, if it does not exist in db, it adds
         //the ingredient to the db.
-        public async void AddNewIngredientAndUnit(PostRecipeVM recipeVM)
+        public bool AddNewIngredientAndUnit(PostRecipeVM recipeVM)
         {
             var checkIngredientExists = _unitOfWork.RecipeIngredients.GetAll().Result.ToList();
             var checkMeasurementExists = _unitOfWork.RecipeMeasurements.GetAll().Result.ToList();
 
-            foreach (var x in recipeVM.recipeIngredientGroupVM)
+            foreach (var x in recipeVM.RecipeIngredientGroupVM)
             {               
                 var checkIngredientExist = checkIngredientExists.Find(y => y.RecipeIngredientName == x.IngredientName);
                 if (checkIngredientExist == null)
@@ -161,7 +256,8 @@ namespace CookingPapa.Domain.Business
                 }
             }
             //save the change so that ingredient group can be added to the db below.
-            await _unitOfWork.Complete();
+            //_unitOfWork.Complete();
+            return true;
         }
     }
 

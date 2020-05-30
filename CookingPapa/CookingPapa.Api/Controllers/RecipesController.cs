@@ -59,37 +59,17 @@ namespace CookingPapa.Api.Controllers
         // PUT: api/Recipes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRecipe(int id, PostRecipeVM recipeVM)
+        [HttpPut]
+        public async Task<GetRecipeDetailVM> PutRecipe(PostRecipeVM recipeVM)
         {
             //for editting a recipeVM angular will send over a recipeVM object with 
             //editted informations. Need to remember to add functionality to add and remove
             //ingredients of a recipe. before any functionality is performed we need to retrieve the original
             //recipe information so it can be compared with the editted recipe.
-            if (id != recipeVM.RecipeId)
-            {
-                return BadRequest();
-            }
-
             //_context.Entry(recipeVM).State = EntityState.Modified;
-
-            try
-            {
-                await _unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RecipeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var editRecipe = await _businessL.PutRecipe(recipeVM);     
+            return editRecipe;
+            //return CreatedAtAction("GetRecipe", new { id = editRecipe.RecipeInfos.Id }, editRecipe);
         }
 
         // POST: api/Recipes
@@ -106,20 +86,15 @@ namespace CookingPapa.Api.Controllers
 
         // DELETE: api/Recipes/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Recipe>> DeleteRecipe(int id)
+        public async Task<Recipe> DeleteRecipe(int id)
         {
             //delete recipe
-            var recipe = await _unitOfWork.Recipes.Get(id);
-            if (recipe == null)
-            {
-                return NotFound();
-            }
+            var deletedRecipe = await _businessL.DeleteRecipe(id);
+            await _unitOfWork.Complete();
 
-            _unitOfWork.Recipes.Delete(id);
-            var returnVal = await _unitOfWork.Complete();
             //Check the return value?
 
-            return recipe;
+            return deletedRecipe;
         }
 
         private bool RecipeExists(int id)

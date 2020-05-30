@@ -20,7 +20,7 @@ namespace CookingPapa.Domain
         IRepository<RecipeMeasurement> RecipeMeasurements { get; } //Holder for RecipeMeasurement repository
         IRepository<RecipeOrigin> RecipeOrigins { get; } //Holder for RecipeOrigin repository
         IReviewRepository RecipeReviews { get; } //Holder for RecipeReview repository
-        IRepository<User> Users { get; } //Holder for User repository
+        IUserRepository Users { get; } //Holder for User repository
         #endregion
 
         Task<int> Complete(); //Save changes made by the Unit of Work to the database
