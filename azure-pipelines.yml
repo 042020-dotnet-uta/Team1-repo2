@@ -78,5 +78,5 @@ steps:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Free Trial(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
     appType: 'webApp'
-    WebAppName: 'Team1-WebApi1'
+    WebAppName: 'Team1-WebApp1'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/app'
