@@ -22,7 +22,6 @@
     <ProjectReference Include="..\CookingPapa.Api\CookingPapa.Api.csproj" />
     <ProjectReference Include="..\CookingPapa.Data\CookingPapa.Data.csproj" />
     <ProjectReference Include="..\CookingPapa.Domain\CookingPapa.Domain.csproj" />
-    <ProjectReference Include="..\Cookingpapa.web\Cookingpapa.web.csproj" />
   </ItemGroup>
 
 </Project>
