@@ -5,7 +5,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: 'CookingPapa/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -32,7 +32,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '**/*.sln'
+    projects: 'CookingPapa/*.sln'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet testing'
@@ -44,7 +44,7 @@ steps:
       /p:Coverletoutput=$(Build.SourcesDirectory)/TestResults/Coverage 
       --collect "Codecoverage"
       --logger trx'
-    projects: '**/*Test.csproj'
+    projects: CookingPapa/**/*Test.csproj'
     nobuild: true
 
 - task: SonarCloudAnalyze@1
@@ -77,6 +77,6 @@ steps:
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Free Trial(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
-    appType: 'webApp'
-    WebAppName: 'Team1-WebApp1'
+    appType: 'apiApp'
+    WebAppName: 'Team1-P2-Api'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/app'

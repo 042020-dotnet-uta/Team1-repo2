@@ -11,6 +11,7 @@ using CookingPapa.Domain.ViewModels;
 using CookingPapa.Domain;
 using Microsoft.Extensions.Logging;
 using SQLitePCL;
+using CookingPapa.Domain.Business;
 
 namespace CookingPapa.Api.Controllers
 {
@@ -21,36 +22,37 @@ namespace CookingPapa.Api.Controllers
         //This part should be changed to the repository or business logic 
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<RecipesController> _logger;
+        private readonly IBusinessL _businessL;
 
-        public RecipesController(IUnitOfWork unitOfWork, ILogger<RecipesController> logger)
+        public RecipesController(IUnitOfWork unitOfWork, ILogger<RecipesController> logger,
+            IBusinessL businessL)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _businessL = businessL;
         }
 
         // GET: api/Recipes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
+        public async Task<ActionResult<List<GetRecipesVM>>> GetRecipes()
         {
             //for searching all recipeVM
             //return all the recipeVM with all of its components without ratings
-            return _unitOfWork.Recipes.GetAllEager().Result.ToList();
-
+            //return _unitOfWork.Recipes.GetAllEager().Result.ToList();
+            return await _businessL.GetRecipes();
         }
 
         // GET: api/Recipes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Recipe>> GetRecipe(int id)
+        public async Task<ActionResult<GetRecipeDetailVM>> GetRecipe(int id)
         {
             //the list of recipeVM we are searching from need to include all the information
             //including origin, cook time, ingredient and reviews
-            var recipe = await _unitOfWork.Recipes.GetEager(id);
-
+            var recipe = await _businessL.GetRecipeDetail(id);
             if (recipe == null)
             {
                 return NotFound();
             }
-
             return recipe;
         }
 
