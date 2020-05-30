@@ -72,7 +72,7 @@ namespace CookingPapa.Data.Repositories
         /// </summary>
         /// <param name="id">The Recipe ID to filter by.</param>
         /// <returns>Returns an IEnumerable populated with the appropriate entities.</returns>
-        public async Task<IEnumerable<RecipeReview>> GetByRecipeEager(int id)
+        public async Task<List<RecipeReview>> GetByRecipeEager(int id)
         {
             try
             {
