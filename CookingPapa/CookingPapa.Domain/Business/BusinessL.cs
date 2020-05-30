@@ -90,10 +90,9 @@ namespace CookingPapa.Domain.Business
         }
         public async Task<GetRecipeDetailVM> GetRecipeDetail(int id)
         {
-            //var RecipeInfos = await _unitOfWork.Recipes.GetEager(id);
             var RecipeIngredientInfos = await _unitOfWork.RecipeIngredientGroups.GetEager(id);
             var RecipeReviewInfos = await _unitOfWork.RecipeReviews.GetByRecipeEager(id);
-            if(RecipeIngredientInfos == null || RecipeReviewInfos == null)
+            if(RecipeIngredientInfos == null)
             {
                 return null;
             }
@@ -104,5 +103,65 @@ namespace CookingPapa.Domain.Business
             };           
             return RecipeDetails;
         }
+
+        public async Task<Recipe> PostRecipe(PostRecipeVM recipeVM)
+        {
+            AddNewIngredientAndUnit(recipeVM);
+            RecipeOrigin recipeOrigin = new RecipeOrigin()
+            {
+                RecipeOriginName = recipeVM.RecipeOriginName
+            };
+            var user = await _unitOfWork.Users.Get(recipeVM.UserId);
+            Recipe recipe = new Recipe()
+            {
+                User = user,
+                RecipeOrigin = recipeOrigin,
+                RecipeName = recipeVM.RecipeName,
+                RecipeCookTime = recipeVM.RecipeCookTime,
+                RecipeInstruction = recipeVM.RecipeInstruction
+            };
+            List<RecipeIngredientGroups> recipeIngredientGroups = new List<RecipeIngredientGroups>();
+            foreach(var x in recipeVM.recipeIngredientGroupVM)
+            {
+                recipeIngredientGroups.Add(new RecipeIngredientGroups()
+                {
+                    Recipe = recipe,
+                    RecipeIngredient = new RecipeIngredient() { RecipeIngredientName = x.IngredientName},
+                    RecipeMeasurement = new RecipeMeasurement() { RecipeMeasurementName = x.MeasurementName},
+                    RecipeIngredientAmount = x.IngredientAmount
+                });
+            }
+            _unitOfWork.RecipeOrigins.Add(recipeOrigin);
+            _unitOfWork.Recipes.Add(recipe);
+            _unitOfWork.RecipeIngredientGroups.AddRange(recipeIngredientGroups);
+            await _unitOfWork.Complete();
+            var newRecipe = _unitOfWork.Recipes.GetAll().Result.Last();
+            return newRecipe;
+        }
+
+        //Function used for post/put recipe.
+        //checks all the ingredient user selected with the database, if it does not exist in db, it adds
+        //the ingredient to the db.
+        public async void AddNewIngredientAndUnit(PostRecipeVM recipeVM)
+        {
+            foreach (var x in recipeVM.recipeIngredientGroupVM)
+            {
+                var checkIngredientExist = _unitOfWork.RecipeIngredients.GetAll()
+                    .Result.ToList().Find(y => y.RecipeIngredientName == x.IngredientName);
+                if (checkIngredientExist == null)
+                {
+                    _unitOfWork.RecipeIngredients.Add(new RecipeIngredient() { RecipeIngredientName = x.IngredientName });
+                }
+                var checkMeasurementExists = _unitOfWork.RecipeMeasurements.GetAll()
+                    .Result.ToList().Find(y => y.RecipeMeasurementName == x.MeasurementName);
+                if (checkMeasurementExists == null)
+                {
+                    _unitOfWork.RecipeMeasurements.Add(new RecipeMeasurement() { RecipeMeasurementName = x.MeasurementName });
+                }
+            }
+            //save the change so that ingredient group can be added to the db below.
+            await _unitOfWork.Complete();
+        }
     }
+
 }

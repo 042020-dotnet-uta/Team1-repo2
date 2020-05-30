@@ -30,5 +30,6 @@ namespace CookingPapa.Domain.RepositoryInterfaces
         /// <param name="id">The Recipe ID to filter by.</param>
         /// <returns>Returns an IEnumerable populated with the appropriate entities.</returns>
         Task<IEnumerable<RecipeIngredientGroups>> GetByRecipeEager(int id);
+        void AddRange(List<RecipeIngredientGroups> recipeIngredientGroups);
     }
 }

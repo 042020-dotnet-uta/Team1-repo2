@@ -13,5 +13,6 @@ namespace CookingPapa.Domain.Business
         Task<List<GetCookbookVM>> GetCookbook(int id);
         Task<List<GetRecipesVM>> GetRecipes();
         Task<GetRecipeDetailVM> GetRecipeDetail(int id);
+        Task<Recipe> PostRecipe(PostRecipeVM recipeVM);
     }
 }
