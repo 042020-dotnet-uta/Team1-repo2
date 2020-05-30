@@ -1,0 +1,25 @@
+<div style="border: 1px solid red">view-recipe Component</div>
+<div>
+  <!--this div box should be on the left side-->
+  <div>
+    <div>
+      <h3>
+        Show the name of recipe here      <button class="btn btn-light btn-outline-dark">Add to Cookbook(only visible for user)</button>
+      </h3>
+      <p><span>Origin</span>   <span>Cook Time</span></p>
+    </div>
+    <div>
+      <!--<p ng-repeat="(key, value) in controller.greeting.custinfo">{key}}: {value}}</p>-->
+      <p>for each to display the ingredients, amounts and what not</p>
+    </div>
+  </div>
+  <!--this div box should be on the right side-->
+  <div>
+    <p>Display the instructions here</p>
+  </div>
+</div>
+<div>
+  <p>This section should display the rating and comments</p>
+</div>
+<button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
+
