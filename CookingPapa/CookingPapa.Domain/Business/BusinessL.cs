@@ -144,17 +144,18 @@ namespace CookingPapa.Domain.Business
         //the ingredient to the db.
         public async void AddNewIngredientAndUnit(PostRecipeVM recipeVM)
         {
+            var checkIngredientExists = _unitOfWork.RecipeIngredients.GetAll().Result.ToList();
+            var checkMeasurementExists = _unitOfWork.RecipeMeasurements.GetAll().Result.ToList();
+
             foreach (var x in recipeVM.recipeIngredientGroupVM)
-            {
-                var checkIngredientExist = _unitOfWork.RecipeIngredients.GetAll()
-                    .Result.ToList().Find(y => y.RecipeIngredientName == x.IngredientName);
+            {               
+                var checkIngredientExist = checkIngredientExists.Find(y => y.RecipeIngredientName == x.IngredientName);
                 if (checkIngredientExist == null)
                 {
                     _unitOfWork.RecipeIngredients.Add(new RecipeIngredient() { RecipeIngredientName = x.IngredientName });
                 }
-                var checkMeasurementExists = _unitOfWork.RecipeMeasurements.GetAll()
-                    .Result.ToList().Find(y => y.RecipeMeasurementName == x.MeasurementName);
-                if (checkMeasurementExists == null)
+                var checkMeasurementExist = checkMeasurementExists.Find(y => y.RecipeMeasurementName == x.MeasurementName);
+                if (checkMeasurementExist == null)
                 {
                     _unitOfWork.RecipeMeasurements.Add(new RecipeMeasurement() { RecipeMeasurementName = x.MeasurementName });
                 }
