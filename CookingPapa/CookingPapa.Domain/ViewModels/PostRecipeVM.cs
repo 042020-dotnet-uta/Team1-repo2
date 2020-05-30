@@ -20,6 +20,6 @@ namespace CookingPapa.Domain.ViewModels
         public int RecipeCookTime { get; set; }
         public string RecipeInstruction { get; set; }
         //put all the user selected ingredients into a list to add to db.
-        public List<RecipeIngredientGroupVM> recipeIngredientGroupVM { get; set; }
+        public List<RecipeIngredientGroupVM> RecipeIngredientGroupVM { get; set; }
     }
 }

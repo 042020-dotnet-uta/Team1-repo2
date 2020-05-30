@@ -32,11 +32,15 @@ namespace CookingPapa.Data.Repositories
         /// Adds the given entity to the repository's database.
         /// </summary>
         /// <param name="entity">The entity to be added to the database.</param>
-        public async void Add(TEntity entity)
+        public async Task<TEntity> Add(TEntity entity)
         {
             await Context.Set<TEntity>().AddAsync(entity);
+            return entity;
         }
-
+        public void Update(TEntity entity)
+        {
+            Context.Set<TEntity>().Update(entity);
+        }
         /// <summary>
         /// Gets an entity from the database with the given ID.
         /// </summary>

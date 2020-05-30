@@ -15,8 +15,8 @@ namespace CookingPapa.Domain.RepositoryInterfaces
         /// Adds an entity to the repository's database.
         /// </summary>
         /// <param name="entity">An entity of the appropriate type to be added to the database.</param>
-        void Add(TEntity entity);
-
+        Task<TEntity> Add(TEntity entity);
+        void Update(TEntity entity);
         /// <summary>
         /// Retrieves an entity from the database with the given ID.
         /// </summary>

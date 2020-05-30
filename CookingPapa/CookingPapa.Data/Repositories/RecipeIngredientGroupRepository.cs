@@ -40,13 +40,20 @@ namespace CookingPapa.Data.Repositories
                 Console.WriteLine($"Exception caught in RecipeIngredientGroupsRepository.Delete(): {e}");
             }
         }
+        public async Task<bool> DeleteAll (int recipeId)
+        {
+            var allIngredients = await db.RecipeIngredientGroups.Include(x => x.Recipe)
+                .Where(x => x.Recipe.Id == recipeId).ToListAsync();
+            db.RemoveRange(allIngredients);
+            return true;
+        }
 
         /// <summary>
         /// Eager-loads the entity at the given ID.
         /// </summary>
         /// <param name="id">The ID of the entity to be fetched.</param>
         /// <returns>Returns the entity with the given ID.</returns>
-        public async Task<RecipeIngredientGroups> GetEager(int id)
+        public async Task<RecipeIngredientGroups> GetEager(int? id)
         {
             try
             {
