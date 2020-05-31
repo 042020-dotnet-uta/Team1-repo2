@@ -60,6 +60,7 @@ stages:
         inputs:
           command: 'build'
           project: 'CookingPapaAngular'
+          arguments: '--prod'
           DisableAnalytics: false
       - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
         artifact: ClientRelease
