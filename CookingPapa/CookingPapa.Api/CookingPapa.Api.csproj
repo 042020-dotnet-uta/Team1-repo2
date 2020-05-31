@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ProjectGuid>{F5AEECCD-83FC-4113-8246-877D260092B6}</ProjectGuid>
     <DebugType>Full</DebugType>
+    <StartupObject>CookingPapa.Api.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
