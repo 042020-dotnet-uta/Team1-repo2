@@ -27,7 +27,7 @@ stages:
           cd CookingPapaAngular
           npm install
           ./node_modules/@angular/cli/bin/ng build --prod
-      - publish: $(Build.ArtifactStagingDirectory)/CookingPapaAngular/dist
+      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
         artifact: ClientRelease
 
 - stage: DeployClient
