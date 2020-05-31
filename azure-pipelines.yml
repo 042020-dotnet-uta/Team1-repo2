@@ -47,12 +47,19 @@ stages:
           command: 'install'
           workingDir: 'CookingPapaAngular'
 #build angular project
+#      - task: AngularCLI@0
+#        displayName: 'build angular project'
+#        inputs:
+#          command: 'custom'
+#          project: 'CookingPapaAngular'
+#          custom: 'build --prod'
+#          DisableAnalytics: false
+#      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
+#        artifact: ClientRelease
       - task: AngularCLI@0
-        displayName: 'build angular project'
         inputs:
-          command: 'custom'
+          command: 'build'
           project: 'CookingPapaAngular'
-          custom: 'build --prod'
           DisableAnalytics: false
       - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
         artifact: ClientRelease
