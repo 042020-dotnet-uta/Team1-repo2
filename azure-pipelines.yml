@@ -19,6 +19,35 @@ stages:
       inputs:
         restoreSolution: '$(solution)'
 
+- stage: BuildClient
+  jobs:
+    - job: 
+      steps:
+      - bash: |
+          cd CookingPapaAngular
+          npm install
+          ./node_modules/@angular/cli/bin/ng build --prod
+        
+      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
+        artifact: ClientRelease
+
+- stage: DeployClient
+  jobs:
+  - job: deploy
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'ClientRelease'
+        targetPath: 'release'
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Free Trial(4)(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
+        appType: 'webApp'
+        WebAppName: 'CookingPapaWeb'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/CookingPapaAngular/dist'
+
 - stage: BuildApi
   jobs:
   - job:
@@ -95,32 +124,3 @@ stages:
         appType: 'webApp'
         WebAppName: 'CookingPapaApi'
         packageForLinux: '$(Build.ArtifactStagingDirectory)/app'
-
-- stage: BuildClient
-  jobs:
-    - job: 
-      steps:
-      - bash: |
-          cd CookingPapaAngular
-          npm install
-          ./node_modules/@angular/cli/bin/ng build --prod
-        
-      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
-        artifact: ClientRelease
-
-- stage: DeployClient
-  jobs:
-  - job: deploy
-    steps:
-    - task: DownloadPipelineArtifact@2
-      inputs:
-        buildType: 'current'
-        artifactName: 'ClientRelease'
-        targetPath: 'release'
-    - task: AzureRmWebAppDeployment@4
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'Free Trial(4)(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
-        appType: 'webApp'
-        WebAppName: 'CookingPapaWeb'
-        packageForLinux: '$(System.DefaultWorkingDirectory)/CookingPapaAngular/dist'
