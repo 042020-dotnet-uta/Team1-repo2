@@ -27,7 +27,6 @@ stages:
           cd CookingPapaAngular
           npm install
           ./node_modules/@angular/cli/bin/ng build --prod
-        
       - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
         artifact: ClientRelease
 
@@ -35,11 +34,11 @@ stages:
   jobs:
   - job: deploy
     steps:
-    - task: DownloadPipelineArtifact@2
-      inputs:
-        buildType: 'current'
-        artifactName: 'ClientRelease'
-        targetPath: 'release'
+    #- task: DownloadPipelineArtifact@2
+    #  inputs:
+    #    buildType: 'current'
+    #    artifactName: 'ClientRelease'
+    #    targetPath: 'release'
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
