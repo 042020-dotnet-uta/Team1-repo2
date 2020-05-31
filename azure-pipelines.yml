@@ -55,7 +55,7 @@ stages:
           --collect "Codecoverage"
           --logger trx'
         projects: CookingPapa/**/*Test.csproj'
-        nobuild: true
+        #nobuild: true
     - task: SonarCloudAnalyze@1
     - task: PublishCodeCoverageResults@1
       displayName: 'Publish Code Coverage'
