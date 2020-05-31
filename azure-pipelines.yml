@@ -38,20 +38,20 @@ stages:
         displayName: 'Install Angular CLI'
         inputs:
           command: 'custom'
-          workingDir: 'project2/CharSheet/CharSheetWeb'
+          workingDir: 'CookingPapaAngular'
           customCommand: 'install @angular/cli@latest -g'
 #install angular app dependencies
       - task: Npm@1
         displayName: 'install project dependencies'
         inputs:
           command: 'install'
-          workingDir: 'project2/CharSheet/CharSheetWeb'
+          workingDir: 'CookingPapaAngular'
 #build angular project
       - task: AngularCLI@0
         displayName: 'build angular project'
         inputs:
           command: 'custom'
-          project: 'project2/CharSheet/CharSheetWeb'
+          project: 'CookingPapaAngular'
           custom: 'build --prod'
           DisableAnalytics: false
       - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
