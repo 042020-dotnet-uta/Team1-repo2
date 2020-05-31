@@ -10,7 +10,7 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-- stage: Restore NuGets
+- stage: RestoreNuGets
   jobs:
   - job:
     steps:
@@ -19,7 +19,7 @@ stages:
       inputs:
         restoreSolution: '$(solution)'
 
-- stage: Build Api
+- stage: BuildApi
   jobs:
   - job:
     steps:
@@ -67,7 +67,8 @@ stages:
     - task: SonarCloudPublish@1
       inputs:
         pollingTimeoutSec: '300'
-- stage: Deploy Api
+        
+- stage: DeployApi
   jobs:
   - job: 
     steps:
