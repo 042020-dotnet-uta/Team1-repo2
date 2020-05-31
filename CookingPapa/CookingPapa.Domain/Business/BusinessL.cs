@@ -172,11 +172,11 @@ namespace CookingPapa.Domain.Business
         public async Task<InformationVM> GetInformation()
         {
             var origins = await _unitOfWork.RecipeOrigins.GetAll();
-            var origins1 = origins.Select(x=>x.RecipeOriginName).ToList();
+            var origins1 = origins.Select(x=>x.RecipeOriginName).ToArray();
             var ingredients = await _unitOfWork.RecipeIngredients.GetAll();
-            var ingredients1 = ingredients.Select(x=>x.RecipeIngredientName).ToList();
+            var ingredients1 = ingredients.Select(x=>x.RecipeIngredientName).ToArray();
             var units = await _unitOfWork.RecipeMeasurements.GetAll();
-            var units1 = units.Select(x=>x.RecipeMeasurementName).ToList();
+            var units1 = units.Select(x=>x.RecipeMeasurementName).ToArray();
             var information = new InformationVM()
             {
                 Origins = origins1,

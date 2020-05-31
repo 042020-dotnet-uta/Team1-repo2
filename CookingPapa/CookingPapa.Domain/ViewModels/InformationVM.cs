@@ -6,8 +6,8 @@ namespace CookingPapa.Domain.ViewModels
 {
     public class InformationVM
     {
-        public List<string> Origins { get; set; }
-        public List<string> Ingredients { get; set; }
-        public List<string> MeasurementUnits { get; set; }
+        public string[] Origins { get; set; }
+        public string[] Ingredients { get; set; }
+        public string[] MeasurementUnits { get; set; }
     }
 }
