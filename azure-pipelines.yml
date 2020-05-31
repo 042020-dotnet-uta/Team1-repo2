@@ -23,10 +23,37 @@ stages:
   jobs:
     - job: 
       steps:
-      - bash: |
-          cd CookingPapaAngular
-          npm install
-          ./node_modules/@angular/cli/bin/ng build --prod
+#      - bash: |
+#          cd CookingPapaAngular
+#          npm install
+#          ./node_modules/@angular/cli/bin/ng build --prod
+#      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
+#        artifact: ClientRelease
+      - task: NodeAndNpmTool@1
+        inputs:
+          versionSpec: '12.x'
+          checkLatest: true
+#install angular cli
+      - task: Npm@1
+        displayName: 'Install Angular CLI'
+        inputs:
+          command: 'custom'
+          workingDir: 'project2/CharSheet/CharSheetWeb'
+          customCommand: 'install @angular/cli@latest -g'
+#install angular app dependencies
+      - task: Npm@1
+        displayName: 'install project dependencies'
+        inputs:
+          command: 'install'
+          workingDir: 'project2/CharSheet/CharSheetWeb'
+#build angular project
+      - task: AngularCLI@0
+        displayName: 'build angular project'
+        inputs:
+          command: 'custom'
+          project: 'project2/CharSheet/CharSheetWeb'
+          custom: 'build --prod'
+          DisableAnalytics: false
       - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
         artifact: ClientRelease
 
