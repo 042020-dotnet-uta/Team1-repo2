@@ -45,6 +45,10 @@ stages:
           sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
           sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
     - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: 'CookingPapa/*.sln'
+    - task: DotNetCoreCLI@2
       displayName: 'dotnet testing'
       inputs:
         command: 'test'
@@ -55,7 +59,7 @@ stages:
           --collect "Codecoverage"
           --logger trx'
         projects: CookingPapa/**/*Test.csproj'
-        #nobuild: true
+        nobuild: true
     - task: SonarCloudAnalyze@1
     - task: PublishCodeCoverageResults@1
       displayName: 'Publish Code Coverage'
