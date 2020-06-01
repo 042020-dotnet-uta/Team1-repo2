@@ -34,12 +34,17 @@ namespace CookingPapa.Api.Controllers
 
         // GET: api/Recipes
         [HttpGet]
-        public async Task<ActionResult<List<GetRecipesVM>>> GetRecipes()
+        public async Task<ActionResult<List<GetRecipesVM>>> GetRecipes(string searchpattern)
         {
             //for searching all recipeVM
             //return all the recipeVM with all of its components without ratings
             //return _unitOfWork.Recipes.GetAllEager().Result.ToList();
-            return await _businessL.GetRecipes();
+            if(String.IsNullOrEmpty(searchpattern?.Trim()))
+            {
+                return await _businessL.GetRecipes();
+            }
+            else
+                return await _businessL.GetRecipes(searchpattern);
         }
 
         // GET: api/Recipes/5

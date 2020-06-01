@@ -90,7 +90,30 @@ namespace CookingPapa.Domain.Business
             }
             return newRecipesList;
         }
+<<<<<<< HEAD
         public async Task<RecipeInformationVM> GetRecipeDetail(int id)
+=======
+
+        public async Task<List<GetRecipesVM>> GetRecipes(string searchPattern)
+        {
+            var recipes = await _unitOfWork.Recipes.FindEager(r => r.RecipeName.Contains(searchPattern));
+            List<GetRecipesVM> newRecipesList = new List<GetRecipesVM>();
+            foreach (var x in recipes)
+            {
+                newRecipesList.Add(new GetRecipesVM()
+                {
+                    RecipeId = x.Id,
+                    UserId = x.User.Id,
+                    UserName = x.User.Username,
+                    RecipeName = x.RecipeName,
+                    RecipeOrigin = x.RecipeOrigin.RecipeOriginName,
+                    RecipeCookTime = x.RecipeCookTime
+                });
+            }
+            return newRecipesList;
+        }
+        public async Task<GetRecipeDetailVM> GetRecipeDetail(int id)
+>>>>>>> cf7be2b5848efcd2b1db3a809a91e67ce3132ce3
         {
             var RecipeIngredientInfos = await _unitOfWork.RecipeIngredientGroups.GetByRecipeEager(id);
             var RecipeReviewInfos = await _unitOfWork.RecipeReviews.GetByRecipeEager(id);
