@@ -55,6 +55,9 @@
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/view-cookbook']">View cookbook</a>
             </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/profile']" *ngIf="auth.loggedIn">Profile</a>
+            </li>
 
           </ul>
         </div>
