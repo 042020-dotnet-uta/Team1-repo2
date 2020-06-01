@@ -47,22 +47,20 @@ stages:
           command: 'install'
           workingDir: 'CookingPapaAngular'
 #build angular project
-#      - task: AngularCLI@0
-#        displayName: 'build angular project'
-#        inputs:
-#          command: 'custom'
-#          project: 'CookingPapaAngular'
-#          custom: 'build --prod'
-#          DisableAnalytics: false
-#      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
-#        artifact: ClientRelease
       - task: AngularCLI@0
+        displayName: 'build angular project'
         inputs:
-          command: 'build'
+          command: 'custom'
           project: 'CookingPapaAngular'
-          arguments: '--prod'
+          custom: 'build --prod'
           DisableAnalytics: false
-      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
+#      - task: AngularCLI@0
+#        inputs:
+#          command: 'build'
+#          project: 'CookingPapaAngular'
+#          arguments: '--prod'
+#          DisableAnalytics: false
+      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
         artifact: ClientRelease
 
 - stage: DeployClient
@@ -81,6 +79,10 @@ stages:
         appType: 'webApp'
         WebAppName: 'CookingPapaWeb'
         packageForLinux: '$(Build.SourcesDirectory)/release'
+        enableCustomDeployment: true
+        DeploymentType: 'webDeploy'
+        TakeAppOfflineFlag: false
+        RemoveAdditionalFilesFlag: true
 
 - stage: BuildApi
   jobs:
