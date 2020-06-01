@@ -2,11 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
+    <ProjectGuid>{D11CD582-05BB-429F-A3E4-3D864BC58AA8}</ProjectGuid>
+    <DebugType>Full</DebugType>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" Version="2.8.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -17,7 +22,6 @@
     <ProjectReference Include="..\CookingPapa.Api\CookingPapa.Api.csproj" />
     <ProjectReference Include="..\CookingPapa.Data\CookingPapa.Data.csproj" />
     <ProjectReference Include="..\CookingPapa.Domain\CookingPapa.Domain.csproj" />
-    <ProjectReference Include="..\Cookingpapa.web\Cookingpapa.web.csproj" />
   </ItemGroup>
 
 </Project>

@@ -15,7 +15,7 @@ namespace CookingPapa.Domain.RepositoryInterfaces
         /// Delete the entry at the given ID.
         /// </summary>
         /// <param name="id">The ID of the entity to be deleted.</param>
-        void Delete(int id);
+        Task<RecipeReview> Delete(int id);
 
         /// <summary>
         /// Eager-loads the entity at the given ID.
@@ -29,6 +29,6 @@ namespace CookingPapa.Domain.RepositoryInterfaces
         /// </summary>
         /// <param name="id">The Recipe ID to filter by.</param>
         /// <returns>Returns an IEnumerable populated with the appropriate entities.</returns>
-        Task<IEnumerable<RecipeReview>> GetByRecipeEager(int id);
+        Task<List<RecipeReview>> GetByRecipeEager(int id);
     }
 }

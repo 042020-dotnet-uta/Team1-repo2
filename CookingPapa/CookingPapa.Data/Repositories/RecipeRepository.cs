@@ -27,17 +27,19 @@ namespace CookingPapa.Data.Repositories
         /// Delete the entry at the given ID.
         /// </summary>
         /// <param name="id">The ID of the entity to be deleted.</param>
-        public async void Delete(int id)
+        public async Task<Recipe> Delete(int? id)
         {
             try
             {
                 var recipeR = await db.Recipes.FindAsync(id);
                 db.Recipes.Remove(recipeR);
+                return recipeR;
             }
             catch (Exception e)
             {
                 //Log exception details
                 Console.WriteLine($"Exception caught in RecipeRepository.Delete(): {e}");
+                return null;
             }
         }
 

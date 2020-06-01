@@ -32,7 +32,7 @@ namespace CookingPapa.Data
             RecipeMeasurements = new Repository<RecipeMeasurement>(_context);
             RecipeOrigins = new Repository<RecipeOrigin>(_context);
             RecipeReviews = new ReviewRepository(_context);
-            Users = new Repository<User>(_context);
+            Users = new UserRepository(_context);
         }
 
         #region Repository Containers
@@ -50,7 +50,7 @@ namespace CookingPapa.Data
 
         public IReviewRepository RecipeReviews { get; private set; }
 
-        public IRepository<User> Users { get; private set; }
+        public IUserRepository Users { get; private set; }
         #endregion
 
         /// <summary>
