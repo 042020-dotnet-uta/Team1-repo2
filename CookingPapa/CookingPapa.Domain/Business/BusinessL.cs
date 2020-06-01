@@ -90,9 +90,6 @@ namespace CookingPapa.Domain.Business
             }
             return newRecipesList;
         }
-<<<<<<< HEAD
-        public async Task<RecipeInformationVM> GetRecipeDetail(int id)
-=======
 
         public async Task<List<GetRecipesVM>> GetRecipes(string searchPattern)
         {
@@ -112,8 +109,7 @@ namespace CookingPapa.Domain.Business
             }
             return newRecipesList;
         }
-        public async Task<GetRecipeDetailVM> GetRecipeDetail(int id)
->>>>>>> cf7be2b5848efcd2b1db3a809a91e67ce3132ce3
+        public async Task<RecipeInformationVM> GetRecipeDetail(int id)
         {
             var RecipeIngredientInfos = await _unitOfWork.RecipeIngredientGroups.GetByRecipeEager(id);
             var RecipeReviewInfos = await _unitOfWork.RecipeReviews.GetByRecipeEager(id);
@@ -269,9 +265,6 @@ namespace CookingPapa.Domain.Business
             }
             return null;
         }
-
-
-
 
 
 
