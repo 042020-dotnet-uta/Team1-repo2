@@ -10,14 +10,15 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-- stage: RestoreNuGets
-  jobs:
-  - job:
-    steps:
-    - task: NuGetToolInstaller@1
-    - task: NuGetCommand@2
-      inputs:
-        restoreSolution: '$(solution)'
+
+#- stage: RestoreNuGets
+#  jobs:
+#  - job:
+#    steps:
+#    - task: NuGetToolInstaller@1
+#    - task: NuGetCommand@2
+#      inputs:
+#        restoreSolution: '$(solution)'
 
 - stage: BuildClient
   jobs:
