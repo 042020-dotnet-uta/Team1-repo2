@@ -79,13 +79,23 @@ stages:
   jobs:
     - job: 
       steps:
-#      - bash: |
-#          cd CookingPapaAngular
-#          npm install
-#          ./node_modules/@angular/cli/bin/ng build --prod
-#      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
-#        artifact: ClientRelease
-
+      - task: NodeAndNpmTool@1
+        inputs:
+          versionSpec: '12.x'
+          checkLatest: true
+#install angular cli
+      - task: Npm@1
+        displayName: 'Install Angular CLI'
+        inputs:
+          command: 'custom'
+          workingDir: 'CookingPapaAngular'
+          customCommand: 'install @angular/cli@latest -g'
+#install angular app dependencies
+      - task: Npm@1
+        displayName: 'install project dependencies'
+        inputs:
+          command: 'install'
+          workingDir: 'CookingPapaAngular'
 #build angular project
       - task: AngularCLI@0
         displayName: 'build angular project'
