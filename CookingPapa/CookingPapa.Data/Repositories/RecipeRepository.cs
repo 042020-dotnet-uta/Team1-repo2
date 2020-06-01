@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace CookingPapa.Data.Repositories
 {
@@ -88,6 +89,31 @@ namespace CookingPapa.Data.Repositories
             {
                 //Log exception details
                 Console.WriteLine($"Exception caught in RecipeRepository.Delete(): {e}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Recipe>> FindEager(Expression<Func<Recipe, bool>> predicate)
+        {
+            try
+            {
+                var recipes = await db.Recipes
+                .Include(ori => ori.RecipeOrigin)
+                .Include(user => user.User)
+                .Where(predicate)
+                .ToListAsync();
+
+                return recipes;
+            }
+            catch (Exception e)
+            {
+                //Log exception details
+                Console.WriteLine($"Exception caught in RecipeRepository.FindEager(): {e}");
                 return null;
             }
         }
