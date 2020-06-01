@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-//import { Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 //import {
 //   debounceTime, distinctUntilChanged, switchMap
 // } from 'rxjs/operators';
 
 import { RecipeSearchService } from '../recipe-search.service';
+import { RecipeVM } from '../Models/recipeVM';
+import { AbstractExtendedWebDriver } from 'protractor/built/browser';
 
 @Component({
   selector: 'app-search-recipe',
@@ -13,7 +15,7 @@ import { RecipeSearchService } from '../recipe-search.service';
   styleUrls: ['./search-recipe.component.css']
 })
 export class SearchRecipeComponent implements OnInit {
-  recipes: string[];
+  recipes: RecipeVM[];
   searchTerm: string;
 
   constructor(private location: Location,
@@ -28,7 +30,8 @@ export class SearchRecipeComponent implements OnInit {
       this.recipes = null;
     }
     else {
-      this.recipes = this.recipeSearchService.getRecipes(this.searchTerm);
+      this.recipeSearchService.getRecipes(this.searchTerm)
+        .then(recipes => this.recipes = recipes);
     }
   }
   ngOnInit(): void {

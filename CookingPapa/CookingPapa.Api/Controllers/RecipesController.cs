@@ -12,11 +12,13 @@ using CookingPapa.Domain;
 using Microsoft.Extensions.Logging;
 using SQLitePCL;
 using CookingPapa.Domain.Business;
+using Microsoft.AspNetCore.Cors;
 
 namespace CookingPapa.Api.Controllers
 {
     [Route("api/Recipes")]
     [ApiController]
+    [EnableCors()]
     public class RecipesController : ControllerBase
     {
         //This part should be changed to the repository or business logic 

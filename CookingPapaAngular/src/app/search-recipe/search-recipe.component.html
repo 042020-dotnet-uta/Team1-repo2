@@ -16,8 +16,8 @@
     
     <ul class="search-result">
       <li *ngFor="let recipe of recipes" >
-        <a routerLink="/detail/{{recipe}}">
-          {{recipe}}
+        <a routerLink="/detail/{{recipe.recipeId}}">
+          {{recipe.recipeName}}
         </a>
       </li>
     </ul>
