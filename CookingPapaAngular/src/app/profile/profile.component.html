@@ -1,0 +1,7 @@
+<pre *ngIf="auth.userProfile$ | async as profile">
+    <code>{{ profile | json}}</code>
+</pre>
+
+<button id="testButton" class="btn btn-primary btn-margin" (click)="getSessionScope()">
+    log session
+</button>

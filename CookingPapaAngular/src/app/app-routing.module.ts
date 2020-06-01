@@ -9,6 +9,7 @@ import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 import { SearchRecipeComponent } from './search-recipe/search-recipe.component';
 import { ViewCookbookComponent } from './view-cookbook/view-cookbook.component';
 import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 const routes: Routes = [
@@ -21,7 +22,7 @@ const routes: Routes = [
     {path:'create-recipe', component:CreateRecipeComponent},
     {path:'search-recipe', component:SearchRecipeComponent},
     {path:'view-cookbook', component:ViewCookbookComponent},
-
+    {path: 'profile', component:ProfileComponent}
 
   ];
   
