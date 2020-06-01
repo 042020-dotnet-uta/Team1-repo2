@@ -77,7 +77,7 @@ namespace CookingPapa.Data.Repositories
             try
             {
                 var cbs = await db.CookBook
-                .Include(rec => rec.Recipe)
+                .Include(rec => rec.Recipe).ThenInclude(x=>x.RecipeOrigin)
                 .Include(user => user.User)
                 .Where(user => user.User.Id == id)
                 .ToListAsync();

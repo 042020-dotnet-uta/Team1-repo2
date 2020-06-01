@@ -1,0 +1,158 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: 'CookingPapa/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+stages:
+
+- stage: RestoreNuGets
+  jobs:
+  - job:
+    steps:
+     - task: DotNetCoreCLI@2
+       inputs:
+         command: 'restore'
+         projects: 'CookingPapa/*.sln'
+         feedsToUse: 'select'
+         
+- stage: BuildApi
+  jobs:
+  - job:
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: 'CookingPapa/*.sln'
+
+- stage: BuildClient
+  jobs:
+    - job: 
+      steps:
+#      - bash: |
+#          cd CookingPapaAngular
+#          npm install
+#          ./node_modules/@angular/cli/bin/ng build --prod
+#      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist
+#        artifact: ClientRelease
+      - task: NodeAndNpmTool@1
+        inputs:
+          versionSpec: '12.x'
+          checkLatest: true
+#install angular cli
+      - task: Npm@1
+        displayName: 'Install Angular CLI'
+        inputs:
+          command: 'custom'
+          workingDir: 'CookingPapaAngular'
+          customCommand: 'install @angular/cli@latest -g'
+#install angular app dependencies
+      - task: Npm@1
+        displayName: 'install project dependencies'
+        inputs:
+          command: 'install'
+          workingDir: 'CookingPapaAngular'
+#build angular project
+      - task: AngularCLI@0
+        displayName: 'build angular project'
+        inputs:
+          command: 'custom'
+          project: 'CookingPapaAngular'
+          custom: 'build --prod'
+          DisableAnalytics: false
+      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
+        artifact: ClientRelease
+
+- stage: DeployClient
+  jobs:
+  - job: deploy
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'ClientRelease'
+        path: $(Build.SourcesDirectory)/release
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Free Trial(4)(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
+        appType: 'webApp'
+        WebAppName: 'CookingPapaWeb'
+        packageForLinux: '$(Build.SourcesDirectory)/release'
+        enableCustomDeployment: true
+        DeploymentType: 'webDeploy'
+        TakeAppOfflineFlag: false
+        RemoveAdditionalFilesFlag: true
+
+- stage: Testing
+  jobs:
+  - job:
+    steps:
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'Team1P2SonarCloud'
+        organization: 'team1-p2'
+        scannerMode: 'MSBuild'
+        projectKey: 'd8704099b6aad54260ffbca1abfd5ca6a5190d46'
+        projectName: 'Team1-P2'
+        extraProperties: |
+          sonar.exclusions=**/obj/**,**/*.dll
+          sonar.branch.name=$(Build.SourceBranchName)
+          sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+          sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: 'CookingPapa/*.sln'
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet testing'
+      inputs:
+        command: 'test'
+        arguments: '--configuration $(BuildConfiguration)
+          /p:CollectCoverage=true 
+          /p:CoverletOutputFormat=opencover 
+          /p:Coverletoutput=$(Build.SourcesDirectory)/TestResults/Coverage 
+          --collect "Codecoverage"
+          --logger trx'
+        projects: CookingPapa/**/*Test.csproj'
+        nobuild: true
+    - task: SonarCloudAnalyze@1
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish Code Coverage'
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(Build.SourcesDirectory)/**/*.xml'
+        reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
+    - task: SonarCloudAnalyze@1
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'
+        
+- stage: DeployApi
+  jobs:
+  - job: 
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: 
+          --configuration $(buildConfiguration)
+          --output $(Build.ArtifactStagingDirectory)/app
+        modifyOutputPath: false
+        zipAfterPublish: false
+    - publish: $(Build.ArtifactStagingDirectory)/app
+      artifact: app
+      displayName: artifact publish app
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Free Trial(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
+        appType: 'webApp'
+        WebAppName: 'CookingPapaApi'
+        packageForLinux: '$(Build.ArtifactStagingDirectory)/app'

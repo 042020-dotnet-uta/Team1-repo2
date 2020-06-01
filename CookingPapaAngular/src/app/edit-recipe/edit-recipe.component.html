@@ -1,0 +1,42 @@
+
+<h1>Edit Recipe</h1>
+<hr />
+<div class="row">
+  <div class="col-md-4">
+    <form>
+      <div class="text-danger"></div>
+      <div class="form-group">
+        <label class="control-label text-danger">Recipe Name: </label>
+        <input class="form-control" />
+      </div>
+
+      <div class="form-group">
+        Location: <select class="custom-select-sm form-control">
+          <option value="">Origin</option>
+        </select>
+        <button class="btn btn-light btn-outline-dark">Add Origin</button>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label text-danger">Cook Time:  </label>
+        <input type="number" class="form-control" /> Min
+      </div>
+
+      <div class="form-group">
+        <label class="control-label text-danger">Ingredients: </label>
+        <input class="form-control" />
+        <button class="btn btn-light btn-outline-dark">Add Ingredient</button>
+      </div>
+
+
+      <div class="form-group">
+        <label class="control-label text-danger">Instructions: </label>
+        <textarea id="myTextArea" rows="3" cols="80">
+          Your text here
+        </textarea>
+        <button class="btn btn-light btn-outline-dark">Update</button>
+      </div>
+    </form>
+    <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
+  </div>
+</div>
