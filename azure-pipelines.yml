@@ -11,14 +11,24 @@ variables:
 
 stages:
 
-#- stage: RestoreNuGets
-#  jobs:
-#  - job:
-#    steps:
-#    - task: NuGetToolInstaller@1
-#    - task: NuGetCommand@2
-#      inputs:
-#        restoreSolution: '$(solution)'
+- stage: RestoreNuGets
+  jobs:
+  - job:
+    steps:
+     - task: DotNetCoreCLI@2
+       inputs:
+         command: 'restore'
+         projects: 'CookingPapa/*.sln'
+         feedsToUse: 'select'
+         
+- stage: BuildApi
+  jobs:
+  - job:
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: 'CookingPapa/*.sln'
 
 - stage: BuildClient
   jobs:
@@ -55,12 +65,6 @@ stages:
           project: 'CookingPapaAngular'
           custom: 'build --prod'
           DisableAnalytics: false
-#      - task: AngularCLI@0
-#        inputs:
-#          command: 'build'
-#          project: 'CookingPapaAngular'
-#          arguments: '--prod'
-#          DisableAnalytics: false
       - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
         artifact: ClientRelease
 
@@ -84,15 +88,6 @@ stages:
         DeploymentType: 'webDeploy'
         TakeAppOfflineFlag: false
         RemoveAdditionalFilesFlag: true
-
-- stage: BuildApi
-  jobs:
-  - job:
-    steps:
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'build'
-        projects: 'CookingPapa/*.sln'
 
 - stage: Testing
   jobs:
