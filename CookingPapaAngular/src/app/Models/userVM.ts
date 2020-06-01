@@ -1,7 +1,7 @@
 //For post/put UsersController
 export interface UserVM{
-    UserId: number | null;
+    Id: number | null;
     Email: string;
-    Username: string;
-    Password: string;
+
+    Username: string;      
 }

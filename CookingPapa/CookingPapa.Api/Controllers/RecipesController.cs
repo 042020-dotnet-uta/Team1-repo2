@@ -44,7 +44,7 @@ namespace CookingPapa.Api.Controllers
 
         // GET: api/Recipes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetRecipeDetailVM>> GetRecipe(int id)
+        public async Task<ActionResult<RecipeInformationVM>> GetRecipe(int id)
         {
             //the list of recipeVM we are searching from need to include all the information
             //including origin, cook time, ingredient and reviews
@@ -60,7 +60,7 @@ namespace CookingPapa.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
-        public async Task<GetRecipeDetailVM> PutRecipe(PostRecipeVM recipeVM)
+        public async Task<RecipeInformationVM> PutRecipe(PostRecipeVM recipeVM)
         {
             //for editting a recipeVM angular will send over a recipeVM object with 
             //editted informations. Need to remember to add functionality to add and remove
