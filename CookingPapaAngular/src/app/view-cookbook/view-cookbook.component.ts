@@ -15,5 +15,4 @@ export class ViewCookbookComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-
 }

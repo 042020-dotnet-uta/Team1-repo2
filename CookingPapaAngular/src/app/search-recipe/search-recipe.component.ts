@@ -36,5 +36,4 @@ export class SearchRecipeComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-
 }

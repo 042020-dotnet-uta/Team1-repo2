@@ -90,7 +90,8 @@ namespace CookingPapa.Data.Repositories
             try
             {
                 var rigs = await db.RecipeIngredientGroups
-                .Include(rec => rec.Recipe)
+                .Include(rec => rec.Recipe).ThenInclude(x => x.RecipeOrigin)
+                .Include(rec => rec.Recipe).ThenInclude(x => x.User)
                 .Include(ing => ing.RecipeIngredient)
                 .Include(mu => mu.RecipeMeasurement)
                 .Where(rec => rec.Recipe.Id == id)

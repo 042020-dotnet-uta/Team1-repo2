@@ -6,7 +6,7 @@
       <h3>
         Show the name of recipe here      <button class="btn btn-light btn-outline-dark">Add to Cookbook(only visible for user)</button>
       </h3>
-      <p><span>Origin</span>   <span>Cook Time</span></p>
+      <p><span>Origin</span>   <span>---Cook Time</span></p>
     </div>
     <div>
       <!--<p ng-repeat="(key, value) in controller.greeting.custinfo">{key}}: {value}}</p>-->
@@ -22,4 +22,8 @@
   <p>This section should display the rating and comments</p>
 </div>
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
-
+<button class="btn btn-dark" (click)="getRecipe(4)">Ask the Oracle</button>
+<div *ngIf="test">
+<div *ngFor="let item of test2">{{item.ingredientName}}---{{item.measurementName}}---{{item.ingredientAmount}}</div>
+<div>{{test.recipeName}}</div>
+</div>
