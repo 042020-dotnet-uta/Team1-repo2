@@ -12,6 +12,7 @@ using CookingPapa.Domain;
 using Microsoft.Extensions.Logging;
 using SQLitePCL;
 using CookingPapa.Domain.Business;
+using Microsoft.AspNetCore.Cors;
 
 namespace CookingPapa.Api.Controllers
 {
