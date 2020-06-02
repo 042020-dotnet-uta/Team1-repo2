@@ -15,7 +15,8 @@ export class CookbookService {
     public auth: AuthService) { }
       currentUser;
       ID : number;
-      cookbookUrl: string = 'http://localhost:64480/api/Cookbooks/';
+      cookbookUrl: string = environment.cookingPapaUrl + 'Cookbooks/'; //'http://localhost:64480/api/Cookbooks/';
+      
   ngOnInit(): void {
     this.auth.userProfile$.subscribe(data => {
       this.currentUser = data;
@@ -25,7 +26,7 @@ export class CookbookService {
   
   getCookbookRecipes() {
     //Temp for testing
-    this.ID = 1;
+    //this.ID = 1;
      return this.http.get<CookbookResponse[]>(this.cookbookUrl + this.ID).toPromise()
        .then(recipe => recipe);
   }
