@@ -74,24 +74,23 @@ namespace CookingPapa.Data.Repositories
         /// </summary>
         /// <param name="id">The Recipe ID to filter by.</param>
         /// <returns>Returns an IEnumerable populated with the appropriate entities.</returns>
-        public async Task<List<RecipeReview>> GetByRecipeEager(int id)
+        public async Task<IEnumerable<RecipeReview>> GetByRecipeEager(int id)
         {
-            try
-            {
+/*            try
+            {*/
                 var revs = await db.RecipeReviews
                 .Include(rec => rec.Recipe)
                 .Include(user => user.User)
-                .Where(rec => rec.Recipe.Id == id)
-                .ToListAsync();
-
+                .Where(rec => rec.Recipe.Id == id).ToListAsync();
+                
                 return revs;
-            }
+/*            }
             catch (Exception e)
             {
                 //Log exception details
                 Console.WriteLine($"Exception caught in ReviewRepository.GetAllEager(): {e}");
                 return null;
-            }
+            }*/
         }
 
         //add search by name?
