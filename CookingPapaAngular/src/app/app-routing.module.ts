@@ -18,11 +18,11 @@ const routes: Routes = [
     {path:'login', component:LoginComponent},
     {path:'register', component:RegisterComponent},
     {path:'user-access', component:UserAccessComponent},
-    {path:'edit-recipe', component:EditRecipeComponent, canActivate: [AuthGuard]},
+    {path:'edit-recipe', component:EditRecipeComponent},      //, canActivate: [AuthGuard]},
     {path:'view-recipe/:id', component:ViewRecipeComponent},
-    {path:'create-recipe', component:CreateRecipeComponent, canActivate: [AuthGuard]},
+    {path:'create-recipe', component:CreateRecipeComponent},  //, canActivate: [AuthGuard]},
     {path:'search-recipe', component:SearchRecipeComponent},
-    {path:'view-cookbook', component:ViewCookbookComponent, canActivate: [AuthGuard]},
+    {path:'view-cookbook', component:ViewCookbookComponent},  //, canActivate: [AuthGuard]},
     {path: 'profile', component:ProfileComponent, canActivate: [AuthGuard]}
 
   ];
