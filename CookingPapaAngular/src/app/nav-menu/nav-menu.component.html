@@ -26,32 +26,29 @@
             </li>
             
             <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
+              <a class="nav-link text-dark" (click)="auth.login()" [routerLink]="['/']" *ngIf="!auth.loggedIn">Log In/Sign Up</a>
             </li>
-            
+
             <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/register']">Register</a>
+              <a class="nav-link text-dark" (click)="auth.logout()" [routerLink]="['/']" *ngIf="auth.loggedIn">Log Out</a>
             </li>
-            
+          
             <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/user-access']">User Access</a>
+              <a class="nav-link text-dark" [routerLink]="['/search-recipe']">Search Recipe</a>
             </li>
-            
-            <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/create-recipe']">Create Recipe</a>
-            </li>
-            
+
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/view-recipe']">View Recipe</a>
             </li>
             
             <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/create-recipe']">Create Recipe</a>
+            </li>
+                        
+            <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/edit-recipe']">Edit Recipe</a>
             </li>
             
-            <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/search-recipe']">Search Recipe</a>
-            </li>
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/view-cookbook']">View cookbook</a>
             </li>
@@ -63,7 +60,5 @@
         </div>
       </div>
     </nav>
-    <button (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</button>
-    <button (click)="auth.logout()" *ngIf="auth.loggedIn">Log Out</button>
   </header>
   
