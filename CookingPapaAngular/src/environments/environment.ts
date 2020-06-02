@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  cookingPapaUrl:'https://cookingpapa.azurewebsites.net/api',
+  //cookingPapaUrl:'https://cookingpapa.azurewebsites.net/api'
   recipesUrl: 'http://localhost:64480/api/Recipes'
 };
 
