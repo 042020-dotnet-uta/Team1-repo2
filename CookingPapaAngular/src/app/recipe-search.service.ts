@@ -9,23 +9,11 @@ import { RecipeVM } from './Models/recipeVM';
   providedIn: 'root'
 })
 export class RecipeSearchService {
-  /*
-     recipes : string[] = [
-      'Good Food',
-      'Gross Food',
-      'Some Food',
-      'Some More Food',
-      'Eat it Damnit',
-      'Sure why not'
-    ];
-    */
   constructor(private http: HttpClient) { }
 
   getRecipes(searchTerm: string) {
-    const url : string = 'https://cors-anywhere.herokuapp.com/' + environment.recipesUrl;
-
-     return this.http.get<RecipeVM[]>(environment.recipesUrl).toPromise()
+    const recipesUrl = 'http://localhost:64480/api/Recipes';
+     return this.http.get<RecipeVM[]>(recipesUrl + "?searchPattern="+searchTerm).toPromise()
        .then(recipe => recipe);
-    //return this.recipes;
   }
 }

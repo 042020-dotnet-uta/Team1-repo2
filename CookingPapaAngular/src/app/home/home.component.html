@@ -1,1 +1,11 @@
-<h1>testing home page</h1>
+<h1 *ngIf="!auth.loggedIn">Welcome to the Cooking Papa Web!</h1>
+<h1 *ngIf="auth.loggedIn">Welcome {{username}}!</h1>
+
+<body *ngIf="!auth.loggedIn">
+    Without signing in, you are limited to searching and viewing recipes. <br>
+    Please log in for access to more or continue on to look at the various recipes we have!
+</body>
+
+<body *ngIf="auth.loggedIn">
+    You now have full access to the site, see what's cooking!
+</body>
