@@ -1,5 +1,5 @@
 export interface RecipeIngredientGroupVM{
-    ingredientName:string;
-    measurementName:string;
-    ingredientAmount:number;
+    IngredientName:string;
+    MeasurementName:string;
+    IngredientAmount:number;
 }
