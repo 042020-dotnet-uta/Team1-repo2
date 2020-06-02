@@ -19,7 +19,7 @@ const routes: Routes = [
     {path:'register', component:RegisterComponent},
     {path:'user-access', component:UserAccessComponent},
     {path:'edit-recipe', component:EditRecipeComponent, canActivate: [AuthGuard]},
-    {path:'view-recipe', component:ViewRecipeComponent},
+    {path:'view-recipe/:id', component:ViewRecipeComponent},
     {path:'create-recipe', component:CreateRecipeComponent, canActivate: [AuthGuard]},
     {path:'search-recipe', component:SearchRecipeComponent},
     {path:'view-cookbook', component:ViewCookbookComponent, canActivate: [AuthGuard]},

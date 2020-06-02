@@ -12,6 +12,6 @@ export class RecipeDetailService {
   constructor(private http: HttpClient) { }
 
 getRecipe(x:number){
-  return this.http.get<RecipeInformationsVM>(`https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/recipes/4`)
+  return this.http.get<RecipeInformationsVM>(`https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/recipes/${x}`)
 }
 }
