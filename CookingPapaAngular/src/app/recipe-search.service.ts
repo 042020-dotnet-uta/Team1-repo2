@@ -22,9 +22,8 @@ export class RecipeSearchService {
   constructor(private http: HttpClient) { }
 
   getRecipes(searchTerm: string) {
-    const url : string = 'https://cors-anywhere.herokuapp.com/' + environment.recipesUrl;
-
-     return this.http.get<RecipeVM[]>(environment.recipesUrl).toPromise()
+    const recipesUrl = 'http://localhost:64480/api/Recipes';
+     return this.http.get<RecipeVM[]>(recipesUrl).toPromise()
        .then(recipe => recipe);
     //return this.recipes;
   }
