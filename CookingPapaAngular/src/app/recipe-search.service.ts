@@ -22,8 +22,8 @@ export class RecipeSearchService {
   constructor(private http: HttpClient) { }
 
   getRecipes(searchTerm: string) {
-
-     return this.http.get<RecipeVM[]>(environment.recipesUrl).toPromise()
+    const recipesUrl = 'http://localhost:64480/api/Recipes';
+     return this.http.get<RecipeVM[]>(recipesUrl).toPromise()
        .then(recipe => recipe);
     //return this.recipes;
   }
