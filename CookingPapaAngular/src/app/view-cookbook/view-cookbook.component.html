@@ -1,13 +1,13 @@
 <h1>My Cookbook</h1>
 <hr />
 <div *ngIf="recipes">
-  <ul class="search-result">
+  <ul class="recipes">
    <li *ngFor="let recipe of recipes" >
      <a routerLink="/view-recipe/{{recipe.recipeId}}">
        {{recipe.recipeName}}
      </a>
-     <button class="delete" title="deleteRecipe"
-            (click)="delete(recipe)">Remove</button>
+     <button class="delete" title="Remove Recipe"
+            (click)="delete(recipe)">x</button>
    </li>
  </ul>
  </div>
