@@ -9,6 +9,8 @@ import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 import { SearchRecipeComponent } from './search-recipe/search-recipe.component';
 import { ViewCookbookComponent } from './view-cookbook/view-cookbook.component';
 import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AuthGuard } from './auth.guard';
 
 
 const routes: Routes = [
@@ -16,12 +18,12 @@ const routes: Routes = [
     {path:'login', component:LoginComponent},
     {path:'register', component:RegisterComponent},
     {path:'user-access', component:UserAccessComponent},
-    {path:'edit-recipe', component:EditRecipeComponent},
-    {path:'view-recipe', component:ViewRecipeComponent},
-    {path:'create-recipe', component:CreateRecipeComponent},
+    {path:'edit-recipe', component:EditRecipeComponent},      //, canActivate: [AuthGuard]},
+    {path:'view-recipe/:id', component:ViewRecipeComponent},
+    {path:'create-recipe', component:CreateRecipeComponent},  //, canActivate: [AuthGuard]},
     {path:'search-recipe', component:SearchRecipeComponent},
-    {path:'view-cookbook', component:ViewCookbookComponent},
-
+    {path:'view-cookbook', component:ViewCookbookComponent},  //, canActivate: [AuthGuard]},
+    {path: 'profile', component:ProfileComponent, canActivate: [AuthGuard]}
 
   ];
   

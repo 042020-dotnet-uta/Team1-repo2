@@ -36,6 +36,15 @@ namespace CookingPapa.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBusinessL, BusinessL>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowAnyOrigin",
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin();
+                                  });
+            });
+
             services.AddLogging(logger =>
             {
                 Host.CreateDefaultBuilder()
@@ -58,6 +67,8 @@ namespace CookingPapa.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AllowAnyOrigin");
 
             app.UseAuthorization();
 

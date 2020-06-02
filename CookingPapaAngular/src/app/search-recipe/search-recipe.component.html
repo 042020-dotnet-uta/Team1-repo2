@@ -1,12 +1,27 @@
 <h1>Search Recipe</h1>
 <hr />
-<div>
-  <label>Recipe: </label><input />
-</div>
-<div>
-  <!--<p ng-repeat="(key, value) in controller.greeting.custinfo">{key}}: {value}}</p>-->
-  <p>displays list of recipes with ng-repeat.</p>
-</div>
+<div id="search-component">
+  <div>
+    <label>Recipe Name:
+      <input #searchTermTb />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="search(searchTermTb.value); searchTermTb.value=''">
+      Search
+    </button>
+  </div>
+
+  <div *ngIf="recipes">
+     <ul class="search-result">
+      <li *ngFor="let recipe of recipes" >
+        <a routerLink="/view-recipe/{{recipe.recipeId}}">
+          {{recipe.recipeName}}
+        </a>
+      </li>
+    </ul>
+  
+  </div>
+
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
 
 

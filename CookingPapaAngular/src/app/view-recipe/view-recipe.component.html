@@ -1,25 +1,38 @@
 <div style="border: 1px solid red">view-recipe Component</div>
+<button class="btn btn-dark" (click)="getRecipe()">Ask the Oracle</button>
+<div *ngIf="test">
+
 <div>
   <!--this div box should be on the left side-->
   <div>
     <div>
-      <h3>
-        Show the name of recipe here      <button class="btn btn-light btn-outline-dark">Add to Cookbook(only visible for user)</button>
-      </h3>
-      <p><span>Origin</span>   <span>Cook Time</span></p>
+      <div>
+        <h1>{{test.recipeName}}<button class="btn btn-sm btn-light btn-outline-dark">Add to Cookbook(only visible for user)</button></h1>
     </div>
-    <div>
-      <!--<p ng-repeat="(key, value) in controller.greeting.custinfo">{key}}: {value}}</p>-->
-      <p>for each to display the ingredients, amounts and what not</p>
+      <div>
+        <h5>Recipe Cook Time: {{test.recipeCooktime}}---
+        Recipe Origin:{{test.recipeOrigin}} </h5>        
+      </div>
     </div>
+
+      <div class="border border-dark" *ngFor="let item of test2">
+        {{item.ingredientName}}---{{item.measurementName}}---{{item.ingredientAmount}}
+      </div>
+
   </div>
-  <!--this div box should be on the right side-->
+
   <div>
-    <p>Display the instructions here</p>
+    <h2>Instructions:</h2>
+    {{test.recipeDescription}}<br/>
   </div>
+
 </div>
-<div>
-  <p>This section should display the rating and comments</p>
+
+<h2>Comments</h2>
+<div class="border border-dark" *ngFor="let review of test3">
+  {{review.username}}----Rating:{{review.recipeReviewRating}}<br/>
+  Comments:<br/>
+  {{review.recipeReviewComment}}
 </div>
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
-
+</div>

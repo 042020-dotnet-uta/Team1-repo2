@@ -90,19 +90,70 @@ namespace CookingPapa.Domain.Business
             }
             return newRecipesList;
         }
-        public async Task<GetRecipeDetailVM> GetRecipeDetail(int id)
+
+        public async Task<List<GetRecipesVM>> GetRecipes(string searchPattern)
         {
-            var RecipeIngredientInfos = await _unitOfWork.RecipeIngredientGroups.GetEager(id);
-            var RecipeReviewInfos = await _unitOfWork.RecipeReviews.GetByRecipeEager(id);
-            if(RecipeIngredientInfos == null)
+            var recipes = await _unitOfWork.Recipes.FindEager(r => r.RecipeName.Contains(searchPattern));
+            List<GetRecipesVM> newRecipesList = new List<GetRecipesVM>();
+            foreach (var x in recipes)
             {
-                return null;
+                newRecipesList.Add(new GetRecipesVM()
+                {
+                    RecipeId = x.Id,
+                    UserId = x.User.Id,
+                    UserName = x.User.Username,
+                    RecipeName = x.RecipeName,
+                    RecipeOrigin = x.RecipeOrigin.RecipeOriginName,
+                    RecipeCookTime = x.RecipeCookTime
+                });
             }
-            GetRecipeDetailVM RecipeDetails = new GetRecipeDetailVM()
+            return newRecipesList;
+        }
+        public async Task<RecipeInformationVM> GetRecipeDetail(int id)
+        {
+            var RecipeIngredientInfos = await _unitOfWork.RecipeIngredientGroups.GetByRecipeEager(id);
+            var RecipeReviewInfos = await _unitOfWork.RecipeReviews.GetByRecipeEager(id);
+            double averageRating=0;
+            List<RecipeIngredientGroupVM> recipeIngredientGroupVMs = new List<RecipeIngredientGroupVM>();
+            List<RecipeInformationReviewVM> recipeInformationReviewVMs = new List<RecipeInformationReviewVM>();
+            foreach (var x in RecipeIngredientInfos)
             {
-                RecipeInfos = RecipeIngredientInfos,
-                RecipeReviews = RecipeReviewInfos
-            };           
+                recipeIngredientGroupVMs.Add(
+                    new RecipeIngredientGroupVM()
+                    {
+                        IngredientName = x.RecipeIngredient.RecipeIngredientName,
+                        MeasurementName = x.RecipeMeasurement.RecipeMeasurementName,
+                        IngredientAmount = x.RecipeIngredientAmount
+                    });
+            };
+            if (RecipeReviewInfos.Any())
+            {
+
+                foreach (var y in RecipeReviewInfos)
+                {
+                    recipeInformationReviewVMs.Add(
+                        new RecipeInformationReviewVM()
+                        {
+                            Username = y.User.Username,
+                            RecipeReviewComment = y.RecipeReviewComment,
+                            RecipeReviewRating = y.RecipeReviewRating
+                        });
+                };
+                averageRating = Math.Round(recipeInformationReviewVMs.Average(x => x.RecipeReviewRating),2);
+            }
+            RecipeInformationVM RecipeDetails = new RecipeInformationVM()
+            {
+                RecipeId = id,
+                RecipeName = RecipeIngredientInfos.First().Recipe.RecipeName,
+                RecipeOrigin = RecipeIngredientInfos.First().Recipe.RecipeOrigin.RecipeOriginName,
+                RecipeCooktime = RecipeIngredientInfos.First().Recipe.RecipeCookTime,
+                RecipeDescription = RecipeIngredientInfos.First().Recipe.RecipeInstruction,
+                RecipeCreator = RecipeIngredientInfos.First().Recipe.User.Username,
+                RecipeAverageRating = averageRating,
+                RecipeIngredientGroupVMs = recipeIngredientGroupVMs,
+                recipeReviewVMs = recipeInformationReviewVMs
+            };
+
             return RecipeDetails;
         }
         public async Task<Recipe> PostRecipe(PostRecipeVM recipeVM)
@@ -152,7 +203,7 @@ namespace CookingPapa.Domain.Business
             //var newRecipe = _unitOfWork.Recipes.GetAll().Result.Last();
             return recipe;
         }
-        public async Task<GetRecipeDetailVM> PutRecipe(PostRecipeVM recipeVM)
+        public async Task<RecipeInformationVM> PutRecipe(PostRecipeVM recipeVM)
         {
             //var oldRecipe = await _unitOfWork.RecipeIngredientGroups.GetEager(recipeVM.RecipeId);
             var updateRecipe = await PostRecipe(recipeVM);
@@ -214,9 +265,6 @@ namespace CookingPapa.Domain.Business
             }
             return null;
         }
-
-
-
 
 
 

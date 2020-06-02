@@ -12,9 +12,14 @@ namespace CookingPapa.Domain.Business
         Task<Cookbook> PostCookbook(PostCookbookVM cookbook);
         Task<List<GetCookbookVM>> GetCookbook(int id);
         Task<List<GetRecipesVM>> GetRecipes();
-        Task<GetRecipeDetailVM> GetRecipeDetail(int id);
+
+        Task<RecipeInformationVM> GetRecipeDetail(int id);
+
+
+        Task<List<GetRecipesVM>> GetRecipes(string searchPattern);
+
         Task<Recipe> PostRecipe(PostRecipeVM recipeVM);
-        Task<GetRecipeDetailVM> PutRecipe(PostRecipeVM recipeVM);
+        Task<RecipeInformationVM> PutRecipe(PostRecipeVM recipeVM);
         Task<Recipe> DeleteRecipe(int id);
         Task<InformationVM> GetInformation();
         Task<RecipeReview> PutRecipeReview(RecipeReviewVM recipeReview);
