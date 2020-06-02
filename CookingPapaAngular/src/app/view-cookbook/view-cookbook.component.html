@@ -4,6 +4,17 @@
   <!--<p ng-repeat="(key, value) in controller.greeting.custinfo">{key}}: {value}}</p>-->
   <p>displays list of recipes under cook book with ng-repeat.</p>
 </div>
+
+<div *ngIf="recipes">
+  <ul class="search-result">
+   <li *ngFor="let recipe of recipes" >
+     <a routerLink="/view-recipe/{{recipe.recipeId}}">
+       {{recipe.recipeName}}
+     </a>
+   </li>
+ </ul>
+ </div>
+ 
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
 
 
