@@ -6,7 +6,7 @@
       <input #searchTermTb />
     </label>
     <!-- (click) passes input value to add() and then clears the input -->
-    <button (click)="search(searchTermTb.value); searchTermTb.value=''">
+    <button class="btn btn-light btn-outline-dark" (click)="search(searchTermTb.value); searchTermTb.value=''">
       Search
     </button>
   </div>
