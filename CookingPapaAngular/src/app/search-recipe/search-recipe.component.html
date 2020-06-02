@@ -12,9 +12,7 @@
   </div>
 
   <div *ngIf="recipes">
-    <h2>Search = {{searchTerm}}</h2>
-    
-    <ul class="search-result">
+     <ul class="search-result">
       <li *ngFor="let recipe of recipes" >
         <a routerLink="/view-recipe/{{recipe.recipeId}}">
           {{recipe.recipeName}}
