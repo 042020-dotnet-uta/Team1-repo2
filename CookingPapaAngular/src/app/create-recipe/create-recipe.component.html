@@ -4,10 +4,9 @@
 <div class="row">
   <div class="col-md-4">
     <form>
-      <div class="text-danger"></div>
       <div class="form-group">
         <label class="control-label text-danger">Recipe Name: </label>
-        <input class="form-control" />
+        <input type="text" class="form-control" id="recipeName" required />
       </div>
 
       <div class="form-group">
@@ -19,13 +18,26 @@
 
       <div class="form-group">
         <label class="control-label text-danger">Cook Time:  </label>
-        <input type="number" class="form-control" /> Min
+        <input type="number" class="form-control" id="CookTime" required/> Min
       </div>
 
       <div class="form-group">
-        <label class="control-label text-danger">Ingredients: </label>
-        <input class="form-control" />
+        <input id="addIngred" class="form-control" /><button class="btn btn-light btn-outline-dark">Add New Ingredient</button>
+        <input id="addMeasure" class="form-control" /><button class="btn btn-light btn-outline-dark">Add New Measurement</button>
+        <label class="control-label text-danger">Ingredient: </label>
+        <select id="" class="custom-select-sm form-control">
+          <option value="">Ingredients</option>
+        </select>
+        <label class="control-label text-danger">Amount: </label>
+        <input id="selectedAmount" class="form-control" />
+        <label class="control-label text-danger">Measurement Unit: </label>
+        <select id="selectedMeasure" class="custom-select-sm form-control">
+          <option value="">Measurements</option>
+        </select>
         <button class="btn btn-light btn-outline-dark">Add Ingredient</button>
+      </div>
+      <div class="form-group">
+        Display added ingredient here.
       </div>
 
 
@@ -34,7 +46,7 @@
         <textarea id="myTextArea" rows="3" cols="80">
           Your text here
         </textarea>
-        <button class="btn btn-light btn-outline-dark">Create</button>
+        <button type="submit" class="btn btn-light btn-outline-dark">Create</button>
       </div>
     </form>
     <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
