@@ -19,7 +19,7 @@
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-3)" *ngIf="currentPage > 3">{{currentPage-3}}</a> &nbsp;
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-2)" *ngIf="currentPage > 2">{{currentPage-2}}</a> &nbsp;
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-1)" *ngIf="currentPage > 1">{{currentPage-1}}</a> &nbsp;
-        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage)">{{currentPage}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage)"><strong><u>{{currentPage}}</u></strong></a> &nbsp;
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+1)" *ngIf="maxPage > currentPage">{{currentPage+1}}</a> &nbsp;
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+2)" *ngIf="maxPage-1 > currentPage">{{currentPage+2}}</a> &nbsp;
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+3)" *ngIf="maxPage-2 > currentPage">{{currentPage+3}}</a> &nbsp;
@@ -56,7 +56,7 @@
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-3)" *ngIf="currentPage > 3">{{currentPage-3}}</a> &nbsp;
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-2)" *ngIf="currentPage > 2">{{currentPage-2}}</a> &nbsp;
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-1)" *ngIf="currentPage > 1">{{currentPage-1}}</a> &nbsp;
-        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage)">{{currentPage}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage)"> <strong><u>{{currentPage}}</u></strong></a> &nbsp;
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+1)" *ngIf="maxPage > currentPage">{{currentPage+1}}</a> &nbsp;
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+2)" *ngIf="maxPage-1 > currentPage">{{currentPage+2}}</a> &nbsp;
         <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+3)" *ngIf="maxPage-2 > currentPage">{{currentPage+3}}</a> &nbsp;
