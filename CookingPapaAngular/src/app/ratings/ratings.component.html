@@ -1,6 +1,17 @@
 <hr />
 <div>
 <p>Rating goes here</p>
+<h1>  
+    {{title}}   
+  </h1>  
+  <br>  
+  <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">  
+    <!--<i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>-->
+    <i *ngIf="item" class="fa fa-star-o"></i>    
+    <i *ngIf="!item" class="fa fa-star"></i>   
+   </a>  
+  <br>  
+  Rating :- {{rating}} stars  
 </div>
 
 <div>
