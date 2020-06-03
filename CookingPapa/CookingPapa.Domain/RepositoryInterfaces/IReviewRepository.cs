@@ -31,5 +31,6 @@ namespace CookingPapa.Domain.RepositoryInterfaces
         /// <returns>Returns an IEnumerable populated with the appropriate entities.</returns>
         Task<IEnumerable<RecipeReview>> GetByRecipeEager(int id);
         Task<IEnumerable<RecipeReview>> UpdateReviews(int recipeId, int updatedRecipeId);
+        Task<IEnumerable<RecipeReview>> DeleteAll(int id);
     }
 }
