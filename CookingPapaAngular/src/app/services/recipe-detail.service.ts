@@ -20,10 +20,10 @@ getRecipe(recipeId:number){
   return this.http.get<RecipeInformationsVM>(environment.cookingPapaUrl /*this.JDLocalUrl*/ + `recipes/${recipeId}`)
 }
 getIngOriMeaInformation(){
-  return this.http.get<GetIngOriMeaInformation>(environment.cookingPapaUrl /*this.JDLocalUrl*/ + `Information`)
+  return this.http.get<GetIngOriMeaInformation>(/*environment.cookingPapaUrl*/ this.JDLocalUrl + `Information`)
 }
 postRecipe(newRecipe:PostRecipeVM){
-  return this.http.post<PostRecipeVM>(environment.cookingPapaUrl /*this.JDLocalUrl*/ + `recipes`,newRecipe)
+  return this.http.post<PostRecipeVM>(/*environment.cookingPapaUrl*/ this.JDLocalUrl + `recipes`,newRecipe)
 }
 putRecipe(newRecipe:PostRecipeVM){
   return this.http.put<PostRecipeVM>(environment.cookingPapaUrl + `recipes`,newRecipe)
