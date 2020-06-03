@@ -21,6 +21,10 @@ export class ReviewsService {
       submitReview(review:RecipeReviewVM){
         //this.ID = 1;
         return this.http.post<RecipeReviewVM>(this.reviewUrl, review).toPromise()
-        .then(recipe => recipe);
+        .then(review => review);
+      }
+      getReviews(recipeId:number){
+        return this.http.get<RecipeReviewVM[]>(this.reviewUrl + recipeId).toPromise()
+       .then(review => review);
       }
 }

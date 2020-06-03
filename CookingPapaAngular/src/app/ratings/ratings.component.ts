@@ -17,13 +17,14 @@ export class RatingsComponent implements OnInit {
   @Input() recipeId: number;
 
   currentUser:any;
-  ID : number;
+  userId : number;
 
   starList: boolean[] = [true,true,true,true,true];// create a list which contains status of 5 stars
   rating:number;  
   comment:string;
 
   review: RecipeReviewVM;
+  reviews: RecipeReviewVM[];
 
   //Create a function which receives the value counting of stars click, 
   //and according to that value we do change the value of that star in list.
@@ -45,8 +46,12 @@ export class RatingsComponent implements OnInit {
    private getUserId(){
     this.auth.userProfile$.subscribe(data => {
       this.currentUser = data;
-      this.ID = <number> + this.currentUser.sub.toString().substr(6);
+      this.userId = <number> + this.currentUser.sub.toString().substr(6);
     });
+   }
+   private getReviews(){
+      this.reviewsService.getReviews(this.recipeId)
+      .then(reviews => this.reviews = reviews);
    }
   ngOnInit(): void {
     this.getUserId();
@@ -54,8 +59,9 @@ export class RatingsComponent implements OnInit {
       RecipeReviewId:null,
       RecipeId: this.recipeId,
       RecipeReviewRating:0,
-      UserId: 1,//this.ID,
+      UserId: 1,//this.userId,
       RecipeReviewComment: ''
     }
+    this.getReviews();
   }
 }

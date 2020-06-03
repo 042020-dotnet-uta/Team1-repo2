@@ -249,6 +249,24 @@ namespace CookingPapa.Domain.Business
             return information;
         }
 
+        public async Task<List<RecipeReviewVM>> GetReviewsForRecipe(int recipeId)
+        {
+            var reviewsList = new List<RecipeReviewVM>();
+            var reviews = await _unitOfWork.RecipeReviews.GetByRecipeEager(recipeId);
+            foreach (var review in reviews)
+            {
+                reviewsList.Add(new RecipeReviewVM
+                {
+                    RecipeReviewId = review.Id,
+                    RecipeId = review.Recipe.Id,
+                    UserId = review.User.Id,
+                    RecipeReviewRating = review.RecipeReviewRating,
+                    RecipeReviewComment = review.RecipeReviewComment
+                });
+            }
+
+            return reviewsList;
+        }
         public async Task<RecipeReview> PutRecipeReview(RecipeReviewVM recipeReview)
         {
             var edittedReview = await functionForReview(recipeReview);
