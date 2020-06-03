@@ -110,8 +110,8 @@ namespace CookingPapa.Api.Controllers
             try
             {
                 var recipeCreated = await _businessL.PostRecipe(recipeVM);            
-                //return CreatedAtAction("GetRecipe", new { id = recipeCreated.Id }, recipeCreated);
-                return null;
+                return CreatedAtAction("GetRecipe", new { id = recipeCreated.Id }, recipeCreated);
+                //return null;
             }
             catch (Exception e)
             {
