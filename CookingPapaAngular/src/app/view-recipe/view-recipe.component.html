@@ -28,11 +28,7 @@
 
 </div>
 
-<h2>Comments</h2>
-<div class="border border-dark" *ngFor="let review of test3">
-  {{review.username}}----Rating:{{review.recipeReviewRating}}<br/>
-  Comments:<br/>
-  {{review.recipeReviewComment}}
-</div>
+<app-ratings></app-ratings>
+
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
 </div>
