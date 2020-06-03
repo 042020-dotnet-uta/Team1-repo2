@@ -97,8 +97,7 @@ namespace CookingPapa.Api.Controllers
         public async Task<Recipe> DeleteRecipe(int id)
         {
             //delete recipe
-            var deletedRecipe = await _businessL.DeleteRecipe(id);
-            await _unitOfWork.Complete();
+            var deletedRecipe = await _businessL.DeleteRecipeWithReview(id);
 
             //Check the return value?
 
