@@ -7,11 +7,15 @@
   <div>
     <div>
       <div>
-        <h1>{{test.recipeName}}<button class="btn btn-sm btn-light btn-outline-dark">Add to Cookbook(only visible for user)</button></h1>
-    </div>
-      <div>
+        <h1>{{test.recipeName}}</h1>
         <h5>Recipe Cook Time: {{test.recipeCooktime}}---
-        Recipe Origin:{{test.recipeOrigin}} </h5>        
+          Recipe Origin:{{test.recipeOrigin}} </h5>   
+      </div>
+
+      <div>
+        <a routerLink="/edit-recipe/{{test.recipeId}}"><button *ngIf="ownRecipe&&notGuest" class="btn btn-sm btn-light btn-outline-dark">Edit</button></a>
+        <button *ngIf="ownRecipe&&notGuest" (click)="onDelete()" class="btn btn-sm btn-light btn-outline-dark">Delete</button>
+        <button *ngIf="!ownRecipe&&notGuest&&!inCookbook" (click)="addToCookbook()" class="btn btn-sm btn-light btn-outline-dark">CookBook it!</button>
       </div>
     </div>
 
@@ -27,8 +31,8 @@
   </div>
 
 </div>
+<div><app-ratings [recipeId]=test.recipeId></app-ratings></div>
 
-<app-ratings></app-ratings>
 
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
 </div>

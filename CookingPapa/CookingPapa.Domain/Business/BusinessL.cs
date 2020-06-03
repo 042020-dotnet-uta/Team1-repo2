@@ -149,6 +149,7 @@ namespace CookingPapa.Domain.Business
                 RecipeCooktime = RecipeIngredientInfos.First().Recipe.RecipeCookTime,
                 RecipeDescription = RecipeIngredientInfos.First().Recipe.RecipeInstruction,
                 RecipeCreator = RecipeIngredientInfos.First().Recipe.User.Username,
+                RecipeCreatorId = RecipeIngredientInfos.First().Recipe.User.Id,
                 RecipeAverageRating = averageRating,
                 RecipeIngredientGroupVMs = recipeIngredientGroupVMs,
                 recipeReviewVMs = recipeInformationReviewVMs
@@ -221,6 +222,15 @@ namespace CookingPapa.Domain.Business
             var recipeDeleted = await _unitOfWork.Recipes.Delete(id);
             return recipeDeleted;
         }
+        public async Task<Recipe> DeleteRecipeWithReview(int id)
+        {
+            await _unitOfWork.RecipeIngredientGroups.DeleteAll(id);
+            var deleteReview = await _unitOfWork.RecipeReviews.DeleteAll(id);
+            var recipeDeleted = await _unitOfWork.Recipes.Delete(id);
+            await _unitOfWork.Complete();
+            return recipeDeleted;
+        }
+
 
         public async Task<InformationVM> GetInformation()
         {
@@ -278,7 +288,7 @@ namespace CookingPapa.Domain.Business
             {
                 User = user,
                 Recipe = recipe,
-                Id = recipeReview.RecipeReviewId,
+                Id = recipeReview.RecipeReviewId.Value,
                 RecipeReviewRating = recipeReview.RecipeReviewRating,
                 RecipeReviewComment = recipeReview.RecipeReviewComment
             };

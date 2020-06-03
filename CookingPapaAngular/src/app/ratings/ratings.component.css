@@ -1,0 +1,8 @@
+textarea {
+    width: 350px;
+    height: 50px;
+    min-height: 50px;
+  }
+  i{
+      color: darkorange;
+  }

@@ -1,0 +1,23 @@
+<h1>External Web Recipe Search</h1>
+<body>Enter the food you're looking for below!</body>
+<input #searchData 
+  (keyup.enter)="getData(searchData.value)">
+<button (click)="getData(searchData.value)">Search</button>
+
+<br>
+<button (click)="didFetchWork()">Check it</button>
+
+<br>
+<button (click)="testing()">Testing</button>
+
+<div *ngFor="let recipe of recipeData; let i = index">
+    <h3>
+        {{i+1}}: {{recipe.title}}        
+    </h3>
+    <body>
+        <img src="https://spoonacular.com/recipeImages/{{recipe.image}}"> <br>
+        Total Cook Time: {{recipe.readyInMinutes}} minutes <br>
+        Want to learn more? Check out the <a href={{recipe.sourceUrl}}> full recipe</a>!
+    </body>
+    <br> <br>
+</div>

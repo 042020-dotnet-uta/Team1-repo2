@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {NavMenuComponent}from './nav-menu/nav-menu.component';
 import { FormsModule } from '@angular/forms';
-
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -17,6 +16,7 @@ import { SearchRecipeComponent } from './search-recipe/search-recipe.component';
 import { ViewCookbookComponent } from './view-cookbook/view-cookbook.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ApiSearchComponent } from './api-search/api-search.component';
 import { RatingsComponent } from './ratings/ratings.component';
 
 @NgModule({
@@ -33,7 +33,8 @@ import { RatingsComponent } from './ratings/ratings.component';
     ViewCookbookComponent,
     HomeComponent,
     ProfileComponent,
-    RatingsComponent,
+    ApiSearchComponent,
+    RatingsComponent
   ],
   imports: [
     BrowserModule,
