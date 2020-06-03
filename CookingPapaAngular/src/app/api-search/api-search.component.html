@@ -1,23 +1,70 @@
 <h1>External Web Recipe Search</h1>
 <body>Enter the food you're looking for below!</body>
 <input #searchData 
-  (keyup.enter)="getData(searchData.value)">
-<button (click)="getData(searchData.value)">Search</button>
-
-<br>
-<button (click)="didFetchWork()">Check it</button>
+  (keyup.enter)="getData(searchData.value, 1)">
+<button (click)="getData(searchData.value, 1)">Search</button>
 
 <br>
 <button (click)="testing()">Testing</button>
 
+<div class="card text-center m-3" *ngIf="displayPages()">
+    <h3 class="card-header">Pages</h3>
+    <div class="card-footer pb-0 pt-3">
+        <button (click)="getData(searchQuery, 1)" *ngIf="currentPage > 3">First</button> &nbsp;
+        <button (click)="getData(searchQuery, currentPage - 1)" *ngIf="currentPage != 1">Previous</button> &nbsp;&nbsp;
+
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-6)" *ngIf="currentPage == maxPage">{{currentPage-6}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-5)" *ngIf="currentPage >= maxPage-1">{{currentPage-5}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-4)" *ngIf="currentPage >= maxPage-2">{{currentPage-4}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-3)" *ngIf="currentPage > 3">{{currentPage-3}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-2)" *ngIf="currentPage > 2">{{currentPage-2}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-1)" *ngIf="currentPage > 1">{{currentPage-1}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage)">{{currentPage}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+1)" *ngIf="maxPage > currentPage">{{currentPage+1}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+2)" *ngIf="maxPage-1 > currentPage">{{currentPage+2}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+3)" *ngIf="maxPage-2 > currentPage">{{currentPage+3}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+4)" *ngIf="3 >= currentPage">{{currentPage+4}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+5)" *ngIf="2 >= currentPage">{{currentPage+5}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+6)" *ngIf="currentPage == 1">{{currentPage+6}}</a> &nbsp;
+
+        &nbsp;<button (click)="getData(searchQuery, currentPage + 1)" *ngIf="currentPage != maxPage">Next</button> &nbsp;
+        <button (click)="getData(searchQuery, maxPage)" *ngIf="maxPage-2 > currentPage">Last</button>
+    </div>
+</div>
+
 <div *ngFor="let recipe of recipeData; let i = index">
     <h3>
-        {{i+1}}: {{recipe.title}}        
+        {{i+1+(currentPage-1)*5}}: {{recipe.title}}        
     </h3>
     <body>
-        <img src="https://spoonacular.com/recipeImages/{{recipe.image}}"> <br>
+        <img src="https://spoonacular.com/recipeImages/{{recipe.image}}" alt="{{recipe.image}}"> <br>
         Total Cook Time: {{recipe.readyInMinutes}} minutes <br>
         Want to learn more? Check out the <a href={{recipe.sourceUrl}}> full recipe</a>!
     </body>
     <br> <br>
+</div>
+
+<div class="card text-center m-3" *ngIf="displayPages()">
+    <h3 class="card-header">Pages</h3>
+    <div class="card-footer pb-0 pt-3">
+        <button (click)="getData(searchQuery, 1)" *ngIf="currentPage > 3">First</button> &nbsp;
+        <button (click)="getData(searchQuery, currentPage - 1)" *ngIf="currentPage != 1">Previous</button> &nbsp;&nbsp;
+
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-6)" *ngIf="currentPage == maxPage">{{currentPage-6}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-5)" *ngIf="currentPage >= maxPage-1">{{currentPage-5}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-4)" *ngIf="currentPage >= maxPage-2">{{currentPage-4}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-3)" *ngIf="currentPage > 3">{{currentPage-3}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-2)" *ngIf="currentPage > 2">{{currentPage-2}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage-1)" *ngIf="currentPage > 1">{{currentPage-1}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage)">{{currentPage}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+1)" *ngIf="maxPage > currentPage">{{currentPage+1}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+2)" *ngIf="maxPage-1 > currentPage">{{currentPage+2}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+3)" *ngIf="maxPage-2 > currentPage">{{currentPage+3}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+4)" *ngIf="3 >= currentPage">{{currentPage+4}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+5)" *ngIf="2 >= currentPage">{{currentPage+5}}</a> &nbsp;
+        <a href="javascript:void(0)" (click)="getData(searchQuery, currentPage+6)" *ngIf="currentPage == 1">{{currentPage+6}}</a> &nbsp;
+
+        &nbsp;<button (click)="getData(searchQuery, currentPage + 1)" *ngIf="currentPage != maxPage">Next</button> &nbsp;
+        <button (click)="getData(searchQuery, maxPage)" *ngIf="maxPage-2 > currentPage">Last</button>
+    </div>
 </div>
