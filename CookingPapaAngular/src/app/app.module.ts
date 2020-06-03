@@ -17,6 +17,7 @@ import { SearchRecipeComponent } from './search-recipe/search-recipe.component';
 import { ViewCookbookComponent } from './view-cookbook/view-cookbook.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ApiSearchComponent } from './api-search/api-search.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ProfileComponent } from './profile/profile.component';
     ViewCookbookComponent,
     HomeComponent,
     ProfileComponent,
+    ApiSearchComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,7 @@ import { ViewCookbookComponent } from './view-cookbook/view-cookbook.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './auth.guard';
+import { ApiSearchComponent } from './api-search/api-search.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
     {path:'create-recipe', component:CreateRecipeComponent},  //, canActivate: [AuthGuard]},
     {path:'search-recipe', component:SearchRecipeComponent},
     {path:'view-cookbook', component:ViewCookbookComponent},  //, canActivate: [AuthGuard]},
-    {path: 'profile', component:ProfileComponent, canActivate: [AuthGuard]}
+    {path: 'profile', component:ProfileComponent, canActivate: [AuthGuard]},
+    {path: 'api-search', component:ApiSearchComponent}
 
   ];
   
