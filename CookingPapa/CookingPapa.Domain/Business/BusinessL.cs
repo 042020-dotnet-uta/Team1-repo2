@@ -257,10 +257,10 @@ namespace CookingPapa.Domain.Business
             {
                 reviewsList.Add(new RecipeReviewVM
                 {
-                    RecipeReviewId = review.Id,
-                    RecipeId = review.Recipe.Id,
-                    UserId = review.User.Id,
-                    RecipeReviewRating = review.RecipeReviewRating,
+                    RecipeReviewId      = review.Id,
+                    RecipeId            = review.Recipe.Id,
+                    UserId              = review.User.Id,
+                    RecipeReviewRating  = review.RecipeReviewRating,
                     RecipeReviewComment = review.RecipeReviewComment
                 });
             }

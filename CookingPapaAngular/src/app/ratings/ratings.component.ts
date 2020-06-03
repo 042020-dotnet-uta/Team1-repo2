@@ -12,7 +12,7 @@ import { ReviewsService } from '../reviews.service';
 })
 export class RatingsComponent implements OnInit {
   constructor(public auth: AuthService, 
-              private reviewsService: ReviewsService) { }
+              private reviewsService: ReviewsService) {  }
 
   @Input() recipeId: number;
 
@@ -50,11 +50,12 @@ export class RatingsComponent implements OnInit {
     });
    }
    private getReviews(){
-      this.reviewsService.getReviews(this.recipeId)
+      this.reviewsService.getReviews(this.review.RecipeId)
       .then(reviews => this.reviews = reviews);
    }
   ngOnInit(): void {
     this.getUserId();
+    //console.log('Recipe ID=' + this.recipeId);
     this.review = {
       RecipeReviewId:null,
       RecipeId: this.recipeId,
