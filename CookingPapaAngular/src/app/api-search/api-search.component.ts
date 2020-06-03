@@ -55,7 +55,7 @@ export class ApiSearchComponent implements OnInit {
         id: 262682, 
         title: "Thai Sweet Potato Veggie Burgers with Spicy Peanut Sauce", 
         readyInMinutes: 75,
-        image: "thai-sweet-potato-veggie-burgers-with-spicy-peanut-sauce-262682.jpg",
+        image: "thai-sweet-potato-veggie-burgers-with-spicy-peanut-sauce-262682.png",
         sourceUrl: "http://www.food.com/recipe/"
       },
       {
