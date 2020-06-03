@@ -1,9 +1,17 @@
 <h1>My Cookbook</h1>
 <hr />
-<div>
-  <!--<p ng-repeat="(key, value) in controller.greeting.custinfo">{key}}: {value}}</p>-->
-  <p>displays list of recipes under cook book with ng-repeat.</p>
-</div>
+<div *ngIf="recipes">
+  <ul class="recipes">
+   <li *ngFor="let recipe of recipes" >
+     <a routerLink="/view-recipe/{{recipe.recipeId}}">
+       {{recipe.recipeName}}
+     </a>
+     <button class="delete" title="Remove Recipe"
+            (click)="delete(recipe)">x</button>
+   </li>
+ </ul>
+ </div>
+
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
 
 
