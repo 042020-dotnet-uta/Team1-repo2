@@ -4,6 +4,7 @@ import { RecipeInformationsVM } from '../Models/recipeInformationsVM'
 import { GetRecipesVM } from '../Models/GetRecipesVM';
 import { UserVM } from '../Models/userVM';
 import { GetIngOriMeaInformation } from '../Models/getIngOriMeaInformation';
+import { PostRecipeVM } from '../Models/postRecipeVM';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ getRecipe(x:number){
 getIngOriMeaInformation(){
   return this.http.get<GetIngOriMeaInformation>(`https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/Information`)
 }
-postRecipe(){
-  
+postRecipe(newRecipe:PostRecipeVM){
+  return this.http.post<PostRecipeVM>(`https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/recipes`,newRecipe)
 }
 }

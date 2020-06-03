@@ -1,5 +1,5 @@
 export interface GetIngOriMeaInformation{
-    Origins:string[];
-    Ingredients:string[];
-    MeasurementUnits:string[];
+    origins:string[];
+    ingredients:string[];
+    measurementUnits:string[];
 }
