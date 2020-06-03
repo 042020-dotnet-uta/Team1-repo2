@@ -1,27 +1,16 @@
 <hr />
 <div>
-<p>Rating goes here</p>
-<h1>  
-    {{title}}   
-  </h1>  
-  <br>  
+<p>Rating goes here</p> 
   <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">  
     <!--<i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>-->
     <i *ngIf="item" class="fa fa-star-o"></i>    
     <i *ngIf="!item" class="fa fa-star"></i>   
-   </a>  
-  <br>  
-  Rating :- {{rating}} stars  
+   </a> 
+   <br>   
 </div>
 
 <div>
-    <textarea>Stuff and Crap!!!</textarea>
+    <textarea #comment></textarea>
 </div>
-
-<!--
-<div class="border border-dark" *ngFor="let review of test3">
-    {{review.username}}----Rating:{{review.recipeReviewRating}}<br/>
-    Comments:<br/>
-    {{review.recipeReviewComment}}
-  </div>
-  -->
+    <button class="btn btn-light btn-outline-dark" (click)="submitReview(comment.value)">Submit</button>
+<hr />
