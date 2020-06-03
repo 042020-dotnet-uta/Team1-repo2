@@ -16,15 +16,15 @@ export class RecipeDetailService {
   constructor(private http: HttpClient) { }
 JDLocalUrl = 'http://localhost:64480/api/';
 getRecipe(x:number){
-  return this.http.get<RecipeInformationsVM>(/*environment.cookingPapaUrl */this.JDLocalUrl + `recipes/${x}`)
+  return this.http.get<RecipeInformationsVM>(environment.cookingPapaUrl /*this.JDLocalUrl*/ + `recipes/${x}`)
 }
 getIngOriMeaInformation(){
-  return this.http.get<GetIngOriMeaInformation>(/*environment.cookingPapaUrl */this.JDLocalUrl + `Information`)
+  return this.http.get<GetIngOriMeaInformation>(environment.cookingPapaUrl /*this.JDLocalUrl*/ + `Information`)
 }
 postRecipe(newRecipe:PostRecipeVM){
-  return this.http.post<PostRecipeVM>(/*environment.cookingPapaUrl */this.JDLocalUrl + `recipes`,newRecipe)
+  return this.http.post<PostRecipeVM>(environment.cookingPapaUrl /*this.JDLocalUrl*/ + `recipes`,newRecipe)
 }
 putRecipe(newRecipe:PostRecipeVM){
-  return this.http.put<PostRecipeVM>(`https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/recipes`,newRecipe)
+  return this.http.put<PostRecipeVM>(environment.cookingPapaUrl + `recipes`,newRecipe)
 }
 }
