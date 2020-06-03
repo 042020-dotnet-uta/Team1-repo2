@@ -40,14 +40,23 @@ namespace CookingPapa.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _unitOfWork.Users.Get(id);
-
-            if (user == null)
+            try
             {
-                return NotFound();
-            }
+                var user = await _unitOfWork.Users.Get(id);
 
-            return user;
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                return user;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Exception in UsersController.GetUser: {e}");
+                return null;
+            }
+            
         }
 
         // PUT: api/Users/5
@@ -67,6 +76,7 @@ namespace CookingPapa.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
+                _logger.LogError("Error: Database Concurrency failure at line 75 of UsersController");
                     return NotFound();
             }
             return user;
