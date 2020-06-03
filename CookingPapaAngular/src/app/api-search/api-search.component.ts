@@ -12,7 +12,7 @@ export class ApiSearchComponent implements OnInit {
 
   recipeData: any;
   
-  getData(query) {
+  getData(query) {/*
     fetch("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=5&offset=20&query=" + query, {
     "method": "GET",
     "headers": {
@@ -31,7 +31,7 @@ export class ApiSearchComponent implements OnInit {
       console.log("more data: ", this.data.Value.number);/*
       console.log("object: ", this.data.object.number);
       console.log("object without object keyword: ", this.data.number);
-      console.log("second index: ", this.data.results[1]);*/
+      console.log("second index: ", this.data.results[1]);
       //console.log("the parse: ", JSON.parse(this.data));
     .then(data => {
       console.log('Success: ', data);
@@ -42,6 +42,7 @@ export class ApiSearchComponent implements OnInit {
     .catch(err => {
       console.log(err);
     });
+    */
   }
 
   didFetchWork() {
@@ -52,10 +53,19 @@ export class ApiSearchComponent implements OnInit {
   testing() {
     this.recipeData = [
       {
+        id: 102992,
+        image: "vegetarian-bagel-sandwich-2-102992.jpg",
+        openLicense: 0,
+        readyInMinutes: 5,
+        servings: 1,
+        sourceUrl: "http://www.food.com/recipe/vegetarian-bagel-sandwich-66172",
+        title: "vegetarian bagel sandwich"
+      },
+      {
         id: 262682, 
         title: "Thai Sweet Potato Veggie Burgers with Spicy Peanut Sauce", 
         readyInMinutes: 75,
-        image: "thai-sweet-potato-veggie-burgers-with-spicy-peanut-sauce-262682.png",
+        image: "thai-sweet-potato-veggie-burgers-with-spicy-peanut-sauce-262682.jpg",
         sourceUrl: "http://www.food.com/recipe/"
       },
       {
