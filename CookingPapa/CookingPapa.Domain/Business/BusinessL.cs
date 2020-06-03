@@ -288,7 +288,7 @@ namespace CookingPapa.Domain.Business
             {
                 User = user,
                 Recipe = recipe,
-                Id = recipeReview.RecipeReviewId,
+                Id = recipeReview.RecipeReviewId.Value,
                 RecipeReviewRating = recipeReview.RecipeReviewRating,
                 RecipeReviewComment = recipeReview.RecipeReviewComment
             };
