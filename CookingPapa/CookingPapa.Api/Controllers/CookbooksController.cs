@@ -39,14 +39,22 @@ namespace CookingPapa.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<List<GetCookbookVM>>> GetCookbook(int id)
         {
-
-            //returns list of recipes in the user cookbook.
-            var cookbook = await _businessL.GetCookbook(id);
-            if (cookbook == null)
+            try
             {
-                return NotFound();
+                //returns list of recipes in the user cookbook.
+                var cookbook = await _businessL.GetCookbook(id);
+                if (cookbook == null)
+                {
+                    return NotFound();
+                }
+                return cookbook;
             }
-            return cookbook;
+            catch (Exception e)
+            {
+                _logger.LogError($"Error: Exception thrown in CookbooksController.GetCookbook: {e}");
+                return StatusCode(500);
+            }
+            
         }
         /// <summary>
         /// POST: api/Cookbooks
@@ -58,12 +66,21 @@ namespace CookingPapa.Api.Controllers
         [HttpPost("")]
         public async Task<ActionResult<Cookbook>> PostCookbook(PostCookbookVM cookbook)
         {
-            var addedCookbook = await _businessL.PostCookbook(cookbook);
-            if (addedCookbook == null)
+            try
             {
-                return NoContent();
+                var addedCookbook = await _businessL.PostCookbook(cookbook);
+                if (addedCookbook == null)
+                {
+                    return NoContent();
+                }
+                return addedCookbook;
             }
-            return addedCookbook;
+            catch (Exception e)
+            {
+                _logger.LogError($"Error: Exception thrown in CookbooksController.PostCookbook: {e}");
+                return StatusCode(500);
+            }
+            
         }
         /// <summary>
         /// DELETE: api/Cookbooks/1/5
@@ -74,16 +91,25 @@ namespace CookingPapa.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Cookbook>> DeleteCookbook(int id)
         {
-            //there should be a remove from Cookbook button by the list of recipe under cookbook that
-            //directs user here.
-            var cookbook = await _unitOfWork.Cookbooks.GetEager(id);
-            if (cookbook == null)
+            try
             {
-                return NotFound();
+                //there should be a remove from Cookbook button by the list of recipe under cookbook that
+                //directs user here.
+                var cookbook = await _unitOfWork.Cookbooks.GetEager(id);
+                if (cookbook == null)
+                {
+                    return NotFound();
+                }
+                _unitOfWork.Cookbooks.Delete(id);
+                await _unitOfWork.Complete();
+                return cookbook;
             }
-            _unitOfWork.Cookbooks.Delete(id);
-            await _unitOfWork.Complete();
-            return cookbook;
+            catch (Exception e)
+            {
+                _logger.LogError($"Error: Exception thrown in CookbooksController.DeleteCookbook: {e}");
+                return StatusCode(500);
+            }
+            
         }
 
         private bool CookbookExists(int id)

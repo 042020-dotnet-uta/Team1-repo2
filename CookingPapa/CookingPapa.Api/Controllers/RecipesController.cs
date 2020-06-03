@@ -40,26 +40,46 @@ namespace CookingPapa.Api.Controllers
             //for searching all recipeVM
             //return all the recipeVM with all of its components without ratings
             //return _unitOfWork.Recipes.GetAllEager().Result.ToList();
-            if(String.IsNullOrEmpty(searchpattern?.Trim()))
+            try
             {
-                return await _businessL.GetRecipes();
+                if (String.IsNullOrEmpty(searchpattern?.Trim()))
+                {
+                    return await _businessL.GetRecipes();
+                }
+                else
+                {
+                    return await _businessL.GetRecipes(searchpattern);
+                }
             }
-            else
-                return await _businessL.GetRecipes(searchpattern);
+            catch (Exception e)
+            {
+                _logger.LogError($"Error: Exception thrown in RecipesController.GetRecipes: {e}");
+                return StatusCode(500);
+            }
+            
         }
 
         // GET: api/Recipes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RecipeInformationVM>> GetRecipe(int id)
         {
-            //the list of recipeVM we are searching from need to include all the information
-            //including origin, cook time, ingredient and reviews
-            var recipe = await _businessL.GetRecipeDetail(id);
-            if (recipe == null)
+            try
             {
-                return NotFound();
+                //the list of recipeVM we are searching from need to include all the information
+                //including origin, cook time, ingredient and reviews
+                var recipe = await _businessL.GetRecipeDetail(id);
+                if (recipe == null)
+                {
+                    return NotFound();
+                }
+                return recipe;
+            } 
+            catch (Exception e)
+            {
+                _logger.LogError($"Error: Exception thrown in RecipesController.GetRecipe: {e}");
+                return StatusCode(500);
             }
-            return recipe;
+            
         }
 
         // PUT: api/Recipes/5
@@ -87,9 +107,18 @@ namespace CookingPapa.Api.Controllers
             //PostRecipeVM recipeVM
             //For Creating a new Recipe will accept PostRecipeVM object from Angular
             //need to translate that object into query readable to update db
-            var recipeCreated = await _businessL.PostRecipe(recipeVM);            
-            return CreatedAtAction("GetRecipe", new { id = recipeCreated.Id }, recipeCreated);
-            //return recipeCreated;
+            try
+            {
+                var recipeCreated = await _businessL.PostRecipe(recipeVM);            
+                return CreatedAtAction("GetRecipe", new { id = recipeCreated.Id }, recipeCreated);
+                //return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error: Exception thrown in RecipesController.PostRecipe: {e}");
+                return StatusCode(500);
+            }
+            
         }
 
         // DELETE: api/Recipes/5
