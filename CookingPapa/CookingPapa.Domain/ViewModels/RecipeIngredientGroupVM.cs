@@ -8,6 +8,6 @@ namespace CookingPapa.Domain.ViewModels
     {
         public string IngredientName { get; set; }
         public string MeasurementName { get; set; }
-        public int IngredientAmount { get; set; }
+        public string IngredientAmount { get; set; }
     }
 }

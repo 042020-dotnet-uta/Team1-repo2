@@ -23,8 +23,6 @@ namespace CookingPapa.Domain.Models
         [Required]
         public RecipeMeasurement RecipeMeasurement { get; set; }
 
-        [Display(Name = "Amount")]
-        [Range(0,99999)]
         [Required]
         public int RecipeIngredientAmount { get; set; }
     }
