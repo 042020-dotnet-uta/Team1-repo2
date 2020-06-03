@@ -10,10 +10,27 @@ export class ApiSearchComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  recipeData: any;
+  recipeData: Array<any>;
+  currentPage: number;
+  maxPage: number = 20;
+  searchQuery: string;
   
-  getData(query) {/*
-    fetch("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=5&offset=20&query=" + query, {
+  displayPages(): boolean {
+    if (this.recipeData.length >= 1) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  getData(query: string, page: number) {
+    this.searchQuery = query;
+    this.currentPage = page;
+    console.log("searched: ", query);
+    console.log("offset=" + (page-1)*5 + "&query=" + query);
+    /*
+    fetch("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=5&offset=" + (page-1)*4 + "&query=" + query, {
     "method": "GET",
     "headers": {
       "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
@@ -38,11 +55,13 @@ export class ApiSearchComponent implements OnInit {
       console.log(data.results);
       console.log(data.results[1]);
       this.recipeData = data.results;
+      this.currentPage = page;
+      this.searchQuery = query;
     })
     .catch(err => {
       console.log(err);
-    });
-    */
+    });*/
+    
   }
 
   didFetchWork() {
@@ -89,10 +108,11 @@ export class ApiSearchComponent implements OnInit {
         sourceUrl: "http://www.food.com/recipe/"
       }
     ];
+    this.searchQuery = "bagel";
+    this.currentPage = 1;
     console.log(this.recipeData);
   }
 
   ngOnInit(): void {
   }
-
 }
