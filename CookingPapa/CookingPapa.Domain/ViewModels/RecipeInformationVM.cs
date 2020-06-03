@@ -13,6 +13,7 @@ namespace CookingPapa.Domain.ViewModels
         public int RecipeCooktime { get; set; }
         public string RecipeDescription { get; set; }
         public string RecipeCreator { get; set; }
+        public int? RecipeCreatorId{ get; set; }
         public double RecipeAverageRating { get; set; }
         public List<RecipeIngredientGroupVM> RecipeIngredientGroupVMs { get; set; }
         public List<RecipeInformationReviewVM> recipeReviewVMs { get; set; }

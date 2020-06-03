@@ -36,13 +36,21 @@
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/search-recipe']">Search Recipe</a>
             </li>
-            
+
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/api-search']">External Search</a>
+            </li>
+
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/create-recipe']">Create Recipe</a>
             </li>
                                     
             <li class="nav-item" [routerLinkActive]="['link-active']">
+<<<<<<< HEAD
               <a class="nav-link text-dark" [routerLink]="['/view-cookbook']">View cookbook</a>
+=======
+              <a class="nav-link text-dark" [routerLink]="['/view-recipe/27']">View cookbook</a>
+>>>>>>> 0460e1cb7e0008a17a7115e2cddc24defd0d3cca
             </li>
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/profile']" *ngIf="auth.loggedIn">Profile</a>

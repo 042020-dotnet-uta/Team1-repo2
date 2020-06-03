@@ -8,6 +8,7 @@ export interface RecipeInformationsVM{
     recipeCooktime:number;
     recipeDescription:string;
     recipeCreator:string;
+    recipeCreatorId:number;
     recipeAverageRating:number;
     recipeIngredientGroupVMs:RecipeIngredientGroupVM[];
     recipeReviewVMs: RecipeInformationReviewVM[];
