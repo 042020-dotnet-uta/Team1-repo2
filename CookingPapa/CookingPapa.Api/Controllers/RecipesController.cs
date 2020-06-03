@@ -84,10 +84,12 @@ namespace CookingPapa.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Recipe>> PostRecipe(PostRecipeVM recipeVM)
         {
+            //PostRecipeVM recipeVM
             //For Creating a new Recipe will accept PostRecipeVM object from Angular
             //need to translate that object into query readable to update db
             var recipeCreated = await _businessL.PostRecipe(recipeVM);            
-            return CreatedAtAction("GetRecipe", new { id = recipeCreated.Id }, recipeCreated);
+            //return CreatedAtAction("GetRecipe", new { id = recipeCreated.Id }, recipeCreated);
+            return null;
         }
 
         // DELETE: api/Recipes/5

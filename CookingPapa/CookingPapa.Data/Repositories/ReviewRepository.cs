@@ -92,6 +92,19 @@ namespace CookingPapa.Data.Repositories
                 return null;
             }*/
         }
+        public async Task<IEnumerable<RecipeReview>> UpdateReviews(int recipeId, int updatedRecipeId)
+        {
+            var getAllReviews = await GetByRecipeEager((int)recipeId);
+            var getUpdatedRecipe = db.Recipes.Include(x => x.User).FirstAsync(x => x.Id == updatedRecipeId);
+            foreach (var x in getAllReviews)
+            {
+                x.Recipe = await getUpdatedRecipe;
+            }
+            db.UpdateRange(getAllReviews);
+            await db.SaveChangesAsync();
+            return getAllReviews;
+        }
+
 
         //add search by name?
 

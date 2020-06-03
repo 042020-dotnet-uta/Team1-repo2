@@ -3,40 +3,56 @@
 <hr />
 <div class="row">
   <div class="col-md-4">
-    <form>
-      <div class="text-danger"></div>
+    <form #createRecipe="ngForm" (ngSubmit)="onEdit()">
       <div class="form-group">
         <label class="control-label text-danger">Recipe Name: </label>
-        <input class="form-control" />
+        <input [(ngModel)]="newRecipe.RecipeName" name="recipeName" type="text" class="form-control" #recipeName="ngModel" required />
+        <div [hidden]="recipeName.valid || recipeName.pristine"
+        class="alert alert-danger">Recipe Name is required</div>
       </div>
 
       <div class="form-group">
-        Location: <select class="custom-select-sm form-control">
-          <option value="">Origin</option>
+        <input #newOrigin class="form-control" /><button type="button" (click)="addOrigin(newOrigin.value); newOrigin.value=''" class="btn btn-light btn-outline-dark">Add Origin</button>
+        <br/>Origin:
+        <select [(ngModel)]="newRecipe.RecipeOriginName" name="originName" class="custom-select-sm form-control">
+          <option *ngFor="let ing of information.origins">{{ing}}</option>
         </select>
-        <button class="btn btn-light btn-outline-dark">Add Origin</button>
       </div>
 
       <div class="form-group">
         <label class="control-label text-danger">Cook Time:  </label>
-        <input type="number" class="form-control" /> Min
+        <input [(ngModel)]="newRecipe.RecipeCookTime" name="cookTime" type="number" min="1" class="form-control" id="CookTime" required/> Min
       </div>
 
       <div class="form-group">
-        <label class="control-label text-danger">Ingredients: </label>
-        <input class="form-control" />
-        <button class="btn btn-light btn-outline-dark">Add Ingredient</button>
+        <input #newIngredient class="form-control" /><button type="button" (click)="addIngredient(newIngredient.value); newIngredient.value=''" class="btn btn-light btn-outline-dark">Add New Ingredient</button>
+        <input #newMeasurement class="form-control" /><button type="button" (click)="addMeasurement(newMeasurement.value); newMeasurement.value=''" class="btn btn-light btn-outline-dark">Add New Measurement</button>
+        <label class="control-label text-danger">Ingredient: </label>
+        <select #selectedIngredient class="custom-select-sm form-control">
+          <option *ngFor="let ing of information.ingredients" >{{ing}}</option>
+        </select>
+        <label class="control-label text-danger">Amount: </label>
+        <input #selectedAmount class="form-control" />
+        <label class="control-label text-danger">Measurement Unit: </label>
+        <select #selectedMeasure class="custom-select-sm form-control">
+          <option *ngFor="let ing of information.measurementUnits" [value]="ing">{{ing}}</option>
+        </select>
+        <button type="button" (click)="addIngredientGroup(selectedIngredient.value, selectedAmount.value, selectedMeasure.value)" 
+        class="btn btn-light btn-outline-dark">Add Ingredient</button>
       </div>
-
+      <div class="form-group">
+        <p *ngFor="let ing of newRecipeIngredientGroup">{{ing.ingredientName}}---
+          {{ing.ingredientAmount}}-{{ing.measurementName}}<a (click)="removeIngredient(ing)">X</a></p>>
+      </div>
 
       <div class="form-group">
         <label class="control-label text-danger">Instructions: </label>
-        <textarea id="myTextArea" rows="3" cols="80">
+        <textarea [(ngModel)]="newRecipe.RecipeInstruction" name="instruction" id="myTextArea" rows="3" cols="80">
           Your text here
         </textarea>
-        <button class="btn btn-light btn-outline-dark">Update</button>
+        <button type="submit" class="btn btn-light btn-outline-dark" [disabled]="!createRecipe.form.valid">Create</button>
       </div>
     </form>
-    <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
+    <button class="btn btn-light btn-outline-dark" (onClick)="goBack()">go back</button>
   </div>
 </div>
