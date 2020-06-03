@@ -12,7 +12,7 @@
       </div>
 
       <div class="form-group">
-        <input #newOrigin class="form-control" /><button (click)="addOrigin(newOrigin.value); newOrigin.value=''" class="btn btn-light btn-outline-dark">Add Origin</button>
+        <input #newOrigin class="form-control" /><button type="button" (click)="addOrigin(newOrigin.value); newOrigin.value=''" class="btn btn-light btn-outline-dark">Add Origin</button>
         <br/>Origin:
         <select [(ngModel)]="newRecipe.RecipeOriginName" name="originName" class="custom-select-sm form-control">
           <option *ngFor="let ing of information.origins">{{ing}}</option>
@@ -25,8 +25,8 @@
       </div>
 
       <div class="form-group">
-        <input #newIngredient class="form-control" /><button (click)="addIngredient(newIngredient.value); newIngredient.value=''" class="btn btn-light btn-outline-dark">Add New Ingredient</button>
-        <input #newMeasurement class="form-control" /><button (click)="addMeasurement(newMeasurement.value); newMeasurement.value=''" class="btn btn-light btn-outline-dark">Add New Measurement</button>
+        <input #newIngredient class="form-control" /><button type="button" (click)="addIngredient(newIngredient.value); newIngredient.value=''" class="btn btn-light btn-outline-dark">Add New Ingredient</button>
+        <input #newMeasurement class="form-control" /><button type="button" (click)="addMeasurement(newMeasurement.value); newMeasurement.value=''" class="btn btn-light btn-outline-dark">Add New Measurement</button>
         <label class="control-label text-danger">Ingredient: </label>
         <select #selectedIngredient class="custom-select-sm form-control">
           <option *ngFor="let ing of information.ingredients" >{{ing}}</option>
