@@ -24,4 +24,7 @@ getIngOriMeaInformation(){
 postRecipe(newRecipe:PostRecipeVM){
   return this.http.post<PostRecipeVM>(/*environment.cookingPapaUrl */this.JDLocalUrl + `recipes`,newRecipe)
 }
+putRecipe(newRecipe:PostRecipeVM){
+  return this.http.put<PostRecipeVM>(`https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/recipes`,newRecipe)
+}
 }

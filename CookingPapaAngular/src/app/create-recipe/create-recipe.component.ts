@@ -48,9 +48,9 @@ export class CreateRecipeComponent implements OnInit {
   addIngredientGroup(selectedIngredient:string,
     selectedAmount:number,selectedMeasure:string){
       this.newRecipeIngredientGroup.push({
-        IngredientName:selectedIngredient,
-        IngredientAmount:selectedAmount,
-        MeasurementName:selectedMeasure
+        ingredientName:selectedIngredient,
+        ingredientAmount:selectedAmount,
+        measurementName:selectedMeasure
       }
       )
     }
