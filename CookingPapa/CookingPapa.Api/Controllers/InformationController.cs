@@ -30,8 +30,17 @@ namespace CookingPapa.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<InformationVM>> GetInformation()
         {
-            var information = await _businessL.GetInformation();
-            return information;
+            try
+            {
+                var information = await _businessL.GetInformation();
+                return information;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error: Exception thrown in InformationController.GetInformation: {e}");
+                return StatusCode(500);
+            }
+            
         }
 
     }
