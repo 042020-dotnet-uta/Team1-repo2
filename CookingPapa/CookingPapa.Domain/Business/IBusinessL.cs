@@ -21,6 +21,7 @@ namespace CookingPapa.Domain.Business
         Task<Recipe> PostRecipe(PostRecipeVM recipeVM);
         Task<RecipeInformationVM> PutRecipe(PostRecipeVM recipeVM);
         Task<Recipe> DeleteRecipe(int id);
+        Task<Recipe> DeleteRecipeWithReview(int id);
         Task<InformationVM> GetInformation();
         Task<RecipeReview> PutRecipeReview(RecipeReviewVM recipeReview);
         Task<RecipeReview> PostRecipeReview(RecipeReviewVM recipeReview);

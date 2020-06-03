@@ -42,6 +42,14 @@ namespace CookingPapa.Data.Repositories
                 return null;
             }
         }
+        public async Task<IEnumerable<RecipeReview>> DeleteAll(int id)
+        {
+            var allReviews = await db.RecipeReviews.Include(x => x.Recipe).Where(x => x.Recipe.Id == id).ToListAsync();
+            db.RecipeReviews.RemoveRange(allReviews);
+            
+            
+            return null;
+        }
 
         /// <summary>
         /// Eager-loads the entity at the given ID.

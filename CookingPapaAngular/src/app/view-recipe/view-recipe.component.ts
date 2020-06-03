@@ -5,6 +5,7 @@ import { RecipeInformationsVM } from '../Models/recipeInformationsVM'
 import { RecipeIngredientGroupVM } from '../Models/RecipeIngredientGroupVM';
 import { RecipeInformationReviewVM } from '../Models/recipeInformationReviewVM';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-view-recipe',
@@ -16,14 +17,21 @@ export class ViewRecipeComponent implements OnInit {
   public test:RecipeInformationsVM;
   public test2:RecipeIngredientGroupVM[];
   public test3:RecipeInformationReviewVM[];
-  
-  constructor(private route: ActivatedRoute, private location: Location, private recServ:RecipeDetailService) { }
+  public currentUserId:number=0; 
+  public userLoggedId:number=1;
+  public ownRecipe:boolean=false;
+
+  constructor(private route: ActivatedRoute,
+     private location: Location, 
+     private recServ:RecipeDetailService,
+     private auth:AuthService) { }
 
   goBack():void{
   this.location.back();
 };
 
   ngOnInit(): void { 
+    this.getUserId();
     this.getRecipe();
   }
 
@@ -33,6 +41,19 @@ export class ViewRecipeComponent implements OnInit {
       this.test = g;
       this.test2 = g.recipeIngredientGroupVMs;
       this.test3 = g.recipeReviewVMs;
-      console.log(g)});
+      this.currentUserId = g.recipeCreatorId;
+      console.log(g);
+      if(this.currentUserId==this.userLoggedId)this.ownRecipe=true;});
+    }
+      //check if the accessing user created this recipe or not
+           
+     getUserId():void{
+      this.auth.userProfile$.subscribe(g=>this.userLoggedId=<number> + g.sub.toString().substr(6));
+      console.log(this.userLoggedId);
+     }
+  
+    
+  checkCookbook():void{
+
   }
 }
