@@ -40,14 +40,23 @@ namespace CookingPapa.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _unitOfWork.Users.Get(id);
-
-            if (user == null)
+            try
             {
-                return NotFound();
-            }
+                var user = await _unitOfWork.Users.Get(id);
 
-            return user;
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                return user;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Exception in UsersController.GetUser: {e}");
+                return StatusCode(500);
+            }
+            
         }
 
         // PUT: api/Users/5
@@ -67,7 +76,13 @@ namespace CookingPapa.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                    return NotFound();
+                _logger.LogError("Error: Database Concurrency failure in UsersController.PutUser");
+                return StatusCode(500);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error: Exception thrown in UsersController.PutUser: {e}");
+                return StatusCode(500);
             }
             return user;
         }
@@ -77,27 +92,45 @@ namespace CookingPapa.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            var createdUser = await _businessL.CreateUser(user);
-            if (createdUser == null)
+            try
             {
-                return NoContent();
+                var createdUser = await _businessL.CreateUser(user);
+                if (createdUser == null)
+                {
+                    return NoContent();
+                }
+                return user;
+            } 
+            catch (Exception e)
+            {
+                _logger.LogError($"Error: Exception thrown in UserController.PostUser: {e}");
+                return StatusCode(500);
             }
-            return user;
+            
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
-            var user = await _unitOfWork.Users.Get(id);
-            if (user == null)
+            try
             {
-                return NotFound();
-            }
-            await _unitOfWork.Users.Delete(id);
-            await _unitOfWork.Complete();
+                var user = await _unitOfWork.Users.Get(id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                await _unitOfWork.Users.Delete(id);
+                await _unitOfWork.Complete();
 
-            return user;
+                return user;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error: Exception thrown in UserController.DeleteUser: {e}");
+                return StatusCode(500);
+            }
+            
         }
     }
 }

@@ -13,9 +13,9 @@
       </div>
 
       <div>
-        <a routerLink="/edit-recipe/{{test.recipeId}}"><button *ngIf="ownRecipe" class="btn btn-sm btn-light btn-outline-dark">Edit</button></a>
-        <button *ngIf="ownRecipe" class="btn btn-sm btn-light btn-outline-dark">Delete</button>
-        <button *ngIf="!ownRecipe" class="btn btn-sm btn-light btn-outline-dark">CookBook it!</button>
+        <a routerLink="/edit-recipe/{{test.recipeId}}"><button *ngIf="ownRecipe&&notGuest" class="btn btn-sm btn-light btn-outline-dark">Edit</button></a>
+        <button *ngIf="ownRecipe&&notGuest" (click)="onDelete()" class="btn btn-sm btn-light btn-outline-dark">Delete</button>
+        <button *ngIf="!ownRecipe&&notGuest&&!inCookbook" (click)="addToCookbook()" class="btn btn-sm btn-light btn-outline-dark">CookBook it!</button>
       </div>
     </div>
 
