@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { AuthService } from './auth.service';
-import { RecipeVM } from './Models/RecipeVM';
+import { CookbookResponse } from './Models/cookbook-response';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,8 @@ export class CookbookService {
     public auth: AuthService) { }
       currentUser;
       ID : number;
-
+      cookbookUrl: string = /*environment.cookingPapaUrl + 'Cookbooks/';*/'http://localhost:64480/api/Cookbooks/';
+      
   ngOnInit(): void {
     this.auth.userProfile$.subscribe(data => {
       this.currentUser = data;
@@ -26,8 +27,10 @@ export class CookbookService {
   getCookbookRecipes() {
     //Temp for testing
     this.ID = 1;
-    const cookbookUrl = 'http://localhost:64480/api/Cookbooks/';
-     return this.http.get<RecipeVM[]>(cookbookUrl + this.ID).toPromise()
+     return this.http.get<CookbookResponse[]>(this.cookbookUrl + this.ID).toPromise()
        .then(recipe => recipe);
+  }
+  removeRecipe(Id: number){
+    return this.http.delete<CookbookResponse>(this.cookbookUrl + Id).subscribe();
   }
 }

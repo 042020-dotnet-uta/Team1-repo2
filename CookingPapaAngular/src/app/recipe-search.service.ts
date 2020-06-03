@@ -10,10 +10,10 @@ import { RecipeVM } from './Models/recipeVM';
 })
 export class RecipeSearchService {
   constructor(private http: HttpClient) { }
-
+  recipesUrl = /*environment.cookingPapaUrl + 'Recipes';*/'http://localhost:64480/api/Recipes';
+  
   getRecipes(searchTerm: string) {
-    const recipesUrl = 'http://localhost:64480/api/Recipes';
-     return this.http.get<RecipeVM[]>(recipesUrl + "?searchPattern="+searchTerm).toPromise()
+     return this.http.get<RecipeVM[]>(this.recipesUrl + "?searchPattern="+searchTerm).toPromise()
        .then(recipe => recipe);
   }
 }

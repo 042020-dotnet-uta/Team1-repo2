@@ -121,9 +121,9 @@ namespace CookingPapa.Domain.Business
                 recipeIngredientGroupVMs.Add(
                     new RecipeIngredientGroupVM()
                     {
-                        IngredientName = x.RecipeIngredient.RecipeIngredientName,
-                        MeasurementName = x.RecipeMeasurement.RecipeMeasurementName,
-                        IngredientAmount = x.RecipeIngredientAmount
+                        ingredientName = x.RecipeIngredient.RecipeIngredientName,
+                        measurementName = x.RecipeMeasurement.RecipeMeasurementName,
+                        ingredientAmount = x.RecipeIngredientAmount.ToString()
                     });
             };
             if (RecipeReviewInfos.Any())
@@ -185,16 +185,17 @@ namespace CookingPapa.Domain.Business
             List<RecipeIngredientGroups> recipeIngredientGroups = new List<RecipeIngredientGroups>();
             var ingredientId = _unitOfWork.RecipeIngredients.GetAll().Result.ToList();
             var measurementId = _unitOfWork.RecipeMeasurements.GetAll().Result.ToList();
+                       
             foreach (var x in recipeVM.RecipeIngredientGroupVM)
             {
-                var ingredientIds = ingredientId.Find(y => y.RecipeIngredientName == x.IngredientName).Id;
-                var measurementIds = measurementId.Find(y => y.RecipeMeasurementName == x.MeasurementName).Id;
+                var ingredientIds = ingredientId.Find(y => y.RecipeIngredientName == x.ingredientName).Id;
+                var measurementIds = measurementId.Find(y => y.RecipeMeasurementName == x.measurementName).Id;
                 recipeIngredientGroups.Add(new RecipeIngredientGroups()
                 {
                     Recipe = recipe,
                     RecipeIngredient = _unitOfWork.RecipeIngredients.Get(ingredientIds).Result,
                     RecipeMeasurement = _unitOfWork.RecipeMeasurements.Get(measurementIds).Result,
-                    RecipeIngredientAmount = x.IngredientAmount
+                    RecipeIngredientAmount = int.Parse(x.ingredientAmount)
                 });
             }
             _unitOfWork.Recipes.Add(recipe);
@@ -207,6 +208,7 @@ namespace CookingPapa.Domain.Business
         {
             //var oldRecipe = await _unitOfWork.RecipeIngredientGroups.GetEager(recipeVM.RecipeId);
             var updateRecipe = await PostRecipe(recipeVM);
+            var updatedReviews = await _unitOfWork.RecipeReviews.UpdateReviews((int)recipeVM.RecipeId, updateRecipe.Id);           
             var deletedRecipe = await DeleteRecipe((int)recipeVM.RecipeId);
             var newRecipe = await GetRecipeDetail(updateRecipe.Id);
             await _unitOfWork.Complete();
@@ -292,15 +294,15 @@ namespace CookingPapa.Domain.Business
 
             foreach (var x in recipeVM.RecipeIngredientGroupVM)
             {               
-                var checkIngredientExist = checkIngredientExists.Find(y => y.RecipeIngredientName == x.IngredientName);
+                var checkIngredientExist = checkIngredientExists.Find(y => y.RecipeIngredientName == x.ingredientName);
                 if (checkIngredientExist == null)
                 {
-                    _unitOfWork.RecipeIngredients.Add(new RecipeIngredient() { RecipeIngredientName = x.IngredientName });
+                    _unitOfWork.RecipeIngredients.Add(new RecipeIngredient() { RecipeIngredientName = x.ingredientName });
                 }
-                var checkMeasurementExist = checkMeasurementExists.Find(y => y.RecipeMeasurementName == x.MeasurementName);
+                var checkMeasurementExist = checkMeasurementExists.Find(y => y.RecipeMeasurementName == x.measurementName);
                 if (checkMeasurementExist == null)
                 {
-                    _unitOfWork.RecipeMeasurements.Add(new RecipeMeasurement() { RecipeMeasurementName = x.MeasurementName });
+                    _unitOfWork.RecipeMeasurements.Add(new RecipeMeasurement() { RecipeMeasurementName = x.measurementName });
                 }
             }
             //save the change so that ingredient group can be added to the db below.

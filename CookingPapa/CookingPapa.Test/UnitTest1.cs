@@ -270,9 +270,15 @@ namespace CookingPapa.Test
                     Email = "Test@Test.Test"
                 };
 
+                var testRecipe = new Recipe
+                {
+
+                };
+
                 var testCookbook = new Cookbook
                 {
-                    User = testUser
+                    User = testUser,
+                    Recipe = testRecipe
                 };
 
                 await _unitOfWork.Cookbooks.Add(testCookbook);
@@ -316,14 +322,21 @@ namespace CookingPapa.Test
                     Email = "Test@Test.Test"
                 };
 
+                var testRecipe = new Recipe
+                {
+
+                };
+
                 var testCookbook = new Cookbook
                 {
-                    User = testUser
+                    User = testUser,
+                    Recipe = testRecipe
                 };
 
                 var testCookbook2 = new Cookbook
                 {
-                    User = testUser
+                    User = testUser,
+                    Recipe = testRecipe
                 };
 
                 await _unitOfWork.Cookbooks.Add(testCookbook);
@@ -364,7 +377,9 @@ namespace CookingPapa.Test
 
                 var testUser = new User
                 {
-
+                    Username = "TestUser",
+                    Password = "TestPass",
+                    Email = "Test@Test.Test"
                 };
 
                 await _unitOfWork.Users.Add(testUser);
@@ -442,16 +457,26 @@ namespace CookingPapa.Test
             {
                 var _unitOfWork = new UnitOfWork(context);
 
+                var testUser = new User
+                {
+                    Username = "TestUser",
+                    Password = "TestPass",
+                    Email = "Test@Test.Test"
+                };
+
                 var testRecipe = new Recipe
                 {
-                    RecipeCookTime = 5
+                    RecipeCookTime = 5,
+                    RecipeInstruction = "Do the thing"
                 };
 
                 var testReview = new RecipeReview
                 {
-                    Recipe = testRecipe
+                    Recipe = testRecipe,
+                    User = testUser
                 };
 
+                //await _unitOfWork.Recipes.Add(testRecipe);
                 await _unitOfWork.RecipeReviews.Add(testReview);
                 await _unitOfWork.Complete();
 
@@ -484,6 +509,13 @@ namespace CookingPapa.Test
             {
                 var _unitOfWork = new UnitOfWork(context);
 
+                var testUser = new User
+                {
+                    Username = "TestUser",
+                    Password = "TestPass",
+                    Email = "Test@Test.Test"
+                };
+
                 var testRecipe = new Recipe
                 {
                     RecipeCookTime = 5
@@ -491,12 +523,14 @@ namespace CookingPapa.Test
 
                 var testReview = new RecipeReview
                 {
-                    Recipe = testRecipe
+                    Recipe = testRecipe,
+                    User = testUser
                 };
 
                 var testReview2 = new RecipeReview
                 {
-                    Recipe = testRecipe
+                    Recipe = testRecipe,
+                    User = testUser
                 };
 
                 await _unitOfWork.RecipeReviews.Add(testReview);
@@ -773,16 +807,44 @@ namespace CookingPapa.Test
             {
                 var _unitOfWork = new UnitOfWork(context);
 
+                var testUser = new User
+                {
+                    Username = "TestUser",
+                    Password = "TestPass",
+                    Email = "Test@Test.Test"
+                };
+
+                var testOrigin = new RecipeOrigin
+                {
+                    RecipeOriginName = "America"
+                };
+
                 var testRecipe = new Recipe
                 {
-                    RecipeCookTime = 5
+                    RecipeCookTime = 5,
+                    User = testUser,
+                    RecipeOrigin = testOrigin
+                };
+
+                var testIngredient = new RecipeIngredient
+                {
+                    RecipeIngredientName = "TestIngredient"
+                };
+
+                var testMeasurement = new RecipeMeasurement
+                {
+                    RecipeMeasurementName = "TestMeasurement"
                 };
 
                 var testRIG = new RecipeIngredientGroups
                 {
-                    Recipe = testRecipe
+                    Recipe = testRecipe,
+                    RecipeIngredient = testIngredient,
+                    RecipeMeasurement = testMeasurement,
+                    RecipeIngredientAmount = 5
                 };
 
+                //await _unitOfWork.Recipes.Add(testRecipe);
                 await _unitOfWork.RecipeIngredientGroups.Add(testRIG);
                 await _unitOfWork.Complete();
 
@@ -816,19 +878,49 @@ namespace CookingPapa.Test
             {
                 var _unitOfWork = new UnitOfWork(context);
 
+                var testUser = new User
+                {
+                    Username = "TestUser",
+                    Password = "TestPass",
+                    Email = "Test@Test.Test"
+                };
+
+                var testOrigin = new RecipeOrigin
+                {
+                    RecipeOriginName = "America"
+                };
+
                 var testRecipe = new Recipe
                 {
-                    RecipeCookTime = 5
+                    RecipeCookTime = 5,
+                    User = testUser,
+                    RecipeOrigin = testOrigin
+                };
+
+                var testIngredient = new RecipeIngredient
+                {
+                    RecipeIngredientName = "TestIngredient"
+                };
+
+                var testMeasurement = new RecipeMeasurement
+                {
+                    RecipeMeasurementName = "TestMeasurement"
                 };
 
                 var testRIG = new RecipeIngredientGroups
                 {
-                    Recipe = testRecipe
+                    Recipe = testRecipe,
+                    RecipeIngredient = testIngredient,
+                    RecipeMeasurement = testMeasurement,
+                    RecipeIngredientAmount = 5
                 };
 
                 var testRIG2 = new RecipeIngredientGroups
                 {
-                    Recipe = testRecipe
+                    Recipe = testRecipe,
+                    RecipeIngredient = testIngredient,
+                    RecipeMeasurement = testMeasurement,
+                    RecipeIngredientAmount = 5
                 };
 
                 await _unitOfWork.RecipeIngredientGroups.Add(testRIG);

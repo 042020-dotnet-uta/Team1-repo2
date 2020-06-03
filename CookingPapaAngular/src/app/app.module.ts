@@ -18,6 +18,7 @@ import { ViewCookbookComponent } from './view-cookbook/view-cookbook.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ApiSearchComponent } from './api-search/api-search.component';
+import { RatingsComponent } from './ratings/ratings.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ApiSearchComponent } from './api-search/api-search.component';
     HomeComponent,
     ProfileComponent,
     ApiSearchComponent,
+    RatingsComponent
   ],
   imports: [
     BrowserModule,

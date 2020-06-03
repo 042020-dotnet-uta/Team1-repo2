@@ -17,6 +17,7 @@ import { AbstractExtendedWebDriver } from 'protractor/built/browser';
 export class SearchRecipeComponent implements OnInit {
   recipes: RecipeVM[];
   searchTerm: string;
+  newrec:RecipeVM;
 
   constructor(private location: Location,
     private recipeSearchService: RecipeSearchService) { }

@@ -21,6 +21,7 @@
     "@angular/router": "~9.1.9",
     "@auth0/auth0-spa-js": "^1.8.2",
     "@types/jquery": "^3.3.38",
+    "font-awesome": "^4.7.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.13.0",
     "zone.js": "~0.10.2"

@@ -6,8 +6,8 @@ namespace CookingPapa.Domain.ViewModels
 {
     public class RecipeIngredientGroupVM
     {
-        public string IngredientName { get; set; }
-        public string MeasurementName { get; set; }
-        public int IngredientAmount { get; set; }
+        public string ingredientName { get; set; }
+        public string measurementName { get; set; }
+        public string ingredientAmount { get; set; }
     }
 }

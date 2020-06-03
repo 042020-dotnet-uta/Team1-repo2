@@ -42,6 +42,7 @@ namespace CookingPapa.Api
                                   builder =>
                                   {
                                       builder.AllowAnyOrigin();
+                                      builder.AllowAnyMethod();
                                   });
             });
 
