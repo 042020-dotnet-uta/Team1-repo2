@@ -15,7 +15,8 @@ import { AuthService } from '../auth.service';
 export class CreateRecipeComponent implements OnInit {
   //Properties
   public newRecipe:PostRecipeVM={
-    UserId:0,
+    RecipeId:0,
+    UserId:5,
     RecipeOriginName:"",
     RecipeName:"",
     RecipeCookTime:null,
@@ -66,8 +67,7 @@ export class CreateRecipeComponent implements OnInit {
   }
   onCreate(){
     this.newRecipe.RecipeIngredientGroupVM = this.newRecipeIngredientGroup;
-    //this.auth.userProfile$.subscribe(g=>this.newRecipe.UserId=<number> + g.sub.toString().substr(6));
-    this.newRecipe.UserId=5;
+    this.auth.userProfile$.subscribe(g=>this.newRecipe.UserId=<number> + g.sub.toString().substr(6));
     console.log(this.newRecipe);
     this.recServ.postRecipe(this.newRecipe).subscribe(
       success=>console.log('success: ', success),

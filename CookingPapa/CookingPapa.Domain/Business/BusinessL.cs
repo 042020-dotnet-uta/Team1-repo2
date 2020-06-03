@@ -123,7 +123,7 @@ namespace CookingPapa.Domain.Business
                     {
                         IngredientName = x.RecipeIngredient.RecipeIngredientName,
                         MeasurementName = x.RecipeMeasurement.RecipeMeasurementName,
-                        IngredientAmount = x.RecipeIngredientAmount
+                        IngredientAmount = x.RecipeIngredientAmount.ToString()
                     });
             };
             if (RecipeReviewInfos.Any())
@@ -185,6 +185,7 @@ namespace CookingPapa.Domain.Business
             List<RecipeIngredientGroups> recipeIngredientGroups = new List<RecipeIngredientGroups>();
             var ingredientId = _unitOfWork.RecipeIngredients.GetAll().Result.ToList();
             var measurementId = _unitOfWork.RecipeMeasurements.GetAll().Result.ToList();
+                       
             foreach (var x in recipeVM.RecipeIngredientGroupVM)
             {
                 var ingredientIds = ingredientId.Find(y => y.RecipeIngredientName == x.IngredientName).Id;
@@ -194,7 +195,7 @@ namespace CookingPapa.Domain.Business
                     Recipe = recipe,
                     RecipeIngredient = _unitOfWork.RecipeIngredients.Get(ingredientIds).Result,
                     RecipeMeasurement = _unitOfWork.RecipeMeasurements.Get(measurementIds).Result,
-                    RecipeIngredientAmount = x.IngredientAmount
+                    RecipeIngredientAmount = int.Parse(x.IngredientAmount)
                 });
             }
             _unitOfWork.Recipes.Add(recipe);
