@@ -1,0 +1,19 @@
+div label, div input, div button{
+    height: 35px;
+    margin-bottom: 5px;
+}
+
+tr:hover {
+    cursor: pointer;
+}
+
+.parent {
+  display: flex;
+}
+.left, .center, .right {
+  flex: 1;
+}
+
+.center {
+    cursor: pointer;
+}

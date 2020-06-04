@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { UserAccessComponent } from './user-access/user-access.component';
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
 import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
 import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
@@ -16,9 +13,6 @@ import { ApiSearchComponent } from './api-search/api-search.component';
 
 const routes: Routes = [
     {path:'', component:HomeComponent},
-    {path:'login', component:LoginComponent},
-    {path:'register', component:RegisterComponent},
-    {path:'user-access', component:UserAccessComponent},
     {path:'edit-recipe/:id', component:EditRecipeComponent},      //, canActivate: [AuthGuard]},
     {path:'view-recipe/:id', component:ViewRecipeComponent},
     {path:'create-recipe', component:CreateRecipeComponent},  //, canActivate: [AuthGuard]},

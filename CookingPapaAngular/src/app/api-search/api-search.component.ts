@@ -15,6 +15,7 @@ export class ApiSearchComponent implements OnInit {
   currentPage: number;
   maxPage: number = 20;
   searchQuery: string;
+  numberOfItems: number = 5;
   
   displayPages(): boolean {
     if (this.recipeData.length >= 1) {
@@ -35,7 +36,8 @@ export class ApiSearchComponent implements OnInit {
     console.log("searched: ", query);
     console.log("offset=" + (page-1)*5 + "&query=" + query);
     /*
-    fetch("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=5&offset=" + (page-1)*4 + "&query=" + query, {
+    fetch("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=" +
+      this.numberOfItems" + "&offset=" + (page-1)*4 + "&query=" + query, {
     "method": "GET",
     "headers": {
       "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
