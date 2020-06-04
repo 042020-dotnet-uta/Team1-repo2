@@ -38,11 +38,11 @@
             </li>
             <span>&emsp; | &emsp;</span>                    
             <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/view-cookbook/']">View cookbook</a>
+              <a class="nav-link text-dark" [routerLink]="['/view-cookbook/']">Cookbook</a>
             </li>
             <span>&emsp; | &emsp;</span>
             <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" (click)="auth.login()" [routerLink]="['/']" *ngIf="!auth.loggedIn">Log In/Sign Up</a>
+              <a class="nav-link text-dark" (click)="auth.login()" [routerLink]="['/']" *ngIf="!auth.loggedIn">Log In</a>
             </li>
 
             <li class="nav-item" [routerLinkActive]="['link-active']">
