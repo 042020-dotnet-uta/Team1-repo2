@@ -218,7 +218,7 @@ namespace CookingPapa.Domain.Business
         
         public async Task<Recipe> DeleteRecipe(int id)
         {
-            await _unitOfWork.RecipeIngredientGroups.DeleteAll(id);
+            var x = await _unitOfWork.RecipeIngredientGroups.DeleteAll(id);
             var recipeDeleted = await _unitOfWork.Recipes.Delete(id);
             return recipeDeleted;
         }
