@@ -23,13 +23,14 @@
           <select [(ngModel)]="newRecipe.RecipeOriginName" name="originName" class="custom-select-sm form-control">
             <option *ngFor="let ing of information.origins">{{ing}}</option>
           </select>
-          
-          <input (click)="err1=false" #newOrigin class="form-control"/>
 
-          <button type="button" (click)="addOrigin(newOrigin.value); newOrigin.value=''" class="btn btn-light btn-outline-dark">Add Origin</button>
-        </div>
+          <button [hidden]="hideBut1" type="button" (click)="hidingButton1()">Add new origin</button>
+          <input [hidden]="!hideBut1" (click)="err1=false" #newOrigin class="form-control"/>
+          <button [hidden]="!hideBut1" type="button" (click)="addOrigin(newOrigin.value); newOrigin.value='';hidingButton1()" class="btn btn-light btn-outline-dark">Add</button>
+          </div>
+
         <div [hidden]="!err1"
-        class="alert alert-danger" style="width: 45vw;">Duplicate exists
+        class="alert alert-danger" style="width: 45vw">Error! Please check your input again.
         </div>
         <br>
   
@@ -39,13 +40,13 @@
           <select #selectedIngredient class="custom-select-sm form-control">
             <option *ngFor="let ing of information.ingredients" >{{ing}}</option>
           </select>
-
-          <input (click)="err2=false" #newIngredient class="form-control" />
-          <button type="button" (click)="addIngredient(newIngredient.value); newIngredient.value=''" class="btn btn-light btn-outline-dark">Add New Ingredient</button>
+          <button [hidden]="hideBut2" type="button" (click)="hidingButton2()">Add new Ingredient</button>
+          <input [hidden]="!hideBut2" (click)="err2=false" #newIngredient class="form-control" />
+          <button [hidden]="!hideBut2" type="button" (click)="addIngredient(newIngredient.value); newIngredient.value='';hidingButton2()" class="btn btn-light btn-outline-dark">Add</button>
 
           </div>
           <div [hidden]="!err2"
-          class="alert alert-danger">Duplicate exists
+          class="alert alert-danger">Error! Please check your input again.
           </div>
 
           <br>
@@ -56,25 +57,25 @@
             <select #selectedMeasure class="custom-select-sm form-control">
               <option *ngFor="let ing of information.measurementUnits" [value]="ing">{{ing}}</option>
             </select>
-            
-            <input (click)="err3=false" #newMeasurement class="form-control" />
-            <button type="button" (click)="addMeasurement(newMeasurement.value); newMeasurement.value=''" class="btn btn-light btn-outline-dark">Add New Measurement</button>
+            <button [hidden]="hideBut3" type="button" (click)="hidingButton3()">Add new Measurement</button>
+            <input [hidden]="!hideBut3" (click)="err3=false" #newMeasurement class="form-control" />
+            <button [hidden]="!hideBut3" type="button" (click)="addMeasurement(newMeasurement.value); newMeasurement.value='';hidingButton3()" class="btn btn-light btn-outline-dark">Add</button>
           
           </div>
           <div [hidden]="!err3"
-            class="alert alert-danger">Duplicate exists
+            class="alert alert-danger">Error! Please check your input again.
           </div>
           <br>
 
           <label class="control-label">Amount: </label>
           <div class="form-group">
-            <input #selectedAmount class="form-control" />
+            <input type="number" #selectedAmount class="form-control" />
 
           </div>
         </div>
                   
         <br>
-        <button type="button" (click)="addIngredientGroup(selectedIngredient.value, selectedAmount.value, selectedMeasure.value)" 
+        <button type="button" (click)="addIngredientGroup(selectedIngredient.value, selectedAmount.value, selectedMeasure.value);err1=false;err2=false;err3=false" 
         class="btn btn-light btn-outline-dark" style="width: 45vw;">Add Ingredient</button>
 
         <br><br>

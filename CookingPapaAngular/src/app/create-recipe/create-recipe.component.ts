@@ -6,6 +6,8 @@ import { GetIngOriMeaInformation } from '../Models/getIngOriMeaInformation';
 import { RecipeIngredientGroupVM } from '../Models/RecipeIngredientGroupVM';
 import { AuthService } from '../auth.service';
 import { CookBookVM } from '../Models/cookBookVM';
+import { Router } from '@angular/router';
+import { isNull, isNullOrUndefined } from 'util';
 
 
 
@@ -32,46 +34,65 @@ export class CreateRecipeComponent implements OnInit {
   };
   public newRecipeIngredientGroup:RecipeIngredientGroupVM[]=[];
   public newCookbook:CookBookVM={userId:0,recipeId:0};
-  public err1:boolean;
-  public err2:boolean;
-  public err3:boolean;
-
+  err1:boolean; err2:boolean; err3:boolean;
+  hideBut1:boolean; hideBut2:boolean; hideBut3:boolean;
   //Functions
+
+  isNullOrWhitespace(input:string) {
+    if (typeof input === 'undefined' || input == null) return true;
+    return input.replace(/\s/g, '').length < 1;
+}
+  hidingButton1(){
+    if(this.hideBut1){return this.hideBut1=false}
+    this.hideBut1=true;
+  }
+  hidingButton2(){
+    if(this.hideBut2){return this.hideBut2=false}
+    this.hideBut2=true;
+  }
+  hidingButton3(){
+    if(this.hideBut3){return this.hideBut3=false}
+    this.hideBut3=true;
+  }
+
   addIngredient(newIngredient:string){
-    if(!this.information.ingredients.find(x=>
-      x.toLowerCase()==newIngredient.toLowerCase())){
+    if(this.information.ingredients.find(x=>
+      x.toLowerCase()==newIngredient.toLowerCase())||this.isNullOrWhitespace(newIngredient)){
+        this.err2 = true;
+    }
+    else{
       this.information.ingredients.push(newIngredient);
-    }else{
-      this.err2 = true;
     }
   }
 
   addOrigin(newOrigin:string){
-    if(!this.information.origins.find(x=>
-      x.toLowerCase()==newOrigin.toLowerCase())){
-      this.information.origins.push(newOrigin);    
+    if(this.information.origins.find(x=>
+      x.toLowerCase()==newOrigin.toLowerCase())||this.isNullOrWhitespace(newOrigin)){
+        this.err1=true; 
     }else{
-      this.err1=true;
+      this.information.origins.push(newOrigin);
+      
     }
   }
 
   addMeasurement(newMeasurement:string){
-    if(!this.information.measurementUnits.find(x=>
-      x.toLowerCase()==newMeasurement.toLowerCase())){
-      this.information.measurementUnits.push(newMeasurement);
+    if(this.information.measurementUnits.find(x=>
+      x.toLowerCase()==newMeasurement.toLowerCase())||this.isNullOrWhitespace(newMeasurement)){
+        this.err3 = true;
     }else{
-      this.err3 = true;
+      this.information.measurementUnits.push(newMeasurement)     
     }
   }
 
   addIngredientGroup(selectedIngredient:string,
     selectedAmount:number,selectedMeasure:string){
+      if(!this.isNullOrWhitespace(selectedAmount.toString())){
       this.newRecipeIngredientGroup.push({
         ingredientName:selectedIngredient,
         ingredientAmount:selectedAmount,
         measurementName:selectedMeasure
       }
-      )
+      )}
       console.log(this.newRecipeIngredientGroup);
     }
 
@@ -87,16 +108,6 @@ export class CreateRecipeComponent implements OnInit {
         this.information.origins = g.origins;
       console.log(g)});
   }
-  // addToCookbook():void{
-  //   this.newCookbook={
-  //     userId:this.newRecipe.UserId,
-  //     recipeId:this.newRecipe.RecipeId};
-  //     console.log(this.newCookbook);
-  //     this.recServ.postCookbook(this.newCookbook).subscribe(
-  //       success=>console.log('success: ',success),
-  //       error=>console.log('error')
-  //       );
-  //   }
 
   onCreate(){
     this.newRecipe.RecipeIngredientGroupVM = this.newRecipeIngredientGroup;
@@ -104,9 +115,9 @@ export class CreateRecipeComponent implements OnInit {
     console.log(this.newRecipe);
     this.recServ.postRecipe(this.newRecipe).subscribe(g=>{
       this.newRecipe.RecipeId=g.RecipeId;
-      this.location.back();
-    }   
-    );  
+    });          
+    confirm("Success! Recipe has been created.");
+    this.router.navigateByUrl(`/view-recipe/${<number>this.newRecipe.RecipeId}`);
   }
 
   goBack(): void {
@@ -116,7 +127,8 @@ export class CreateRecipeComponent implements OnInit {
   //Initialization
   constructor(private location: Location,
     private recServ:RecipeDetailService,
-    private auth:AuthService) {
+    private auth:AuthService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
