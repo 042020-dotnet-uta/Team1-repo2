@@ -3,7 +3,7 @@
       class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
     >
       <div class="container">
-        <a class="navbar-brand" [routerLink]="['/']">Cooking Papa</a>
+        <img [routerLink]="['/']"  src="../../assets/b650ddfb-0f0a-47b8-b9bb-96faf3ddec39_200x200.png">
         <button
           class="navbar-toggler"
           type="button"
@@ -15,7 +15,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div
+        <div 
           class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
           [ngClass]="{ show: isExpanded }"
         >
@@ -32,22 +32,23 @@
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" (click)="auth.logout()" [routerLink]="['/']" *ngIf="auth.loggedIn">Log Out</a>
             </li>
-          
+            <span>&emsp; | &emsp;</span>
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/search-recipe']">Search Recipe</a>
             </li>
-
+            <span>&emsp; | &emsp;</span>
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/api-search']">External Search</a>
             </li>
-
+            <span>&emsp; | &emsp;</span>
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/create-recipe']">Create Recipe</a>
             </li>
-                                    
+            <span>&emsp; | &emsp;</span>                    
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/view-cookbook/']">View cookbook</a>
             </li>
+            <span *ngIf="auth.loggedIn">&emsp; | &emsp;</span>
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/profile']" *ngIf="auth.loggedIn">Profile</a>
             </li>          
