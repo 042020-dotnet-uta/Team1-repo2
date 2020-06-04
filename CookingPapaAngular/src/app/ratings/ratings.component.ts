@@ -4,9 +4,6 @@ import { AuthService } from '../auth.service';
 
 import { RecipeReviewVM } from '../Models/recipeReviewVM';
 import { ReviewsService } from '../reviews.service';
-import { RecipeReviewPostVM } from '../Models/RecipeReviewPostVM';
-
-import { ITS_JUST_ANGULAR } from '@angular/core/src/r3_symbols';
 
 @Component({
   selector: 'app-ratings',
@@ -26,9 +23,10 @@ export class RatingsComponent implements OnInit {
   rating: number;
   comment: string;
 
-  review: RecipeReviewPostVM;
+  review: RecipeReviewVM;
   reviews: RecipeReviewVM[];
   reviewList: any[];
+  reviewed: boolean = false;
 
   //Create a function which receives the value counting of stars click, 
   //and according to that value we do change the value of that star in list.
@@ -46,6 +44,7 @@ export class RatingsComponent implements OnInit {
   submitReview(comment: string) {
     this.review.recipeReviewComment = comment;
     this.reviewsService.submitReview(this.review);
+    this.reviewed = true;
   }
   private getUserId() {
     this.auth.userProfile$.subscribe(data => {
@@ -83,9 +82,10 @@ export class RatingsComponent implements OnInit {
   ngOnInit(): void {
     this.getUserId();
     this.review = {
+      recipeReviewId:null,
       recipeId: this.recipeId,
       recipeReviewRating: 0,
-      userId: this.userId,
+      userId: 1,//this.userId,
       recipeReviewComment: ''
     }
     this.getReviews();
