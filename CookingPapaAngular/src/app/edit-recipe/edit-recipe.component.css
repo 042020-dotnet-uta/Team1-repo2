@@ -24,7 +24,7 @@
    }
 
    .borderBox {
-    border: 1px solid black;
+    border: 1px solid white;
     width: 45vw;
     border-radius: 25px;
    }
@@ -48,3 +48,13 @@
    .width {
      width: 45vw;
    }
+
+   label{
+    font-weight: bold;
+    color: white;
+  }
+
+   td {
+    padding-left: 30px;
+    color: white;
+  }

@@ -82,11 +82,27 @@
         <label class="control-label">List of ingredients for this recipe: </label>
         <br>
 
-        <ul class="width">
+        <!-- <ul class="width">
           <li *ngFor="let ing of newRecipeIngredientGroup">
             {{ing.ingredientAmount}} {{ing.measurementName}} of {{ing.ingredientName}}
             &emsp;<a href="javascript:void(0)" class="border border-danger bg-danger text-white" (click)="removeIngredient(ing)">Remove</a></li>>
-        </ul>
+        </ul> -->
+
+        <table style="width: 45vw;">
+          <tr *ngFor="let ing of newRecipeIngredientGroup">
+            <td>
+              &#8226; &emsp; {{ing.ingredientAmount}} {{ing.measurementName}} of {{ing.ingredientName}}
+            </td>
+            <td>
+              <a href="javascript:void(0)" class="border border-danger bg-danger text-white" (click)="removeIngredient(ing)">Remove</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              >
+            </td>
+          </tr>
+        </table>
 
         <div class="form-group">
           <label class="control-label">Instructions: </label>
