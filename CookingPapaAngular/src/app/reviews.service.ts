@@ -11,7 +11,7 @@ import { RecipeReviewVM } from './Models/recipeReviewVM';
 export class ReviewsService {
 
   constructor(private http: HttpClient) { }
-      reviewUrl: string = 'https://cookingpapa.azurewebsites.net/api/RecipeReviews/';
+      reviewUrl: string = 'https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/RecipeReviews/';
       
       submitReview(review:RecipeReviewVM){
         return this.http.post<RecipeReviewVM>(this.reviewUrl, review).toPromise()
