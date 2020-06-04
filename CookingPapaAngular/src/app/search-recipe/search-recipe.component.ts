@@ -27,14 +27,15 @@ export class SearchRecipeComponent implements OnInit {
   }
   search(searchTerm: string): void {
     this.searchTerm = searchTerm;
-    if (searchTerm.length === 0) {
-      this.recipes = null;
-    }
-    else {
+    // if (searchTerm.length === 0) {
+    //   this.recipes = null;
+    // }
+    // else {
       this.recipeSearchService.getRecipes(this.searchTerm)
         .then(recipes => this.recipes = recipes);
-    }
+    //}
   }
   ngOnInit(): void {
+    this.search("");
   }
 }

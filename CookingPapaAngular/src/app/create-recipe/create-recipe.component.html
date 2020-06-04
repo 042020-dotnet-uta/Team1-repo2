@@ -1,23 +1,23 @@
 
 <h1>Create Recipe</h1>
 <hr />
-<body style="width: 50vw;">
+
   <div class="row">
     <div class="col-md-4">
       <form #createRecipe="ngForm" (ngSubmit)="onCreate();">
         <div class="form-group">
-          <label class="control-label text-danger">Recipe Name: </label>
+          <label class="control-label">Recipe Name: </label>
           <input [(ngModel)]="newRecipe.RecipeName" name="recipeName" type="text" class="form-control" #recipeName="ngModel" required />
           <div [hidden]="recipeName.valid || recipeName.pristine"
           class="alert alert-danger">Recipe Name is required</div>
         </div>
   
         <div class="form-group">
-          <label class="control-label text-danger">Cook Time (in minutes):  </label>
+          <label class="control-label">Cook Time (in minutes):  </label>
           <input [(ngModel)]="newRecipe.RecipeCookTime" name="cookTime" type="number" min="1" class="form-control" id="CookTime" required/>
         </div>
 
-        Origin:
+        <label class="control-label">Origin:</label>
         <div class="origins" style="display:flex;width: 45vw;">
 
           <select [(ngModel)]="newRecipe.RecipeOriginName" name="originName" class="custom-select-sm form-control">
@@ -34,7 +34,7 @@
         <br>
   
         <div class="borderBox">
-          <label class="control-label text-danger">Ingredient: </label>
+          <label class="control-label">Ingredient: </label>
           <div class="origins">
           <select #selectedIngredient class="custom-select-sm form-control">
             <option *ngFor="let ing of information.ingredients" >{{ing}}</option>
@@ -50,7 +50,7 @@
 
           <br>
 
-          <label class="control-label text-danger">Measurement Unit: </label>
+          <label class="control-label">Measurement Unit: </label>
           <div class="origins">
 
             <select #selectedMeasure class="custom-select-sm form-control">
@@ -66,7 +66,7 @@
           </div>
           <br>
 
-          <label class="control-label text-danger">Amount: </label>
+          <label class="control-label">Amount: </label>
           <div class="form-group">
             <input #selectedAmount class="form-control" />
 
@@ -78,7 +78,7 @@
         class="btn btn-light btn-outline-dark" style="width: 45vw;">Add Ingredient</button>
 
         <br><br>
-        <label class="control-label text-danger">List of ingredients for this recipe: </label>
+        <label class="control-label">List of ingredients for this recipe: </label>
         <br>
 
         <ul class="width">
@@ -88,7 +88,7 @@
         </ul>
 
         <div class="form-group">
-          <label class="control-label text-danger">Instructions: </label>
+          <label class="control-label">Instructions: </label>
           <textarea [(ngModel)]="newRecipe.RecipeInstruction" name="instruction" id="myTextArea" rows="3" cols="80" style="width: 45vw;">
             Your text here
           </textarea>
@@ -98,4 +98,4 @@
       </form>
     </div>
   </div>  
-</body>
+

@@ -1,5 +1,6 @@
 <h1>Search Recipe</h1>
 <hr />
+
 <div id="search-component">
   <div>
     <label>Recipe Name:
@@ -10,18 +11,17 @@
       Search
     </button>
   </div>
-
+<br>
   <div *ngIf="recipes">
-     <ul class="search-result">
-      <li *ngFor="let recipe of recipes" >
-        <a routerLink="/view-recipe/{{recipe.recipeId}}">
+     <ul class="search-result list-group">
+      <li class="list-group-item list-group-item-action list-group-item-secondary text-center font-weight-bold" 
+      *ngFor="let recipe of recipes" routerLink="/view-recipe/{{recipe.recipeId}}">
           {{recipe.recipeName}}
-        </a>
       </li>
     </ul>
   
   </div>
-
+<br>
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
-
+</div>
 
