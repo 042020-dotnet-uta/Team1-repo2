@@ -1,5 +1,6 @@
 body{
     height:100%;
+    min-height: 100vh;
     width: 100%;
     background-repeat:none;
     background-position: center;
@@ -8,4 +9,9 @@ body{
     /*
     background-image: url("../assets/food-kitchen-cutting-board-cooking-high-resolution-background-images-desktop-images-of-windows-download-wallpaper-amazing-cool-best-wallpaper-ever-images-pictures-160.jpg");
     */
+    color:white;
+}
+
+body div {
+    color:white;
 }
