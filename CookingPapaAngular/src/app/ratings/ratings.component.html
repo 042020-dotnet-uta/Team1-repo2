@@ -1,16 +1,30 @@
 <hr />
+<table border=1>
+  <caption>Reviews</caption>
+  <tr>
+    <th>ID</th>
+    <th>Rating</th>
+    <th>Comment</th>
+  </tr>
+  <tr *ngFor="let review of reviewList">
+    <td>{{review.recipeReviewId}}</td>
+    <td>
+      <a *ngFor="let item of review.recipeReviewRating">
+        <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+      </a>
+    </td>
+    <td>{{review.recipeReviewComment}}</td>
+  </tr>
+</table>
+<hr />
 <div>
-<p>Rating goes here</p> 
-  <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">  
-    <!--<i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>-->
-    <i *ngIf="item" class="fa fa-star-o"></i>    
-    <i *ngIf="!item" class="fa fa-star"></i>   
-   </a> 
-   <br>   
+  <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">
+    <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+  </a>
+  <br>
 </div>
-
 <div>
-    <textarea #comment></textarea>
+  <textarea #comment></textarea>
 </div>
-    <button class="btn btn-light btn-outline-dark" (click)="submitReview(comment.value)">Submit</button>
+<button class="btn btn-light btn-outline-dark" (click)="submitReview(comment.value)">Submit</button>
 <hr />

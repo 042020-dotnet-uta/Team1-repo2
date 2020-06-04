@@ -1,0 +1,20 @@
+
+  caption {
+    padding: 10px;
+    caption-side: top;
+    font-weight: bolder;
+    font-size: larger;
+    color: black;
+    text-align: center;
+}
+.header{
+    font-size: larger;
+    font-weight: bolder;
+}
+th{
+    text-align: center;
+}
+th,td{
+    padding-left: 5px;
+    padding-right: 5px;
+}
