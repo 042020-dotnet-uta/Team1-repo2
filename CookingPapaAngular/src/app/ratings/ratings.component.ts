@@ -15,6 +15,7 @@ export class RatingsComponent implements OnInit {
     private reviewsService: ReviewsService) { }
 
   @Input() recipeId: number;
+  @Input() creatorId: number;
 
   currentUser: any;
   userId: number;
@@ -27,6 +28,8 @@ export class RatingsComponent implements OnInit {
   reviews: RecipeReviewVM[];
   reviewList: any[];
   reviewed: boolean = false;
+  showAddReview = false;
+  okToSubmit = false;
 
   //Create a function which receives the value counting of stars click, 
   //and according to that value we do change the value of that star in list.
@@ -40,6 +43,7 @@ export class RatingsComponent implements OnInit {
         this.starList[i] = true;
       }
     }
+    this.okToSubmit = true;
   }
   submitReview(comment: string) {
     this.review.recipeReviewComment = comment;
@@ -62,6 +66,9 @@ export class RatingsComponent implements OnInit {
     }
     ;
     this.reviewed = true;
+  }
+  openCloseReview(){
+    this.showAddReview = true;
   }
   private getUserId() {
     this.auth.userProfile$.subscribe(data => {
@@ -99,7 +106,6 @@ export class RatingsComponent implements OnInit {
     }
     return item;
   }
-
   ngOnInit(): void {
     this.getUserId();
     this.review = {
@@ -110,5 +116,7 @@ export class RatingsComponent implements OnInit {
       recipeReviewComment: ''
     }
     this.getReviews();
+    console.log('creatorId = ', this.creatorId);
+    console.log('userId = ', this.userId);
   }
 }

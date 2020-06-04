@@ -24,15 +24,7 @@
                 [routerLinkActive]="['link-active']"
                 [routerLinkActiveOptions]="{ exact: true }">
             </li>
-            
-            <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" (click)="auth.login()" [routerLink]="['/']" *ngIf="!auth.loggedIn">Log In/Sign Up</a>
-            </li>
-
-            <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" (click)="auth.logout()" [routerLink]="['/']" *ngIf="auth.loggedIn">Log Out</a>
-            </li>
-            <span>&emsp; | &emsp;</span>
+      
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/search-recipe']">Search Recipe</a>
             </li>
@@ -46,13 +38,16 @@
             </li>
             <span>&emsp; | &emsp;</span>                    
             <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/view-cookbook/']">View cookbook</a>
+              <a class="nav-link text-dark" [routerLink]="['/view-cookbook/']">Cookbook</a>
             </li>
-            <span *ngIf="auth.loggedIn">&emsp; | &emsp;</span>
+            <span>&emsp; | &emsp;</span>
             <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/profile']" *ngIf="auth.loggedIn">{{getProfileName()}}</a>
-            </li>            
-            <img class="profileImage"*ngIf="auth.loggedIn" src="{{getProfileImage()}}">
+              <a class="nav-link text-dark" (click)="auth.login()" [routerLink]="['/']" *ngIf="!auth.loggedIn">Log In</a>
+            </li>
+
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <img class="profileImage"*ngIf="auth.loggedIn" [routerLink]="['/profile']" src="{{getProfileImage()}}">
+            </li>    
           </ul>
         </div>
       </div>
