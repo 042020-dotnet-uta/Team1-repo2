@@ -1,5 +1,5 @@
 <hr />
-<div *ngIf="userId !== creatorId">
+<div *ngIf="userId !== creatorId && auth.loggedIn">
   <h4 (click)="openCloseReview()" [ngClass]="{'show':!showAddReview,'hide':showAddReview}">Add a review</h4> 
   <div *ngIf="showAddReview">
     <div>
