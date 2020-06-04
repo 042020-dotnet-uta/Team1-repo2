@@ -1,9 +1,19 @@
 img {
     border-radius: 8px;
-    height: 25%;
-    width: 25%;
+    height: 20%;
+    width: 20%;
 }
 
 div {
-    text-align: center;
+    text-align: left;
+    font-size: 40px;
+}
+
+table {
+    text-align: left;
+    font-size: 40px;
+}
+
+td {
+    padding-left: 40px;
 }

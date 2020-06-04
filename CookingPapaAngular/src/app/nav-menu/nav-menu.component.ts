@@ -10,6 +10,7 @@ export class NavMenuComponent implements OnInit {
   isExpanded = false;
 
   profileImage: string;
+  profileName: string;
 
   collapse() {
     this.isExpanded = false;
@@ -26,6 +27,13 @@ export class NavMenuComponent implements OnInit {
       this.profileImage = data.picture;
     });
     return this.profileImage;
+  }
+
+  getProfileName(): string {
+    this.auth.userProfile$.subscribe(data => {
+      this.profileName = data.name;
+    });
+    return this.profileName;
   }
 
   ngOnInit() {

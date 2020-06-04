@@ -50,7 +50,7 @@
             </li>
             <span *ngIf="auth.loggedIn">&emsp; | &emsp;</span>
             <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/profile']" *ngIf="auth.loggedIn">Profile</a>
+              <a class="nav-link text-dark" [routerLink]="['/profile']" *ngIf="auth.loggedIn">{{getProfileName()}}</a>
             </li>            
             <img class="profileImage"*ngIf="auth.loggedIn" src="{{getProfileImage()}}">
           </ul>
