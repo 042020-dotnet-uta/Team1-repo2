@@ -4,9 +4,21 @@ textarea {
     min-height: 50px;
   }
   i{
-      color: darkorange;
+      color: crimson;
   }
   caption {
     padding: 10px;
     caption-side: top;
+    font-weight: bolder;
+    font-size: larger;
+    color: black;
+    text-align: center;
+}
+th{
+    text-align: center;
+    font-weight: bolder;
+}
+th,td{
+    padding-left: 5px;
+    padding-right: 5px;
 }

@@ -34,6 +34,7 @@ namespace CookingPapa.Api.Controllers
         public async Task<ActionResult<List<RecipeReviewVM>>> GetRecipeReview(int id)
         {
             //var recipeReview = await _unitOfWork.RecipeReviews.GetEager(id);
+            
             var reviews = await _businessL.GetReviewsForRecipe(id);
             if (reviews == null)
             {

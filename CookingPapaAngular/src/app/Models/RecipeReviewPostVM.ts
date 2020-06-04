@@ -1,6 +1,4 @@
-//For put/post RecipeReviewController
-export interface RecipeReviewVM{
-    recipeReviewId: number;
+export interface RecipeReviewPostVM{
     userId: number;
     recipeId: number;
     recipeReviewRating: 0|1|2|3|4|5;

@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { RecipeReviewVM } from './Models/recipeReviewVM';
+import { RecipeReviewPostVM } from './Models/RecipeReviewPostVM';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,7 @@ export class ReviewsService {
   constructor(private http: HttpClient) { }
       reviewUrl: string = /*environment.cookingPapaUrl + 'RecipeReviews/';*/'http://localhost:64480/api/RecipeReviews/';
       
-      submitReview(review:RecipeReviewVM){
-        //this.ID = 1;
+      submitReview(review:RecipeReviewPostVM){
         return this.http.post<RecipeReviewVM>(this.reviewUrl, review).toPromise()
         .then(review => review);
       }
