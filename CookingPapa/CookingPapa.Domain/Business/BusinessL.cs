@@ -76,17 +76,20 @@ namespace CookingPapa.Domain.Business
         {
             var recipes = await _unitOfWork.Recipes.GetAllEager();
             List<GetRecipesVM> newRecipesList = new List<GetRecipesVM>();
-            foreach(var x in recipes)
+            if (recipes != null)
             {
-                newRecipesList.Add(new GetRecipesVM()
+                foreach (var x in recipes)
                 {
-                    RecipeId = x.Id,
-                    UserId = x.User.Id,
-                    UserName = x.User.Username,
-                    RecipeName = x.RecipeName,
-                    RecipeOrigin = x.RecipeOrigin.RecipeOriginName,
-                    RecipeCookTime = x.RecipeCookTime
-                });
+                    newRecipesList.Add(new GetRecipesVM()
+                    {
+                        RecipeId = x.Id,
+                        UserId = x.User.Id,
+                        UserName = x.User.Username,
+                        RecipeName = x.RecipeName,
+                        RecipeOrigin = x.RecipeOrigin.RecipeOriginName,
+                        RecipeCookTime = x.RecipeCookTime
+                    });
+                }
             }
             return newRecipesList;
         }

@@ -6,3 +6,7 @@ textarea {
   i{
       color: darkorange;
   }
+  caption {
+    padding: 10px;
+    caption-side: top;
+}
