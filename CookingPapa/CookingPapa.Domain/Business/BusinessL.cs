@@ -76,17 +76,20 @@ namespace CookingPapa.Domain.Business
         {
             var recipes = await _unitOfWork.Recipes.GetAllEager();
             List<GetRecipesVM> newRecipesList = new List<GetRecipesVM>();
-            foreach(var x in recipes)
+            if (recipes != null)
             {
-                newRecipesList.Add(new GetRecipesVM()
+                foreach (var x in recipes)
                 {
-                    RecipeId = x.Id,
-                    UserId = x.User.Id,
-                    UserName = x.User.Username,
-                    RecipeName = x.RecipeName,
-                    RecipeOrigin = x.RecipeOrigin.RecipeOriginName,
-                    RecipeCookTime = x.RecipeCookTime
-                });
+                    newRecipesList.Add(new GetRecipesVM()
+                    {
+                        RecipeId = x.Id,
+                        UserId = x.User.Id,
+                        UserName = x.User.Username,
+                        RecipeName = x.RecipeName,
+                        RecipeOrigin = x.RecipeOrigin.RecipeOriginName,
+                        RecipeCookTime = x.RecipeCookTime
+                    });
+                }
             }
             return newRecipesList;
         }
@@ -249,6 +252,24 @@ namespace CookingPapa.Domain.Business
             return information;
         }
 
+        public async Task<List<RecipeReviewVM>> GetReviewsForRecipe(int recipeId)
+        {
+            var reviewsList = new List<RecipeReviewVM>();
+            var reviews = await _unitOfWork.RecipeReviews.GetByRecipeEager(recipeId);
+            foreach (var review in reviews)
+            {
+                reviewsList.Add(new RecipeReviewVM
+                {
+                    RecipeReviewId      = review.Id,
+                    RecipeId            = review.Recipe.Id,
+                    UserId              = review.User.Id,
+                    RecipeReviewRating  = review.RecipeReviewRating,
+                    RecipeReviewComment = review.RecipeReviewComment
+                });
+            }
+
+            return reviewsList;
+        }
         public async Task<RecipeReview> PutRecipeReview(RecipeReviewVM recipeReview)
         {
             var edittedReview = await functionForReview(recipeReview);

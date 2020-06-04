@@ -1,15 +1,13 @@
-<div style="border: 1px solid red">view-recipe Component</div>
-<button class="btn btn-dark" (click)="getRecipe()">Ask the Oracle</button>
-<div *ngIf="test">
-
 <div>
   <!--this div box should be on the left side-->
   <div>
     <div>
       <div>
         <h1>{{test.recipeName}}</h1>
-        <h5>Recipe Cook Time: {{test.recipeCooktime}}---
-          Recipe Origin:{{test.recipeOrigin}} </h5>   
+        <hr />
+        <span class="header">Recipe Cook Time:</span> {{test.recipeCooktime}} minutes
+          <br/>
+          <span class="header">Recipe Origin:</span> {{test.recipeOrigin}}  
       </div>
 
       <div>
@@ -18,15 +16,21 @@
         <button *ngIf="!ownRecipe&&notGuest&&!inCookbook" (click)="addToCookbook()" class="btn btn-sm btn-light btn-outline-dark">CookBook it!</button>
       </div>
     </div>
-
-      <div class="border border-dark" *ngFor="let item of test2">
-        {{item.ingredientName}}---{{item.measurementName}}---{{item.ingredientAmount}}
-      </div>
-
+    <table border=1>  
+      <caption>Ingredients</caption>  
+      <tr>  
+        <th>Ingredient</th> 
+        <th>Amount</th>  
+      </tr>  
+      <tr *ngFor="let item of test2">  
+        <td>{{item.ingredientName}}</td>  
+        <td>{{item.ingredientAmount}} {{item.measurementName}}</td>   
+      </tr>  
+    </table>
   </div>
-
+<br/>
   <div>
-    <h2>Instructions:</h2>
+    <h4>Instructions:</h4>
     {{test.recipeDescription}}<br/>
   </div>
 
@@ -35,4 +39,3 @@
 
 
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
-</div>

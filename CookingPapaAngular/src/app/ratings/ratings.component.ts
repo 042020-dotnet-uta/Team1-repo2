@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 
 import { RecipeReviewVM } from '../Models/recipeReviewVM';
 import { ReviewsService } from '../reviews.service';
+import { ITS_JUST_ANGULAR } from '@angular/core/src/r3_symbols';
 
 @Component({
   selector: 'app-ratings',
@@ -12,23 +13,24 @@ import { ReviewsService } from '../reviews.service';
 })
 export class RatingsComponent implements OnInit {
   constructor(public auth: AuthService, 
-              private reviewsService: ReviewsService) { }
+              private reviewsService: ReviewsService) {  }
 
   @Input() recipeId: number;
 
   currentUser:any;
-  ID : number;
+  userId : number;
 
   starList: boolean[] = [true,true,true,true,true];// create a list which contains status of 5 stars
   rating:number;  
   comment:string;
 
   review: RecipeReviewVM;
+  reviews: RecipeReviewVM[];
 
   //Create a function which receives the value counting of stars click, 
   //and according to that value we do change the value of that star in list.
   setStar(data:any){
-        this.review.RecipeReviewRating=data+1;                               
+        this.review.recipeReviewRating=data+1;                               
         for(var i=0;i<=4;i++){  
           if(i<=data){  
             this.starList[i]=false;  
@@ -39,23 +41,32 @@ export class RatingsComponent implements OnInit {
        }  
    }
    submitReview(comment:string){
-     this.review.RecipeReviewComment = comment;
+     this.review.recipeReviewComment = comment;
      this.reviewsService.submitReview(this.review);
    }
    private getUserId(){
     this.auth.userProfile$.subscribe(data => {
       this.currentUser = data;
-      this.ID = <number> + this.currentUser.sub.toString().substr(6);
+      this.userId = <number> + this.currentUser.sub.toString().substr(6);
     });
+   }
+   private getReviews(){
+      this.reviewsService.getReviews(this.review.recipeId)
+      .then(reviews => this.reviews = reviews);
+
+     this.reviews.forEach(element => {
+       console.log(element.recipeReviewRating);
+     });
    }
   ngOnInit(): void {
     this.getUserId();
     this.review = {
-      RecipeReviewId:null,
-      RecipeId: this.recipeId,
-      RecipeReviewRating:0,
-      UserId: 1,//this.ID,
-      RecipeReviewComment: ''
+      recipeReviewId:null,
+      recipeId: this.recipeId,
+      recipeReviewRating:0,
+      userId: this.userId,
+      recipeReviewComment: ''
     }
+    this.getReviews();
   }
 }

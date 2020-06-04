@@ -31,14 +31,15 @@ namespace CookingPapa.Api.Controllers
         }
         // GET: api/RecipeReviews/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RecipeReview>> GetRecipeReview(int id)
+        public async Task<ActionResult<List<RecipeReviewVM>>> GetRecipeReview(int id)
         {
-            var recipeReview = await _unitOfWork.RecipeReviews.GetEager(id);
-            if (recipeReview == null)
+            //var recipeReview = await _unitOfWork.RecipeReviews.GetEager(id);
+            var reviews = await _businessL.GetReviewsForRecipe(id);
+            if (reviews == null)
             {
                 return NotFound();
             }
-            return recipeReview;
+            return reviews;
         }
 
         // PUT: api/RecipeReviews/5

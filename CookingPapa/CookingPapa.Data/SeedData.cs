@@ -199,7 +199,36 @@ namespace CookingPapa.Data
                 #endregion
 
                 #region Add RecipeReviews
-
+                context.AddRange(
+                    new RecipeReview
+                    {
+                        Recipe = recipe1,
+                        RecipeReviewComment = "Test Review 1",
+                        RecipeReviewRating = 1,
+                        User = user1
+                    },
+                    new RecipeReview
+                    {
+                        Recipe = recipe1,
+                        RecipeReviewComment = "Test Review 2",
+                        RecipeReviewRating = 2,
+                        User = user2
+                    },
+                    new RecipeReview
+                    {
+                        Recipe = recipe2,
+                        RecipeReviewComment = "Test Review 3",
+                        RecipeReviewRating = 3,
+                        User = user1
+                    },
+                    new RecipeReview
+                    {
+                        Recipe = recipe2,
+                        RecipeReviewComment = "Test Review 4",
+                        RecipeReviewRating = 4,
+                        User = user2
+                    }
+                );
                 #endregion
 
                 #region Add CookBooks

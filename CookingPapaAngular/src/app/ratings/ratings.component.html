@@ -1,6 +1,5 @@
 <hr />
 <div>
-<p>Rating goes here</p> 
   <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">  
     <!--<i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>-->
     <i *ngIf="item" class="fa fa-star-o"></i>    
@@ -8,9 +7,27 @@
    </a> 
    <br>   
 </div>
-
 <div>
     <textarea #comment></textarea>
 </div>
     <button class="btn btn-light btn-outline-dark" (click)="submitReview(comment.value)">Submit</button>
+<hr />
+<table border=1>  
+  <caption>Reviews</caption>  
+  <tr>  
+    <td>ID</td> 
+    <td>Rating</td>   
+    <td>Comments</td>  
+  </tr>  
+  <tr *ngFor="let review of reviews">  
+    <td>{{review.RecipeReviewId}}</td>  
+    <td>  
+      <!--<a *ngFor="let item of record.myList; let i=index " (click)="setStarTable(record,i)">  
+        <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>  
+      </a> -->
+      {{review.RecipeReviewRating}} 
+    </td> 
+    <td>{{review.RecipeReviewComment}}</td>   
+  </tr>  
+</table>
 <hr />
