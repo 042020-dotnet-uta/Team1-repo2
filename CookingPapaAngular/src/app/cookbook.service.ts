@@ -15,23 +15,16 @@ export class CookbookService {
     public auth: AuthService) { }
       currentUser;
       ID : number;
-      cookbookUrl: string = environment.cookingPapaUrl + 'Cookbooks/';/*'http://localhost:64480/api/Cookbooks/';*/
+      cookbookUrl: string = 'https://cookingpapa.azurewebsites.net/api/Cookbooks/';
       
   ngOnInit(): void {
-    // this.auth.userProfile$.subscribe(data => {
-    //   this.currentUser = data;
-    //   this.ID = <number> + this.currentUser.sub.toString().substr(6);
-    // });
   }
   
   getCookbookRecipes() {
-    //Temp for testing
-    //this.ID = 1;
     this.auth.userProfile$.subscribe(data => {
       this.currentUser = data;
       this.ID = <number> + this.currentUser.sub.toString().substr(6);
     });
-
      return this.http.get<CookbookResponse[]>(this.cookbookUrl + this.ID).toPromise()
        .then(recipe => recipe);
   }

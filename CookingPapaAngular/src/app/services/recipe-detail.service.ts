@@ -15,27 +15,28 @@ import { CookBookVM } from '../Models/cookBookVM';
 })
 export class RecipeDetailService {
   constructor(private http: HttpClient) { }
-JDLocalUrl = 'http://localhost:64480/api/';
+  cookingPapaUrl = 'https://cookingpapa.azurewebsites.net/api/';
+
 getRecipe(recipeId:number){
-  return this.http.get<RecipeInformationsVM>(environment.cookingPapaUrl /*this.JDLocalUrl*/ + `recipes/${recipeId}`)
+  return this.http.get<RecipeInformationsVM>(this.cookingPapaUrl + `recipes/${recipeId}`)
 }
 getIngOriMeaInformation(){
-  return this.http.get<GetIngOriMeaInformation>(environment.cookingPapaUrl /*this.JDLocalUrl*/ + `Information`)
+  return this.http.get<GetIngOriMeaInformation>(this.cookingPapaUrl + `Information`)
 }
 postRecipe(newRecipe:PostRecipeVM){
-  return this.http.post<PostRecipeVM>('https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/'/*environment.cookingPapaUrl this.JDLocalUrl*/ + `recipes`,newRecipe)
+  return this.http.post<PostRecipeVM>(this.cookingPapaUrl + `recipes`,newRecipe)
 }
 putRecipe(newRecipe:PostRecipeVM){
-  return this.http.put<PostRecipeVM>('https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/'/*environment.cookingPapaUrl*/ + `recipes`,newRecipe)
+  return this.http.put<PostRecipeVM>(this.cookingPapaUrl + `recipes`,newRecipe)
 }
 deleteRecipe(recipeId:number){
-  return this.http.delete<number>(/*environment.cookingPapaUrl*/ this.JDLocalUrl + `recipes/${recipeId}`)
+  return this.http.delete<number>(this.cookingPapaUrl + `recipes/${recipeId}`)
 }
 postCookbook(cookBook:CookBookVM){
-  return this.http.post<CookBookVM>(/*'https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/'*/ this.JDLocalUrl + `cookbooks`,cookBook)
+  return this.http.post<CookBookVM>(this.cookingPapaUrl + `cookbooks`,cookBook)
 }
 getCookbook(userId:number){
-  return this.http.get<CookBookVM[]>(/*'https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/'*/ this.JDLocalUrl + `cookbooks/${userId}`)
+  return this.http.get<CookBookVM[]>(this.cookingPapaUrl + `cookbooks/${userId}`)
 
 }
 }
