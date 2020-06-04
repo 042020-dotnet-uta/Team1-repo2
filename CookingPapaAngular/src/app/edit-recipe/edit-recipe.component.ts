@@ -104,7 +104,8 @@ export class EditRecipeComponent implements OnInit {
       this.recServ.putRecipe(this.newRecipe).subscribe(
         success=>console.log('success: ', success),
         error=>console.log('error')
-      );      
+      );   
+      this.goBack();   
   }
 
   constructor(private location:Location,

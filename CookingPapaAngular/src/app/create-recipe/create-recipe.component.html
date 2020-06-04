@@ -9,7 +9,7 @@
           <label class="control-label">Recipe Name: </label>
           <input [(ngModel)]="newRecipe.RecipeName" name="recipeName" type="text" class="form-control" #recipeName="ngModel" required />
           <div [hidden]="recipeName.valid || recipeName.pristine"
-          class="alert alert-danger">Recipe Name is required</div>
+          class="alert alert-danger" style="width: 45vw;">Recipe Name is required</div>
         </div>
   
         <div class="form-group">

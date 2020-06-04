@@ -15,7 +15,7 @@ import { CookBookVM } from '../Models/cookBookVM';
 })
 export class RecipeDetailService {
   constructor(private http: HttpClient) { }
-  cookingPapaUrl = 'https://cookingpapa.azurewebsites.net/api/';
+  cookingPapaUrl = 'https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/';
 
 getRecipe(recipeId:number){
   return this.http.get<RecipeInformationsVM>(this.cookingPapaUrl + `recipes/${recipeId}`)
