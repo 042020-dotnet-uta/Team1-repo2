@@ -16,7 +16,7 @@ export class ReviewServcieService {
 
       currentUser;
       ID : number;
-      reviewUrl: string = environment.cookingPapaUrl + 'RecipeReviews/';/*'http://localhost:64480/api/RecipeReviews/'*/;
+      reviewUrl: string = /*environment.cookingPapaUrl + 'RecipeReviews/';*/'http://localhost:64480/api/RecipeReviews/';
       
       submitReview(review:RecipeReviewVM){
         this.ID = 1;

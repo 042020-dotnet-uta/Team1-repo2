@@ -43,7 +43,24 @@ export class RatingsComponent implements OnInit {
   }
   submitReview(comment: string) {
     this.review.recipeReviewComment = comment;
-    this.reviewsService.submitReview(this.review);
+
+    if (this.reviewed) {
+      let item = this.reviewList[0];
+      item.recipeReviewId = this.review.recipeReviewId,
+      item.recipeReviewRating = this.colorStars([true, true, true, true, true], this.review.recipeReviewRating),
+      item.recipeReviewComment = comment
+
+      this.reviewList[0] = item;
+    }
+    else {
+      this.reviewList.unshift({
+        recipeReviewId: this.review.recipeReviewId,
+        recipeReviewRating: this.colorStars([true, true, true, true, true], this.review.recipeReviewRating),
+        recipeReviewComment: comment
+      });
+      this.reviewsService.submitReview(this.review);
+    }
+    ;
     this.reviewed = true;
   }
   private getUserId() {
@@ -60,29 +77,33 @@ export class RatingsComponent implements OnInit {
       });
   }
   private setUpReviews() {
-    this.reviewList=[this.reviews.length-1];
+    this.reviewList = [];
     this.reviews.forEach(element => {
-      console.log(element);
       this.reviewList.push({
         recipeReviewId: element.recipeReviewId,
         recipeReviewRating: [true, true, true, true, true],
         recipeReviewComment: element.recipeReviewComment
       });
       let item = this.reviewList[this.reviewList.length - 1];
-      for (let i = 0; i < item.recipeReviewRating.length; i++) {
-        if (i < element.recipeReviewRating) {
-          item.recipeReviewRating[i] = false;
-        }
-        else {
-          item.recipeReviewRating[i] = true;
-        }
-      }
+      item.recipeReviewRating = this.colorStars(item.recipeReviewRating, element.recipeReviewRating);
     });
   }
+  private colorStars(item:boolean[], rating:number): boolean[]{
+    for (let i = 0; i < item.length; i++) {
+      if (i < rating) {
+        item[i] = false;
+      }
+      else {
+        item[i] = true;
+      }
+    }
+    return item;
+  }
+
   ngOnInit(): void {
     this.getUserId();
     this.review = {
-      recipeReviewId:null,
+      recipeReviewId: null,
       recipeId: this.recipeId,
       recipeReviewRating: 0,
       userId: 1,//this.userId,
