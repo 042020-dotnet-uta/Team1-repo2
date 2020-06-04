@@ -1,6 +1,7 @@
 <h1>External Web Recipe Search</h1>
 <hr />
-<body>Enter the food you're looking for below!</body>
+<p>Enter the food you're looking for below!</p>
+
 <input #searchData 
   (keyup.enter)="getData(searchData.value, 1)">
 <button (click)="getData(searchData.value, 1)">Search</button>

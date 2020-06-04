@@ -48,3 +48,8 @@
    .width {
      width: 45vw;
    }
+
+   label{
+     font-weight: bold;
+     color: white;
+   }
