@@ -11,17 +11,8 @@ import { RecipeReviewPostVM } from './Models/RecipeReviewPostVM';
 })
 export class ReviewsService {
 
-<<<<<<< HEAD
-  constructor(private http: HttpClient,
-    public auth: AuthService) { }
-
-      //currentUser;
-      //ID : number;
-      reviewUrl: string = environment.cookingPapaUrl + 'RecipeReviews/';/*'http://localhost:64480/api/RecipeReviews/'*/;
-=======
   constructor(private http: HttpClient) { }
       reviewUrl: string = /*environment.cookingPapaUrl + 'RecipeReviews/';*/'http://localhost:64480/api/RecipeReviews/';
->>>>>>> b245266d0673e7c14e91ed098be56ee7d6fee9c9
       
       submitReview(review:RecipeReviewPostVM){
         return this.http.post<RecipeReviewVM>(this.reviewUrl, review).toPromise()
