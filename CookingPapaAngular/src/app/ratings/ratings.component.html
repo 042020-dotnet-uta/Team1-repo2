@@ -26,5 +26,5 @@
 <div>
   <textarea #comment></textarea>
 </div>
-<button class="btn btn-light btn-outline-dark" (click)="submitReview(comment.value)">Submit</button>
+<button class="btn btn-light btn-outline-dark" (click)="submitReview(comment.value)">{{ reviewed ? 'Update' : 'Submit' }}</button>
 <hr />
