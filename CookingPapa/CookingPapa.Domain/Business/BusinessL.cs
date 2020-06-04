@@ -221,7 +221,7 @@ namespace CookingPapa.Domain.Business
         
         public async Task<Recipe> DeleteRecipe(int id)
         {
-            await _unitOfWork.RecipeIngredientGroups.DeleteAll(id);
+            var x = await _unitOfWork.RecipeIngredientGroups.DeleteAll(id);
             var recipeDeleted = await _unitOfWork.Recipes.Delete(id);
             return recipeDeleted;
         }
@@ -280,7 +280,7 @@ namespace CookingPapa.Domain.Business
 
         public async Task<RecipeReview> PostRecipeReview(RecipeReviewVM recipeReview)
         {
-            var editReview = await functionForReview(recipeReview);
+            var editReview = await convertReviewPost(recipeReview);
             editReview = await _unitOfWork.RecipeReviews.Add(editReview);
             await _unitOfWork.Complete();
             return editReview;
@@ -299,7 +299,19 @@ namespace CookingPapa.Domain.Business
             return null;
         }
 
-
+        public async Task<RecipeReview> convertReviewPost(RecipeReviewVM recipeReview)
+        {
+            var user = await _unitOfWork.Users.Get(recipeReview.UserId);
+            var recipe = await _unitOfWork.Recipes.GetEager(recipeReview.RecipeId);
+            var edittedReview = new RecipeReview()
+            {
+                User = user,
+                Recipe = recipe,
+                RecipeReviewRating = recipeReview.RecipeReviewRating,
+                RecipeReviewComment = recipeReview.RecipeReviewComment
+            };
+            return edittedReview;
+        }
 
         public async Task<RecipeReview> functionForReview(RecipeReviewVM recipeReview)
         {

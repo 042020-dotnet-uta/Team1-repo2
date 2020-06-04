@@ -1,4 +1,15 @@
-img {
+.profileImage {
     height: 5.5%;
     width: 5.5%;
+    padding-top: 30px;
+}
+li a{
+    font-size:20px;
+    padding-top: 45px;
+}
+span{
+    padding-top: 47px;
+}
+img{
+    cursor:pointer;
 }

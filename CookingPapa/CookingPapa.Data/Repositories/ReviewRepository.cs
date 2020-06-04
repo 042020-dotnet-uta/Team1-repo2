@@ -103,14 +103,17 @@ namespace CookingPapa.Data.Repositories
         public async Task<IEnumerable<RecipeReview>> UpdateReviews(int recipeId, int updatedRecipeId)
         {
             var getAllReviews = await GetByRecipeEager((int)recipeId);
-            var getUpdatedRecipe = db.Recipes.Include(x => x.User).FirstAsync(x => x.Id == updatedRecipeId);
-            foreach (var x in getAllReviews)
+            var getUpdatedRecipe = await db.Recipes.Include(x => x.User).FirstAsync(x => x.Id == updatedRecipeId);
+            if (getUpdatedRecipe != null)
             {
-                x.Recipe = await getUpdatedRecipe;
+                foreach (var x in getAllReviews)
+                {
+                    x.Recipe = getUpdatedRecipe;
+                }
+                db.UpdateRange(getAllReviews);
+                return getAllReviews;
             }
-            db.UpdateRange(getAllReviews);
-            await db.SaveChangesAsync();
-            return getAllReviews;
+            return null;
         }
 
 

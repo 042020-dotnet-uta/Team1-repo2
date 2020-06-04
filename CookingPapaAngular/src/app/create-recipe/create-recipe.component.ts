@@ -104,6 +104,7 @@ export class CreateRecipeComponent implements OnInit {
     console.log(this.newRecipe);
     this.recServ.postRecipe(this.newRecipe).subscribe(g=>{
       this.newRecipe.RecipeId=g.RecipeId;
+      this.location.back();
     }   
     );  
   }
