@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-api-search',
@@ -8,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ApiSearchComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private location: Location, private http: HttpClient) { }
 
   recipeData: Array<any>;
   currentPage: number;
@@ -22,6 +23,10 @@ export class ApiSearchComponent implements OnInit {
     else {
       return false;
     }
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   getData(query: string, page: number) {

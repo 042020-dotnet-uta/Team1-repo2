@@ -32,20 +32,34 @@ export class EditRecipeComponent implements OnInit {
     measurementUnits:[]
   };
   public newRecipeIngredientGroup:RecipeIngredientGroupVM[]=[];
+  public err1:boolean;
+  public err2:boolean;
+  public err3:boolean;
+  
   //Functions
   addIngredient(newIngredient:string){
-    if(newIngredient){
+    if(!this.information.ingredients.find(x=>
+      x.toLowerCase()==newIngredient.toLowerCase())){
       this.information.ingredients.push(newIngredient);
+    }else{
+      this.err2 = true;
     }
   }
   addOrigin(newOrigin:string){
-    if(newOrigin){
+    if(!this.information.origins.find(x=>
+      x.toLowerCase()==newOrigin.toLowerCase())){
       this.information.origins.push(newOrigin);    
+    }else{
+      this.err1=true;
     }
   }
+
   addMeasurement(newMeasurement:string){
-    if(newMeasurement){
+    if(!this.information.measurementUnits.find(x=>
+      x.toLowerCase()==newMeasurement.toLowerCase())){
       this.information.measurementUnits.push(newMeasurement);
+    }else{
+      this.err3 = true;
     }
   }
   addIngredientGroup(selectedIngredient:string,
@@ -85,7 +99,7 @@ export class EditRecipeComponent implements OnInit {
 
   onEdit():void{
       this.newRecipe.RecipeIngredientGroupVM = this.newRecipeIngredientGroup;
-      //this.auth.userProfile$.subscribe(g=>this.newRecipe.UserId=<number> + g.sub.toString().substr(6));
+      this.auth.userProfile$.subscribe(g=>this.newRecipe.UserId=<number> + g.sub.toString().substr(6));
       console.log(this.newRecipe);
       this.recServ.putRecipe(this.newRecipe).subscribe(
         success=>console.log('success: ', success),
