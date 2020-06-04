@@ -1,5 +1,5 @@
 
-<h1>Edit Recipe</h1>
+<!-- <h1>Edit Recipe</h1>
 <hr />
 <div class="row">
   <div class="col-md-4">
@@ -55,4 +55,106 @@
     </form>
     <button class="btn btn-light btn-outline-dark" (onClick)="goBack()">go back</button>
   </div>
-</div>
+</div> -->
+
+
+<h1>Edit Recipe</h1>
+<hr />
+<body style="width: 50vw;">
+  <div class="row">
+    <div class="col-md-4">
+      <form #createRecipe="ngForm" (ngSubmit)="onEdit();">
+        <div class="form-group">
+          <label class="control-label text-danger">Recipe Name: </label>
+          <input [(ngModel)]="newRecipe.RecipeName" name="recipeName" type="text" class="form-control" #recipeName="ngModel" required />
+          <div [hidden]="recipeName.valid || recipeName.pristine"
+          class="alert alert-danger">Recipe Name is required</div>
+        </div>
+  
+        <div class="form-group">
+          <label class="control-label text-danger">Cook Time (in minutes):  </label>
+          <input [(ngModel)]="newRecipe.RecipeCookTime" name="cookTime" type="number" min="1" class="form-control" id="CookTime" required/>
+        </div>
+
+        Origin:
+        <div class="origins" style="display:flex;width: 45vw;">
+
+          <select [(ngModel)]="newRecipe.RecipeOriginName" name="originName" class="custom-select-sm form-control">
+            <option *ngFor="let ing of information.origins">{{ing}}</option>
+          </select>
+          
+          <input (click)="err1=false" #newOrigin class="form-control"/>
+
+          <button type="button" (click)="addOrigin(newOrigin.value); newOrigin.value=''" class="btn btn-light btn-outline-dark">Add Origin</button>
+        </div>
+        <div [hidden]="!err1"
+        class="alert alert-danger">Duplicate exists
+        </div>
+        <br>
+  
+        <div class="borderBox">
+          <label class="control-label text-danger">Ingredient: </label>
+          <div class="origins">
+          <select #selectedIngredient class="custom-select-sm form-control">
+            <option *ngFor="let ing of information.ingredients" >{{ing}}</option>
+          </select>
+
+          <input (click)="err2=false" #newIngredient class="form-control" />
+          <button type="button" (click)="addIngredient(newIngredient.value); newIngredient.value=''" class="btn btn-light btn-outline-dark">Add New Ingredient</button>
+
+          </div>
+          <div [hidden]="!err2"
+          class="alert alert-danger">Duplicate exists
+          </div>
+
+          <br>
+
+          <label class="control-label text-danger">Measurement Unit: </label>
+          <div class="origins">
+
+            <select #selectedMeasure class="custom-select-sm form-control">
+              <option *ngFor="let ing of information.measurementUnits" [value]="ing">{{ing}}</option>
+            </select>
+            
+            <input (click)="err3=false" #newMeasurement class="form-control" />
+            <button type="button" (click)="addMeasurement(newMeasurement.value); newMeasurement.value=''" class="btn btn-light btn-outline-dark">Add New Measurement</button>
+          
+          </div>
+          <div [hidden]="!err3"
+            class="alert alert-danger">Duplicate exists
+          </div>
+          <br>
+
+          <label class="control-label text-danger">Amount: </label>
+          <div class="form-group">
+            <input #selectedAmount class="form-control" />
+
+          </div>
+        </div>
+                  
+        <br>
+        <button type="button" (click)="addIngredientGroup(selectedIngredient.value, selectedAmount.value, selectedMeasure.value)" 
+        class="btn btn-light btn-outline-dark" style="width: 45vw;">Add Ingredient</button>
+
+        <br><br>
+        <label class="control-label text-danger">List of ingredients for this recipe: </label>
+        <br>
+
+        <ul class="width">
+          <li *ngFor="let ing of newRecipeIngredientGroup">
+            {{ing.ingredientAmount}} {{ing.measurementName}} of {{ing.ingredientName}}
+            &emsp;<a href="javascript:void(0)" class="border border-danger bg-danger text-white" (click)="removeIngredient(ing)">Remove</a></li>>
+        </ul>
+
+        <div class="form-group">
+          <label class="control-label text-danger">Instructions: </label>
+          <textarea [(ngModel)]="newRecipe.RecipeInstruction" name="instruction" id="myTextArea" rows="3" cols="80" style="width: 45vw;">
+            Your text here
+          </textarea>
+          <button type="submit" class="btn btn-light btn-outline-dark" [disabled]="!createRecipe.form.valid">Edit</button>
+          <button type="button" class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
+        </div>
+      </form>
+    </div>
+  </div>  
+</body>
