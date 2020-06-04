@@ -13,13 +13,13 @@ import { ApiSearchComponent } from './api-search/api-search.component';
 
 const routes: Routes = [
     {path:'', component:HomeComponent},
-    {path:'edit-recipe/:id', component:EditRecipeComponent},      //, canActivate: [AuthGuard]},
+    {path:'edit-recipe/:id', component:EditRecipeComponent, canActivate: [AuthGuard]},
     {path:'view-recipe/:id', component:ViewRecipeComponent},
-    {path:'create-recipe', component:CreateRecipeComponent},  //, canActivate: [AuthGuard]},
+    {path:'create-recipe', component:CreateRecipeComponent, canActivate: [AuthGuard]},
     {path:'search-recipe', component:SearchRecipeComponent},
-    {path:'view-cookbook', component:ViewCookbookComponent},  //, canActivate: [AuthGuard]},
+    {path:'view-cookbook', component:ViewCookbookComponent, canActivate: [AuthGuard]},
     {path: 'profile', component:ProfileComponent, canActivate: [AuthGuard]},
-    {path: 'api-search', component:ApiSearchComponent}
+    {path: 'api-search', component:ApiSearchComponent, canActivate: [AuthGuard]}
 
   ];
   

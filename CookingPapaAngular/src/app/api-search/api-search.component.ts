@@ -35,9 +35,9 @@ export class ApiSearchComponent implements OnInit {
     this.currentPage = page;
     console.log("searched: ", query);
     console.log("offset=" + (page-1)*5 + "&query=" + query);
-    /*
-    fetch("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=" +
-      this.numberOfItems" + "&offset=" + (page-1)*4 + "&query=" + query, {
+  
+    fetch("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=" 
+    + this.numberOfItems + "&offset=" + (page-1)*5 + "&query=" + query, {
     "method": "GET",
     "headers": {
       "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
@@ -56,7 +56,7 @@ export class ApiSearchComponent implements OnInit {
       console.log("object: ", this.data.object.number);
       console.log("object without object keyword: ", this.data.number);
       console.log("second index: ", this.data.results[1]);
-      //console.log("the parse: ", JSON.parse(this.data));
+      //console.log("the parse: ", JSON.parse(this.data));*/
     .then(data => {
       console.log('Success: ', data);
       console.log(data.results);
@@ -67,58 +67,58 @@ export class ApiSearchComponent implements OnInit {
     })
     .catch(err => {
       console.log(err);
-    });*/
+    });
     
   }
 
-  didFetchWork() {
-    console.log(this.recipeData);
-    console.log("button works");
-  }
+  // didFetchWork() {
+  //   console.log(this.recipeData);
+  //   console.log("button works");
+  // }
 
-  testing() {
-    this.recipeData = [
-      {
-        id: 102992,
-        image: "vegetarian-bagel-sandwich-2-102992.jpg",
-        openLicense: 0,
-        readyInMinutes: 5,
-        servings: 1,
-        sourceUrl: "http://www.food.com/recipe/vegetarian-bagel-sandwich-66172",
-        title: "vegetarian bagel sandwich"
-      },
-      {
-        id: 262682, 
-        title: "Thai Sweet Potato Veggie Burgers with Spicy Peanut Sauce", 
-        readyInMinutes: 75,
-        image: "thai-sweet-potato-veggie-burgers-with-spicy-peanut-sauce-262682.jpg",
-        sourceUrl: "http://www.food.com/recipe/"
-      },
-      {
-        id: 602708,
-        title: "Meatless Monday: Grilled Portobello Mushroom Burgers with Romesco and Arugula",
-        readyInMinutes:15,
-        image:"Meatless-Monday--Grilled-Portobello-Mushroom-Burgers-with-Romesco-and-Arugula-602708.jpg",
-        sourceUrl: "http://www.food.com/recipe/"
-      },
-      {
-        id: 262682, 
-        title: "Thai Sweet Potato Veggie Burgers with Spicy Peanut Sauce", 
-        readyInMinutes: 75,
-        image: "thai-sweet-potato-veggie-burgers-with-spicy-peanut-sauce-262682.jpg",
-        sourceUrl: "http://www.food.com/recipe/"},
-      {
-        id: 602708,
-        title: "Meatless Monday: Grilled Portobello Mushroom Burgers with Romesco and Arugula",
-        readyInMinutes:15,
-        image:"Meatless-Monday--Grilled-Portobello-Mushroom-Burgers-with-Romesco-and-Arugula-602708.jpg",
-        sourceUrl: "http://www.food.com/recipe/"
-      }
-    ];
-    this.searchQuery = "bagel";
-    this.currentPage = 1;
-    console.log(this.recipeData);
-  }
+  // testing() {
+  //   this.recipeData = [
+  //     {
+  //       id: 102992,
+  //       image: "vegetarian-bagel-sandwich-2-102992.jpg",
+  //       openLicense: 0,
+  //       readyInMinutes: 5,
+  //       servings: 1,
+  //       sourceUrl: "http://www.food.com/recipe/vegetarian-bagel-sandwich-66172",
+  //       title: "vegetarian bagel sandwich"
+  //     },
+  //     {
+  //       id: 262682, 
+  //       title: "Thai Sweet Potato Veggie Burgers with Spicy Peanut Sauce", 
+  //       readyInMinutes: 75,
+  //       image: "thai-sweet-potato-veggie-burgers-with-spicy-peanut-sauce-262682.jpg",
+  //       sourceUrl: "http://www.food.com/recipe/"
+  //     },
+  //     {
+  //       id: 602708,
+  //       title: "Meatless Monday: Grilled Portobello Mushroom Burgers with Romesco and Arugula",
+  //       readyInMinutes:15,
+  //       image:"Meatless-Monday--Grilled-Portobello-Mushroom-Burgers-with-Romesco-and-Arugula-602708.jpg",
+  //       sourceUrl: "http://www.food.com/recipe/"
+  //     },
+  //     {
+  //       id: 262682, 
+  //       title: "Thai Sweet Potato Veggie Burgers with Spicy Peanut Sauce", 
+  //       readyInMinutes: 75,
+  //       image: "thai-sweet-potato-veggie-burgers-with-spicy-peanut-sauce-262682.jpg",
+  //       sourceUrl: "http://www.food.com/recipe/"},
+  //     {
+  //       id: 602708,
+  //       title: "Meatless Monday: Grilled Portobello Mushroom Burgers with Romesco and Arugula",
+  //       readyInMinutes:15,
+  //       image:"Meatless-Monday--Grilled-Portobello-Mushroom-Burgers-with-Romesco-and-Arugula-602708.jpg",
+  //       sourceUrl: "http://www.food.com/recipe/"
+  //     }
+  //   ];
+  //   this.searchQuery = "bagel";
+  //   this.currentPage = 1;
+  //   console.log(this.recipeData);
+  // }
 
   ngOnInit(): void {
   }
