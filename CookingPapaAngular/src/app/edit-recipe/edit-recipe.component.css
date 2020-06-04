@@ -1,0 +1,50 @@
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }
+
+  .bodyContainer {
+    /* border: 1px solid black; */
+    width: 100%;
+    min-height: 50px; 
+    height: 100%;    
+   }
+
+  .origins input, .origins select, .origins button {
+    /* box-sizing: border-box; 
+    width: 50vw; */
+    height: 40px;
+  } 
+
+  .origins button {
+    width: 90%;
+   }
+
+   .borderBox {
+    border: 1px solid black;
+    width: 45vw;
+    border-radius: 25px;
+   }
+
+   .borderBox div {
+      display: flex;
+      width: 95%;
+      height: 40px;
+      margin-left: auto;
+      margin-right: auto;
+   }
+
+   .borderBox label {
+     margin-left: 2.5%;
+   }
+
+   input {
+     width: 45vw;
+   }
+
+   .width {
+     width: 45vw;
+   }
