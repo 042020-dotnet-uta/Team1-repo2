@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
       this.userID = <number> + data.sub.toString().substr(6);
       this.username = data.name;
       this.profileImage = data.picture;
-      this.email = data.string;
+      this.email = data.email;
     })
   }
 }

@@ -10,7 +10,7 @@ import { RecipeVM } from './Models/recipeVM';
 })
 export class RecipeSearchService {
   constructor(private http: HttpClient) { }
-  recipesUrl = 'https://cookingpapa.azurewebsites.net/api/Recipes';
+  recipesUrl = 'https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/Recipes';
   
   getRecipes(searchTerm: string) {
      return this.http.get<RecipeVM[]>(this.recipesUrl + "?searchPattern="+searchTerm).toPromise()

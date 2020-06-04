@@ -15,7 +15,7 @@ export class CookbookService {
     public auth: AuthService) { }
       currentUser;
       ID : number;
-      cookbookUrl: string = 'https://cookingpapa.azurewebsites.net/api/Cookbooks/';
+      cookbookUrl: string = 'https://cors-anywhere.herokuapp.com/https://cookingpapa.azurewebsites.net/api/Cookbooks/';
       
   ngOnInit(): void {
   }
