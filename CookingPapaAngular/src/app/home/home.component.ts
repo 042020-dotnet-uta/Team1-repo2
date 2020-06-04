@@ -10,23 +10,18 @@ import { AuthService } from '../auth.service';
 export class HomeComponent implements OnInit {
 
   constructor(public auth: AuthService) { 
-    this.auth.userProfile$.subscribe(data => {
-      this.currentUser = data;
-      this.username = this.currentUser.nickname;
-      console.log(this.username);
-      console.log(this.currentUser);
-      console.log(this.currentUser.nickname);
-      console.log('constructor is running');
-    });
   }
-  public currentUser;
+
   public username: string;
 
+  getUsername(): string {
+    this.auth.userProfile$.subscribe(data => {
+      this.username = data.name;
+    });
+    return this.username;
+  }
+
   ngOnInit(): void {
-    /*this.auth.userProfile$.subscribe(data => this.currentUser = data);
-    console.log(this.currentUser);
-    this.username = this.currentUser[0];
-    console.log(this.username);*/
   }
 
 }

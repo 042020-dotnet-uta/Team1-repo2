@@ -1,14 +1,11 @@
 <h1>External Web Recipe Search</h1>
+<hr />
 <body>Enter the food you're looking for below!</body>
 <input #searchData 
   (keyup.enter)="getData(searchData.value, 1)">
 <button (click)="getData(searchData.value, 1)">Search</button>
-
-<br>
+<br><br>
 <button (click)="testing()">Testing</button>
-
-<br>
-<button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
 
 <div class="card text-center m-3" *ngIf="displayPages()">
     <h3 class="card-header">Pages</h3>
@@ -46,6 +43,9 @@
     </body>
     <br> <br>
 </div>
+
+<br><br>
+<button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
 
 <div class="card text-center m-3" *ngIf="displayPages()">
     <h3 class="card-header">Pages</h3>

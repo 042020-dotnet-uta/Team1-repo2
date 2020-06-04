@@ -46,12 +46,13 @@
             </li>
             <span>&emsp; | &emsp;</span>                    
             <li class="nav-item" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/view-cookbook/']">View cookbook</a>
+              <a class="nav-link text-dark" [routerLink]="['/view-recipe/28']">View cookbook</a>
             </li>
             <span *ngIf="auth.loggedIn">&emsp; | &emsp;</span>
             <li class="nav-item" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/profile']" *ngIf="auth.loggedIn">Profile</a>
-            </li>          
+            </li>            
+            <img class="profileImage"*ngIf="auth.loggedIn" src="{{getProfileImage()}}">
           </ul>
         </div>
       </div>

@@ -9,6 +9,8 @@ import { AuthService } from '../auth.service';
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
 
+  profileImage: string;
+
   collapse() {
     this.isExpanded = false;
   }
@@ -18,6 +20,13 @@ export class NavMenuComponent implements OnInit {
   }
 
   constructor(public auth: AuthService) { }
+
+  getProfileImage(): string {
+    this.auth.userProfile$.subscribe(data => {
+      this.profileImage = data.picture;
+    });
+    return this.profileImage;
+  }
 
   ngOnInit() {
   }
