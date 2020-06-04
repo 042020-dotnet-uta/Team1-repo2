@@ -22,3 +22,6 @@ th,td{
     padding-left: 5px;
     padding-right: 5px;
 }
+.show:hover{
+    cursor: pointer;
+}

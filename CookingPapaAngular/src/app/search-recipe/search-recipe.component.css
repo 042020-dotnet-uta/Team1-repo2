@@ -6,3 +6,6 @@ div label, div input, div button{
 li:hover {
     cursor: pointer;
 }
+label{
+    padding: 10px;
+}

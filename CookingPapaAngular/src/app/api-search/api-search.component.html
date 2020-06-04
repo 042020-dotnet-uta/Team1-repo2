@@ -9,8 +9,13 @@
 <button (click)="testing()">Testing</button>
 <br><br>
 
+<<<<<<< HEAD
+<div style="height: 100vh;" class="card text-center m-3" *ngIf="displayPages()">
+    <h3 class="card-header">Pages</h3>
+=======
 <div class="card text-center m-3" *ngIf="displayPages()">
     <h3 class="card-header" style="color: black;">Pages</h3>
+>>>>>>> 9d2e1037e68013fbf581ec9acc4149d1ac58e4e7
     <div class="card-footer pb-0 pt-3">
         <button (click)="getData(searchQuery, 1)" *ngIf="currentPage > 3">First</button> &nbsp;
         <button (click)="getData(searchQuery, currentPage - 1)" *ngIf="currentPage != 1">Previous</button> &nbsp;&nbsp;
@@ -46,7 +51,8 @@
     <br><br>
 </div>
 
-<button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
+<br><br>
+<button class="btn btn-light btn-outline-dark" (click)="goBack()">Back</button>
 
 <div class="card text-center m-3" *ngIf="displayPages()">
     <h3 class="card-header" style="color: black;">Pages</h3>
