@@ -3,13 +3,13 @@
 
 <div id="search-component">
   <div>
-    <label>Recipe Name:
-      <input #searchTermTb />
-    </label>
+    <label>Recipe Name:</label>
+      <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+    
     <!-- (click) passes input value to add() and then clears the input -->
-    <button class="btn btn-light btn-outline-dark" (click)="search(searchTermTb.value); searchTermTb.value=''">
+    <!--<button class="btn btn-light btn-outline-dark" (click)="search(searchBox.value); searchBox.value=''">
       Search
-    </button>
+    </button>-->
   </div>
 <br>
   <div *ngIf="recipes">
