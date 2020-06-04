@@ -117,7 +117,7 @@ export class CreateRecipeComponent implements OnInit {
       this.newRecipe.RecipeId=g.RecipeId;
     });          
     confirm("Success! Recipe has been created.");
-    this.router.navigateByUrl(`/view-recipe/${<number>this.newRecipe.RecipeId}`);
+    this.router.navigateByUrl(`/search-recipe`);
   }
 
   goBack(): void {
