@@ -27,3 +27,12 @@
         </td>
     </tr>
 </table>
+
+<br><br><br><br>
+
+<div class="parent">
+    <div class="left"><button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button></div>
+    <div class="center"><button class="btn btn-light btn-outline-dark" (click)="auth.logout()" style="align-items: center;"
+        [routerLink]="['/']" *ngIf="auth.loggedIn">Log Out</button></div>
+    <div class="right"></div>
+</div>
