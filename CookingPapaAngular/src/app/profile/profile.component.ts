@@ -11,20 +11,17 @@ export class ProfileComponent implements OnInit {
   constructor(public auth: AuthService) { }
 
   currentUser: string;
-  userID: string;
-  ID: number;
+  userID: number;
+  username: string;
+  profileImage: string;
+  email: string;
 
   ngOnInit() {
+    this.auth.userProfile$.subscribe(data => {
+      this.userID = <number> + data.sub.toString().substr(6);
+      this.username = data.name;
+      this.profileImage = data.picture;
+      this.email = data.string;
+    })
   }
-
-  getSessionScope() {
-    this.auth.userProfile$.subscribe(data => this.currentUser = data);
-    console.log(this.currentUser);
-    console.log("This is the auth0 ID: ", this.currentUser.sub);
-    this.userID = this.currentUser.sub.toString();
-    console.log("substring: ", this.userID);
-    this.ID = <number> + this.userID.substr(6);
-    console.log("this is the ID number: ", this.ID);
-  }
-
 }

@@ -1,7 +1,11 @@
-<pre *ngIf="auth.userProfile$ | async as profile">
-    <code>{{ profile | json}}</code>
-</pre>
+<h1>Your Profile</h1>
+<hr />
+<img src="{{profileImage}}" style="float: left;">
 
-<button id="testButton" class="btn btn-primary btn-margin" (click)="getSessionScope()">
-    log session
-</button>
+<div style="display: flex;">
+    <h3>Username: </h3> {{username}} <br>
+</div>
+
+<div>
+    Email: {{email}}
+</div>

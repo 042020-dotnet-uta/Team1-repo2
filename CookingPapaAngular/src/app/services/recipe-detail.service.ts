@@ -17,7 +17,7 @@ export class RecipeDetailService {
   constructor(private http: HttpClient) { }
 JDLocalUrl = 'http://localhost:64480/api/';
 getRecipe(recipeId:number){
-  return this.http.get<RecipeInformationsVM>(/*environment.cookingPapaUrl*/ this.JDLocalUrl + `recipes/${recipeId}`)
+  return this.http.get<RecipeInformationsVM>(environment.cookingPapaUrl /*this.JDLocalUrl*/ + `recipes/${recipeId}`)
 }
 getIngOriMeaInformation(){
   return this.http.get<GetIngOriMeaInformation>(environment.cookingPapaUrl /*this.JDLocalUrl*/ + `Information`)
