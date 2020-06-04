@@ -17,3 +17,10 @@ table {
 td {
     padding-left: 40px;
 }
+
+.parent {
+  display: flex;
+}
+.left, .right {
+  flex: 1;
+}

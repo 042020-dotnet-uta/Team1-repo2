@@ -7,6 +7,7 @@
 <button (click)="getData(searchData.value, 1)">Search</button>
 <br><br>
 <button (click)="testing()">Testing</button>
+<br><br>
 
 <div class="card text-center m-3" *ngIf="displayPages()">
     <h3 class="card-header">Pages</h3>
@@ -37,15 +38,14 @@
     <h3>
         {{i+1+(currentPage-1)*5}}: {{recipe.title}}        
     </h3>
-    <body>
+    <div>
         <img src="https://spoonacular.com/recipeImages/{{recipe.image}}" alt="{{recipe.image}}"> <br>
         Total Cook Time: {{recipe.readyInMinutes}} minutes <br>
         Want to learn more? Check out the <a href={{recipe.sourceUrl}}> full recipe</a>!
-    </body>
-    <br> <br>
+    </div>
+    <br><br>
 </div>
 
-<br><br>
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
 
 <div class="card text-center m-3" *ngIf="displayPages()">
