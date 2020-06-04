@@ -48,11 +48,15 @@ export class ViewRecipeComponent implements OnInit {
         if(this.recipeCreatorId==this.userLoggedId)this.ownRecipe=true;  
      }});}
   
+
+
+
     onDelete():void{
       this.recServ.deleteRecipe(this.test.recipeId).subscribe(
         success=>console.log('success: ',success),
         error=>console.log('error')
       );
+      confirm("You've deleted the recipe!");
       this.goBack();
     }
 
@@ -64,7 +68,8 @@ export class ViewRecipeComponent implements OnInit {
       this.recServ.postCookbook(this.newCookbook).subscribe(x=>{
         this.userCookbooks.push(x);
           this.inCookbook=true;
-          console.log('added and checked')      
+          console.log('added and checked')  
+          confirm("Recipe has been added to your cookbook!");    
       });
       };
            
