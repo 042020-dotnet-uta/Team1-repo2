@@ -2,10 +2,28 @@
 <hr />
 <img src="{{profileImage}}" style="float: left;">
 
-<div style="display: flex;">
-    <h3>Username: </h3> {{username}} <br>
-</div>
+<!-- <div>
+    &emsp;&emsp;&emsp;<strong>&emsp;Username:&emsp;</strong> &emsp;&emsp;{{username}} 
+    <br><br>
+    &emsp;&emsp;&emsp;<strong>&emsp;Email:&emsp;</strong> &emsp;&emsp;{{email}} <br>
+</div> -->
 
-<div>
-    Email: {{email}}
-</div>
+<table>
+    <tr>
+        <td>
+            <strong>Username:</strong>
+        </td>
+        <td>
+            {{username}} <br>
+        </td>
+    </tr>
+    <br>
+    <tr>
+        <td>
+            <strong>Email:</strong>
+        </td>
+        <td>
+            {{email}} <br>
+        </td>
+    </tr>
+</table>
