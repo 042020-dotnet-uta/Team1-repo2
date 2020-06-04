@@ -1,16 +1,21 @@
 <hr />
-<h4>Add a review</h4>
-<div>
-  <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">
-    <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
-  </a>
-  <br>
+<div *ngIf="userId !== creatorId">
+  <h4 (click)="openCloseReview()" [ngClass]="{'show':!showAddReview,'hide':showAddReview}">Add a review</h4> 
+  <div *ngIf="showAddReview">
+    <div>
+      <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">
+        <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+      </a>
+      <br>
+    </div>
+    <div>
+      <textarea #comment></textarea>
+    </div>
+    <button class="btn btn-light btn-outline-dark"
+      (click)="submitReview(comment.value)" [disabled]="!okToSubmit">{{ reviewed ? 'Update' : 'Submit' }}</button>
+  </div>
+  <hr />
 </div>
-<div>
-  <textarea #comment></textarea>
-</div>
-<button class="btn btn-light btn-outline-dark" (click)="submitReview(comment.value)">{{ reviewed ? 'Update' : 'Submit' }}</button>
-<hr />
 
 <table border=1>
   <caption>Reviews</caption>
