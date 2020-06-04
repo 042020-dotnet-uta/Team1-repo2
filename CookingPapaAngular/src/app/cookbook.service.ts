@@ -25,9 +25,6 @@ export class CookbookService {
       this.currentUser = data;
       this.ID = <number> + this.currentUser.sub.toString().substr(6);
     });
-
-    //Temp for testing
-    this.ID = 1;
      return this.http.get<CookbookResponse[]>(this.cookbookUrl + this.ID).toPromise()
        .then(recipe => recipe);
   }

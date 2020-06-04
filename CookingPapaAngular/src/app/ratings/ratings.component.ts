@@ -106,7 +106,7 @@ export class RatingsComponent implements OnInit {
       recipeReviewId: null,
       recipeId: this.recipeId,
       recipeReviewRating: 0,
-      userId: 1,//this.userId,
+      userId: this.userId,
       recipeReviewComment: ''
     }
     this.getReviews();
