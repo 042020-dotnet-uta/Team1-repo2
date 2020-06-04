@@ -65,14 +65,14 @@
     <div class="col-md-4">
       <form #createRecipe="ngForm" (ngSubmit)="onEdit();">
         <div class="form-group">
-          <label class="control-label text-danger">Recipe Name: </label>
+          <label>Recipe Name: </label>
           <input [(ngModel)]="newRecipe.RecipeName" name="recipeName" type="text" class="form-control" #recipeName="ngModel" required />
           <div [hidden]="recipeName.valid || recipeName.pristine"
           class="alert alert-danger" style="width: 45vw;">Recipe Name is required</div>
         </div>
   
         <div class="form-group">
-          <label class="control-label text-danger">Cook Time (in minutes):  </label>
+          <label>Cook Time (in minutes):  </label>
           <input [(ngModel)]="newRecipe.RecipeCookTime" name="cookTime" type="number" min="1" class="form-control" id="CookTime" required/>
         </div>
 
@@ -141,14 +141,30 @@
         <label class="control-label">List of ingredients for this recipe: </label>
         <br>
 
-        <ul class="width">
+        <!-- <ul class="width">
           <li *ngFor="let ing of newRecipeIngredientGroup">
             {{ing.ingredientAmount}} {{ing.measurementName}} of {{ing.ingredientName}}
             &emsp;<a href="javascript:void(0)" class="border border-danger bg-danger text-white" (click)="removeIngredient(ing)">Remove</a></li>>
-        </ul>
+        </ul> -->
+
+        <table style="width: 45vw;">
+          <tr *ngFor="let ing of newRecipeIngredientGroup">
+            <td>
+              &#8226; &emsp; {{ing.ingredientAmount}} {{ing.measurementName}} of {{ing.ingredientName}}
+            </td>
+            <td>
+              <a href="javascript:void(0)" class="border border-danger bg-danger text-white" (click)="removeIngredient(ing)">Remove</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              >
+            </td>
+          </tr>
+        </table>
 
         <div class="form-group">
-          <label class="control-label text-danger">Instructions: </label>
+          <label>Instructions: </label>
           <textarea [(ngModel)]="newRecipe.RecipeInstruction" name="instruction" id="myTextArea" rows="3" cols="80" style="width: 45vw;">
             Your text here
           </textarea>
