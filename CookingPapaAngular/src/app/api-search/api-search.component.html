@@ -8,7 +8,7 @@
 <br><br>
 <button (click)="testing()">Testing</button>
 
-<div class="card text-center m-3" *ngIf="displayPages()">
+<div style="height: 100vh;" class="card text-center m-3" *ngIf="displayPages()">
     <h3 class="card-header">Pages</h3>
     <div class="card-footer pb-0 pt-3">
         <button (click)="getData(searchQuery, 1)" *ngIf="currentPage > 3">First</button> &nbsp;
@@ -46,7 +46,7 @@
 </div>
 
 <br><br>
-<button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>
+<button class="btn btn-light btn-outline-dark" (click)="goBack()">Back</button>
 
 <div class="card text-center m-3" *ngIf="displayPages()">
     <h3 class="card-header">Pages</h3>
