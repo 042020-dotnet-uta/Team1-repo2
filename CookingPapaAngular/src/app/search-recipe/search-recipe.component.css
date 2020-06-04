@@ -2,3 +2,7 @@ div label, div input, div button{
     height: 35px;
     margin-bottom: 5px;
 }
+
+li:hover {
+    cursor: pointer;
+}

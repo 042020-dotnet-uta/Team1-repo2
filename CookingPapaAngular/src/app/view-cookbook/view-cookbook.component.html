@@ -1,14 +1,29 @@
 <h1>My Cookbook</h1>
 <hr />
 <div *ngIf="recipes">
-  <ul class="recipes list-group">
+  <!-- <ul class="recipes list-group">
    <li class="list-group-item list-group-item-action list-group-item-secondary text-center font-weight-bold"
    *ngFor="let recipe of recipes" routerLink="/view-recipe/{{recipe.recipeId}}" >
        {{recipe.recipeName}}
      <a  href="javascript:void(0)" class="delete border border-danger bg-danger text-white"
             (click)="delete(recipe)">Remove</a>
    </li>
- </ul>
+ </ul> -->
+
+ <ul class="recipes list-group" style="align-content: center;">
+  <li class="list-group-item list-group-item-action font-weight-bold" style="background-color: rgba(255, 255, 255, 0.7);align-content: center;"
+  *ngFor="let recipe of recipes" routerLink="/view-recipe/{{recipe.recipeId}}">
+      <div class="parent">
+        <div class="left"></div>
+        <div class="center" style="text-align: center;">{{recipe.recipeName}}</div>
+        <div class="right" style="text-align: right;"><a  href="javascript:void(0)" class="delete border border-danger bg-danger text-white"
+          (click)="delete(recipe)">Remove</a></div>
+        <!-- {{recipe.recipeName}} font-weight-bold text-dark
+        <a  href="javascript:void(0)" class="delete border border-danger bg-danger text-white"
+            (click)="delete(recipe)">Remove</a> -->
+      </div>
+  </li>
+</ul>
  </div>
 
 <button class="btn btn-light btn-outline-dark" (click)="goBack()">go back</button>

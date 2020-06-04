@@ -6,9 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { UserAccessComponent } from './user-access/user-access.component';
 import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
 import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
@@ -23,9 +20,6 @@ import { RatingsComponent } from './ratings/ratings.component';
   declarations: [
     AppComponent,
     NavMenuComponent,
-    LoginComponent,
-    RegisterComponent,
-    UserAccessComponent,
     CreateRecipeComponent,
     EditRecipeComponent,
     ViewRecipeComponent,

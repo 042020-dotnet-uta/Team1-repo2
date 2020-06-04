@@ -14,9 +14,11 @@
 <br>
   <div *ngIf="recipes">
      <ul class="search-result list-group">
-      <li class="list-group-item list-group-item-action list-group-item-secondary text-center font-weight-bold" 
+      <li class="list-group-item list-group-item-action text-center font-weight-bold" style="background-color: rgba(255, 255, 255, 0.7);"
       *ngFor="let recipe of recipes" routerLink="/view-recipe/{{recipe.recipeId}}">
-          {{recipe.recipeName}}
+          <span class="font-weight-bold text-dark">
+            {{recipe.recipeName}}
+          </span>
       </li>
     </ul>
   
