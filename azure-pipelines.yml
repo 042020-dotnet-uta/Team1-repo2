@@ -78,10 +78,9 @@ stages:
   jobs:
   - job:
     steps:
-    # - task: DotNetCoreCLI@2
-    #   inputs:
-    #     command: 'build'
-    #     projects: '**/*.csproj'
+    - bash: |
+        cd CookingPapa
+        dotnet publish -c Release -o release
            
     - task: SonarCloudPrepare@1
       inputs:
@@ -125,27 +124,6 @@ stages:
     - task: SonarCloudPublish@1
       inputs:
         pollingTimeoutSec: '300'
-
-- stage: DeployClient
-  jobs:
-  - job: deploy
-    steps:
-    - task: DownloadPipelineArtifact@2
-      inputs:
-        buildType: 'current'
-        artifactName: 'ClientRelease'
-        path: $(Build.SourcesDirectory)/release
-    - task: AzureRmWebAppDeployment@4
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'Free Trial(4)(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
-        appType: 'webApp'
-        WebAppName: 'CookingPapaWeb'
-        packageForLinux: '$(Build.SourcesDirectory)/release'
-        enableCustomDeployment: true
-        DeploymentType: 'webDeploy'
-        TakeAppOfflineFlag: false
-        RemoveAdditionalFilesFlag: true
 
 - stage: DeployApi
   jobs:
