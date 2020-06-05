@@ -15,11 +15,11 @@ stages:
   jobs:
   - job:
     steps:
-     - task: DotNetCoreCLI@2
-       inputs:
-         command: 'restore'
-         projects: 'CookingPapa/*.sln'
-         feedsToUse: 'select'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'restore'
+          projects: 'CookingPapa/*.sln'
+          feedsToUse: 'select'
 
 # - stage: BuildClient
 #   jobs:
@@ -43,15 +43,15 @@ stages:
 #           command: 'install'
 #           workingDir: 'CookingPapaAngular'
 # #build angular project
-      - task: AngularCLI@0
-        displayName: 'build angular project'
-        inputs:
-          command: 'custom'
-          project: 'CookingPapaAngular'
-          custom: 'build --prod'
-          DisableAnalytics: false
-      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
-        artifact: ClientRelease
+      # - task: AngularCLI@0
+      #   displayName: 'build angular project'
+      #   inputs:
+      #     command: 'custom'
+      #     project: 'CookingPapaAngular'
+      #     custom: 'build --prod'
+      #     DisableAnalytics: false
+      # - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
+      #   artifact: ClientRelease
 
 # - stage: BuildApi
 #   jobs:
