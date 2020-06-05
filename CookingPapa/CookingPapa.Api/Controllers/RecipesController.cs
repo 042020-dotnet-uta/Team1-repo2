@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CookingPapa.Data;
 using CookingPapa.Domain.Models;
 using CookingPapa.Domain.ViewModels;
 using CookingPapa.Domain;
 using Microsoft.Extensions.Logging;
-using SQLitePCL;
 using CookingPapa.Domain.Business;
-using Microsoft.AspNetCore.Cors;
 
 namespace CookingPapa.Api.Controllers
 {
