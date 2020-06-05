@@ -1,8 +1,6 @@
 ﻿using CookingPapa.Domain.Models;
 using CookingPapa.Domain.RepositoryInterfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CookingPapa.Data.Repositories

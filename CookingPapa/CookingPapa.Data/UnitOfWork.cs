@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CookingPapa.Data.Repositories;
+﻿using CookingPapa.Data.Repositories;
 using CookingPapa.Domain;
 using CookingPapa.Domain.Models;
 using CookingPapa.Domain.RepositoryInterfaces;

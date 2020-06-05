@@ -1,7 +1,5 @@
-﻿using CookingPapa.Domain.Models;
-using System;
+﻿
 using System.Collections.Generic;
-using System.Text;
 
 namespace CookingPapa.Domain.ViewModels
 {
