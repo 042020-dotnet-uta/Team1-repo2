@@ -1,6 +1,9 @@
 trigger:
 - master
 
+pool:
+  vmImage: 'windows-latest'
+
 variables:
   solution: 'CookingPapa/*.sln'
   buildPlatform: 'Any CPU'
@@ -30,8 +33,6 @@ stages:
 #       artifact: ClientRelease
 
 - stage: BuildClient
-pool:
-  vmImage: 'windows-latest'
   jobs:
     - job: 
       steps:
@@ -64,10 +65,10 @@ pool:
         artifact: ClientRelease
 
 - stage: BuildAPI
-pool:
-  vmImage: 'ubuntu-latest'
   jobs:
   - job: build
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - bash: |
         cd CookingPapa
