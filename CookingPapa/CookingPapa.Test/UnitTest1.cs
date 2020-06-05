@@ -4,6 +4,8 @@ using CookingPapa.Domain.Models;
 using CookingPapa.Data;
 using System.Linq;
 using System.Collections.Generic;
+using CookingPapa.Domain.Business;
+using CookingPapa.Domain.ViewModels;
 
 namespace CookingPapa.Test
 {
@@ -199,7 +201,7 @@ namespace CookingPapa.Test
 
             //Assert
             using (var context = new CookingpapaContext(options))
-            { 
+            {
                 Assert.Equal("Test1", testOrigins[0].RecipeOriginName);
                 Assert.Equal("Test2", testOrigins[1].RecipeOriginName);
             }
@@ -994,6 +996,135 @@ namespace CookingPapa.Test
                 Assert.Equal(1, testResultsRIG[1].Recipe.Id);
                 Assert.Equal(5, testResultsRIG[1].Recipe.RecipeCookTime);
             }
+        }
+
+        /// <summary>
+        /// Test 20 -- 
+        /// Uses the BusinessL layer to post a cookbook to the database.
+        /// </summary>
+        [Fact]
+        public async void TestBLPostCookbook()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<CookingpapaContext>()
+                .UseInMemoryDatabase(databaseName: "Test20DB")
+                .Options;
+            Cookbook testResult;
+            //Act
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                var businessLogic = new BusinessL(_unitOfWork, null);
+
+                var testUser = new User
+                {
+                    Email = "e@e.e",
+                    Username = "testUser",
+                    Password = "testPass"
+                };
+                await _unitOfWork.Users.Add(testUser);
+
+                var testOrigin = new RecipeOrigin
+                {
+                    RecipeOriginName = "test"
+                };
+                await _unitOfWork.RecipeOrigins.Add(testOrigin);
+
+                var testRecipe = new Recipe
+                {
+                    RecipeOrigin = testOrigin,
+                    User = testUser
+                };
+                await _unitOfWork.Recipes.Add(testRecipe);
+                await _unitOfWork.Complete();
+
+                var testCookbookVM = new PostCookbookVM
+                {
+                    RecipeId = 1,
+                    UserId = 1
+                };
+
+                await businessLogic.PostCookbook(testCookbookVM);
+
+                testResult = await _unitOfWork.Cookbooks.GetEager(1);
+            }
+
+            //Assert
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                Assert.Equal(1, testResult.Id);
+                Assert.Equal(1, testResult.Recipe.Id);
+                Assert.Equal(1, testResult.User.Id);
+            }
+            
+        }
+
+        /// <summary>
+        /// Test 21 -- 
+        /// Uses the BusinessL layer to post a cookbook to the database.
+        /// </summary>
+        [Fact]
+        public async void TestBLGetCookbook()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<CookingpapaContext>()
+                .UseInMemoryDatabase(databaseName: "Test20DB")
+                .Options;
+            List<GetCookbookVM> testResult = new List<GetCookbookVM>();
+            //Act
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                var businessLogic = new BusinessL(_unitOfWork, null);
+
+                var testUser = new User
+                {
+                    Email = "e@e.e",
+                    Username = "testUser",
+                    Password = "testPass"
+                };
+                await _unitOfWork.Users.Add(testUser);
+
+                var testOrigin = new RecipeOrigin
+                {
+                    RecipeOriginName = "test"
+                };
+                await _unitOfWork.RecipeOrigins.Add(testOrigin);
+
+                var testRecipe = new Recipe
+                {
+                    RecipeOrigin = testOrigin,
+                    User = testUser,
+                    RecipeName = "testName",
+                    RecipeCookTime = 5
+                };
+                await _unitOfWork.Recipes.Add(testRecipe);
+                
+
+                var testCookbook = new Cookbook
+                {
+                    Recipe = testRecipe,
+                    User = testUser
+                };
+                await _unitOfWork.Cookbooks.Add(testCookbook);
+                await _unitOfWork.Complete();
+
+                testResult = await businessLogic.GetCookbook(1);
+            }
+
+            //Assert
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                Assert.Equal(1, testResult[0].CookbookId);
+                Assert.Equal(1, testResult[0].RecipeId);
+                Assert.Equal(1, testResult[0].UserId);
+                Assert.Equal("test", testResult[0].RecipeOrigin);
+                Assert.Equal("testName", testResult[0].RecipeName);
+                Assert.Equal(5, testResult[0].RecipeCookTime);
+            }
+
         }
     }
 }
