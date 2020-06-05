@@ -10,18 +10,6 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-
-# - stage: BuildClient
-#   jobs:
-#   - job: build
-#     steps:
-#     - bash: |
-#         cd CookingPapaAngular
-#         npm install @angular/cli@latest -g
-#         ng build --prod
-#     - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
-#       artifact: ClientRelease
-
 - stage: BuildClient
   jobs:
     - job: 
@@ -134,18 +122,6 @@ stages:
   jobs:
   - job: 
     steps:
-    # - task: DotNetCoreCLI@2
-    #   inputs:
-    #     command: 'publish'
-    #     publishWebProjects: true
-    #     arguments: 
-    #       --configuration $(buildConfiguration)
-    #       --output $(Build.ArtifactStagingDirectory)/app
-    #     modifyOutputPath: false
-    #     zipAfterPublish: false
-    # - publish: $(Build.ArtifactStagingDirectory)/app
-    #   artifact: app
-    #   displayName: artifact publish app
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
