@@ -11,16 +11,6 @@ variables:
 
 stages:
 
-# - stage: RestoreNuGets
-#   jobs:
-#   - job:
-#     steps:
-#       - task: DotNetCoreCLI@2
-#         inputs:
-#           command: 'restore'
-#           projects: 'CookingPapa/*.sln'
-#           feedsToUse: 'select'
-
 # - stage: BuildClient
 #   jobs:
 #   - job: build
@@ -94,12 +84,6 @@ stages:
           sonar.branch.name=$(Build.SourceBranchName)
           sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
           sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
-
-    # - task: DotNetCoreCLI@2
-    #   displayName: 'dotnet build'
-    #   inputs:
-    #     arguments: '--configuration $(BuildConfiguration)'
-    #     projects: '**/*.csproj'
         
     - task: DotNetCoreCLI@2
       displayName: 'dotnet testing'
@@ -173,4 +157,4 @@ stages:
         azureSubscription: 'Free Trial(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
         appType: 'webApp'
         WebAppName: 'CookingPapaApi'
-        packageForLinux: '$(System.DefaultWorkingDirectory)/CookingPapa/release'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/release'
