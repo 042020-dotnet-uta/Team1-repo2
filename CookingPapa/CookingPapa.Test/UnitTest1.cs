@@ -5,7 +5,6 @@ using CookingPapa.Data;
 using System.Linq;
 using System.Collections.Generic;
 using CookingPapa.Domain.Business;
-using Microsoft.Extensions.Logging;
 using CookingPapa.Domain.ViewModels;
 
 namespace CookingPapa.Test
