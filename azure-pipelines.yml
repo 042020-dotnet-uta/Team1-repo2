@@ -111,7 +111,7 @@ stages:
           /p:Coverletoutput=$(Build.SourcesDirectory)/TestResults/Coverage 
           --collect "Codecoverage"
           --logger trx'
-        projects: CookingPapa/CookingPapa.Test/*Test.csproj'
+        projects: '**/*Test.csproj'
         nobuild: true
     - task: SonarCloudAnalyze@1
     - task: PublishCodeCoverageResults@1
