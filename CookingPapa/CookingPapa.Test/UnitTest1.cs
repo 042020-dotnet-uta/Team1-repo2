@@ -1340,7 +1340,7 @@ namespace CookingPapa.Test
             }
 
         }
-        /*
+        
         /// <summary>
         /// Test 25 -- 
         /// Uses the BusinessL layer to post a recipe to the database.
@@ -1352,7 +1352,7 @@ namespace CookingPapa.Test
             var options = new DbContextOptionsBuilder<CookingpapaContext>()
                 .UseInMemoryDatabase(databaseName: "Test25DB")
                 .Options;
-            RecipeInformationVM testResult;
+            Recipe testResult;
             //Act
             using (var context = new CookingpapaContext(options))
             {
@@ -1403,24 +1403,38 @@ namespace CookingPapa.Test
                 await _unitOfWork.RecipeIngredientGroups.Add(testRIG);
                 await _unitOfWork.Complete();
 
-                testResult = await businessLogic.GetRecipeDetail(1);
+                var testRIGVM = new RecipeIngredientGroupVM
+                {
+                    ingredientName = "TestIngredient",
+                    measurementName = "TestMeasurement",
+                    ingredientAmount = "2"
+                };
+
+                var testPostRecipeVM = new PostRecipeVM
+                {
+                    RecipeCookTime = 10,
+                    RecipeId = 2,
+                    RecipeInstruction = "This is marvelous!",
+                    RecipeName = "NewRecipe!",
+                    RecipeOriginName = "American",
+                    UserId = 1,
+                    RecipeIngredientGroupVM = new RecipeIngredientGroupVM[1]
+                };
+
+                testPostRecipeVM.RecipeIngredientGroupVM[0] = testRIGVM;
+
+                testResult = await businessLogic.PostRecipe(testPostRecipeVM);
             }
 
             //Assert
             using (var context = new CookingpapaContext(options))
             {
                 var _unitOfWork = new UnitOfWork(context);
-                Assert.Equal(99, testResult.RecipeCooktime);
-                Assert.Equal(1, testResult.RecipeId);
-                Assert.Equal("testName", testResult.RecipeName);
-                Assert.Equal("test", testResult.RecipeOrigin);
-                Assert.Equal("do the thing", testResult.RecipeDescription);
-                Assert.Equal(1, testResult.RecipeCreatorId);
-                Assert.Equal(0, testResult.RecipeAverageRating);
+                Assert.Equal(2, testResult.Id);
             }
 
         }
-        */
+        
 
         /// <summary>
         /// Test 26 -- 
