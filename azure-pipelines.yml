@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 variables:
   solution: 'CookingPapa/*.sln'
@@ -69,8 +69,7 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
-        projects: 'CookingPapa/*.sln'
-        arguments: --no-restore
+        projects: '**/*.csproj'
     - task: SonarCloudPrepare@1
       inputs:
         SonarCloud: 'Team1P2SonarCloud'
