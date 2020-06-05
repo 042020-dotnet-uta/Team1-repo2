@@ -37,7 +37,7 @@ stages:
     steps:
     - bash: |
         cd CookingPapaAngular
-        npm install
+        npm install -g @angular/cli
         ng build --prod
     - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
       artifact: ClientRelease
