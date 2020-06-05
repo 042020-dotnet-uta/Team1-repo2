@@ -70,6 +70,7 @@ stages:
       inputs:
         command: 'build'
         projects: '**/*.csproj'
+           
     - task: SonarCloudPrepare@1
       inputs:
         SonarCloud: 'Team1P2SonarCloud'
@@ -78,23 +79,17 @@ stages:
         projectKey: 'd8704099b6aad54260ffbca1abfd5ca6a5190d46'
         projectName: 'Team1-P2'
         extraProperties: |
-           sonar.exclusions=**/obj/**,**/*.dll
-           sonar.branch.name=$(Build.SourceBranchName)
-           sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
-           sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
-           
-    # - task: SonarCloudPrepare@1
-    #   inputs:
-    #     SonarCloud: 'Team1P2SonarCloud'
-    #     organization: 'team1-p2'
-    #     scannerMode: 'MSBuild'
-    #     projectKey: 'd8704099b6aad54260ffbca1abfd5ca6a5190d46'
-    #     projectName: 'Team1-P2'
-    #     extraProperties: |
-    #       sonar.exclusions=**/obj/**,**/*.dll
-    #       sonar.branch.name=$(Build.SourceBranchName)
-    #       sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
-    #       sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
+          sonar.exclusions=**/obj/**,**/*.dll
+          sonar.branch.name=$(Build.SourceBranchName)
+          sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+          sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet build'
+      inputs:
+        arguments: '--configuration $(BuildConfiguration)'
+        projects: '**/*.csproj'
+        
     - task: DotNetCoreCLI@2
       displayName: 'dotnet testing'
       inputs:
