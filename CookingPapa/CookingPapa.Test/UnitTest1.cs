@@ -1340,5 +1340,210 @@ namespace CookingPapa.Test
             }
 
         }
+        /*
+        /// <summary>
+        /// Test 25 -- 
+        /// Uses the BusinessL layer to post a recipe to the database.
+        /// </summary>
+        [Fact]
+        public async void TestBLPostRecipe()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<CookingpapaContext>()
+                .UseInMemoryDatabase(databaseName: "Test25DB")
+                .Options;
+            RecipeInformationVM testResult;
+            //Act
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                var businessLogic = new BusinessL(_unitOfWork, null);
+
+                var testUser = new User
+                {
+                    Email = "e@e.e",
+                    Username = "testUser",
+                    Password = "testPass"
+                };
+                await _unitOfWork.Users.Add(testUser);
+
+                var testOrigin = new RecipeOrigin
+                {
+                    RecipeOriginName = "test"
+                };
+                await _unitOfWork.RecipeOrigins.Add(testOrigin);
+
+                var testRecipe = new Recipe
+                {
+                    RecipeOrigin = testOrigin,
+                    User = testUser,
+                    RecipeName = "testName",
+                    RecipeCookTime = 5,
+                    RecipeInstruction = "do the thing"
+                };
+                await _unitOfWork.Recipes.Add(testRecipe);
+
+                var testIngredient = new RecipeIngredient
+                {
+                    RecipeIngredientName = "TestIngredient"
+                };
+
+                var testMeasurement = new RecipeMeasurement
+                {
+                    RecipeMeasurementName = "TestMeasurement"
+                };
+
+                var testRIG = new RecipeIngredientGroups
+                {
+                    Recipe = testRecipe,
+                    RecipeIngredient = testIngredient,
+                    RecipeMeasurement = testMeasurement,
+                    RecipeIngredientAmount = 5
+                };
+                await _unitOfWork.RecipeIngredientGroups.Add(testRIG);
+                await _unitOfWork.Complete();
+
+                testResult = await businessLogic.GetRecipeDetail(1);
+            }
+
+            //Assert
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                Assert.Equal(99, testResult.RecipeCooktime);
+                Assert.Equal(1, testResult.RecipeId);
+                Assert.Equal("testName", testResult.RecipeName);
+                Assert.Equal("test", testResult.RecipeOrigin);
+                Assert.Equal("do the thing", testResult.RecipeDescription);
+                Assert.Equal(1, testResult.RecipeCreatorId);
+                Assert.Equal(0, testResult.RecipeAverageRating);
+            }
+
+        }
+        */
+
+        /// <summary>
+        /// Test 26 -- 
+        /// Uses the BusinessL layer to get recipe details from the database.
+        /// </summary>
+        [Fact]
+        public async void TestBLDeleteRecipe()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<CookingpapaContext>()
+                .UseInMemoryDatabase(databaseName: "Test26DB")
+                .Options;
+            Recipe testResult;
+            //Act
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                var businessLogic = new BusinessL(_unitOfWork, null);
+
+                var testUser = new User
+                {
+                    Email = "e@e.e",
+                    Username = "testUser",
+                    Password = "testPass"
+                };
+                await _unitOfWork.Users.Add(testUser);
+
+                var testOrigin = new RecipeOrigin
+                {
+                    RecipeOriginName = "test"
+                };
+                await _unitOfWork.RecipeOrigins.Add(testOrigin);
+
+                var testRecipe = new Recipe
+                {
+                    RecipeOrigin = testOrigin,
+                    User = testUser,
+                    RecipeName = "testName",
+                    RecipeCookTime = 5,
+                    RecipeInstruction = "do the thing"
+                };
+                await _unitOfWork.Recipes.Add(testRecipe);
+
+                var testIngredient = new RecipeIngredient
+                {
+                    RecipeIngredientName = "TestIngredient"
+                };
+
+                var testMeasurement = new RecipeMeasurement
+                {
+                    RecipeMeasurementName = "TestMeasurement"
+                };
+
+                var testRIG = new RecipeIngredientGroups
+                {
+                    Recipe = testRecipe,
+                    RecipeIngredient = testIngredient,
+                    RecipeMeasurement = testMeasurement,
+                    RecipeIngredientAmount = 5
+                };
+                await _unitOfWork.RecipeIngredientGroups.Add(testRIG);
+                await _unitOfWork.Complete();
+
+                var testRecipeVM = new PostRecipeVM
+                {
+                    RecipeCookTime = 10,
+                    RecipeId = 1,
+                    RecipeInstruction = "updated",
+                    RecipeOriginName = "test",
+                    UserId = 1,
+                    RecipeName = "updatedName",
+                };
+
+
+                testResult = await businessLogic.DeleteRecipeWithReview(1);
+            }
+
+            //Assert
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                Assert.Empty(await _unitOfWork.Recipes.GetAll());
+            }
+
+        }
+
+        /// <summary>
+        /// Test 27 -- 
+        /// Uses the BusinessL layer to get recipe details from the database.
+        /// </summary>
+        [Fact]
+        public async void TestBLCreateUser()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<CookingpapaContext>()
+                .UseInMemoryDatabase(databaseName: "Test27DB")
+                .Options;
+            User testResult;
+            //Act
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                var businessLogic = new BusinessL(_unitOfWork, null);
+
+                var testUser = new User
+                {
+                    Email = "e@e.e",
+                    Username = "testUser",
+                    Password = "testPass"
+                };
+                
+                
+
+                testResult = await businessLogic.CreateUser(testUser);
+            }
+
+            //Assert
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                Assert.Equal("testUser", testResult.Username);
+            }
+
+        }
     }
 }
