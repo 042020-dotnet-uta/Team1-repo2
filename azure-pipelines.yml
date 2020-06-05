@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   solution: 'CookingPapa/*.sln'
@@ -10,38 +10,6 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-
-# - stage: RestoreNuGets
-#   jobs:
-#   - job:
-#     steps:
-#       - task: DotNetCoreCLI@2
-#         inputs:
-#           command: 'restore'
-#           projects: 'CookingPapa/*.sln'
-#           feedsToUse: 'select'
-
-- stage: BuildAPI
-  jobs:
-  - job: build
-    steps:
-    - bash: |
-        cd CookingPapa
-        dotnet publish -c Release -o release
-    - publish: $(System.DefaultWorkingDirectory)/CookingPapa/release
-      artifact: APIRelease
-
-# - stage: BuildClient
-#   jobs:
-#   - job: build
-#     steps:
-#     - bash: |
-#         cd CookingPapaAngular
-#         npm install
-#         ./node_modules/@angular/cli/bin/ng build --prod
-#     - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
-#       artifact: ClientRelease
-
 - stage: BuildClient
   jobs:
     - job: 
@@ -74,15 +42,24 @@ stages:
       - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
         artifact: ClientRelease
 
+- stage: BuildAPI
+  jobs:
+  - job: build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - bash: |
+        cd CookingPapa
+        dotnet publish -c Release -o release
+    - publish: $(System.DefaultWorkingDirectory)/CookingPapa/release
+      artifact: APIRelease
+
 - stage: Testing
   jobs:
   - job:
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
-    # - task: DotNetCoreCLI@2
-    #   inputs:
-    #     command: 'build'
-    #     projects: '**/*.csproj'
-           
     - task: SonarCloudPrepare@1
       inputs:
         SonarCloud: 'Team1P2SonarCloud'
@@ -95,12 +72,6 @@ stages:
           sonar.branch.name=$(Build.SourceBranchName)
           sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
           sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/*.xml
-
-    # - task: DotNetCoreCLI@2
-    #   displayName: 'dotnet build'
-    #   inputs:
-    #     arguments: '--configuration $(BuildConfiguration)'
-    #     projects: '**/*.csproj'
         
     - task: DotNetCoreCLI@2
       displayName: 'dotnet testing'
@@ -112,7 +83,7 @@ stages:
           /p:Coverletoutput=$(Build.SourcesDirectory)/TestResults/Coverage 
           --collect "Codecoverage"
           --logger trx'
-        projects: CookingPapa/CookingPapa.Test/*Test.csproj'
+        projects: '**/*Test.csproj'
         nobuild: true
     - task: SonarCloudAnalyze@1
     - task: PublishCodeCoverageResults@1
@@ -151,18 +122,6 @@ stages:
   jobs:
   - job: 
     steps:
-    # - task: DotNetCoreCLI@2
-    #   inputs:
-    #     command: 'publish'
-    #     publishWebProjects: true
-    #     arguments: 
-    #       --configuration $(buildConfiguration)
-    #       --output $(Build.ArtifactStagingDirectory)/app
-    #     modifyOutputPath: false
-    #     zipAfterPublish: false
-    # - publish: $(Build.ArtifactStagingDirectory)/app
-    #   artifact: app
-    #   displayName: artifact publish app
     - task: DownloadPipelineArtifact@2
       inputs:
         buildType: 'current'
@@ -174,4 +133,4 @@ stages:
         azureSubscription: 'Free Trial(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
         appType: 'webApp'
         WebAppName: 'CookingPapaApi'
-        packageForLinux: '$(System.DefaultWorkingDirectory)/CookingPapa/release'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/release'
