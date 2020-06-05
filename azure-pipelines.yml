@@ -10,10 +10,11 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-- stage: BuildClient
-  jobs:
-    - job: 
-      steps:
+
+# - stage: BuildClient
+#   jobs:
+#     - job: 
+#       steps:
 #       - task: NodeAndNpmTool@1
 #         inputs:
 #           versionSpec: '12.x'
