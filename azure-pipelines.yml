@@ -79,11 +79,9 @@ stages:
 - stage: Testing
   jobs:
   - job:
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
-    - bash: |
-        cd CookingPapa
-        dotnet publish -c Release -o release
-           
     - task: SonarCloudPrepare@1
       inputs:
         SonarCloud: 'Team1P2SonarCloud'
