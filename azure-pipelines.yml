@@ -11,15 +11,15 @@ variables:
 
 stages:
 
-- stage: RestoreNuGets
-  jobs:
-  - job:
-    steps:
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: 'restore'
-          projects: 'CookingPapa/*.sln'
-          feedsToUse: 'select'
+# - stage: RestoreNuGets
+#   jobs:
+#   - job:
+#     steps:
+#       - task: DotNetCoreCLI@2
+#         inputs:
+#           command: 'restore'
+#           projects: 'CookingPapa/*.sln'
+#           feedsToUse: 'select'
 
 # - stage: BuildClient
 #   jobs:
