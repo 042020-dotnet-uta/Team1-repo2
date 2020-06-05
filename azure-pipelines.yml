@@ -31,16 +31,16 @@ stages:
     - publish: $(System.DefaultWorkingDirectory)/CookingPapa/release
       artifact: APIRelease
 
-# - stage: BuildClient
-#   jobs:
-#   - job: build
-#     steps:
-#     - bash: |
-#         cd CookingPapaAngular
-#         npm install
-#         ./node_modules/@angular/cli/bin/ng build --prod
-#     - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
-#       artifact: ClientRelease
+- stage: BuildClient
+  jobs:
+  - job: build
+    steps:
+    - bash: |
+        cd CookingPapaAngular
+        npm install
+        ng build --prod
+    - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
+      artifact: ClientRelease
 
 - stage: BuildClient
   jobs:
