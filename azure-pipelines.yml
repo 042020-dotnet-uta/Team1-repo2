@@ -26,9 +26,9 @@ stages:
   - job: build
     steps:
     - bash: |
-        cd Project2/AptMgmtPortalAPI
+        cd CookingPapa
         dotnet publish -c Release -o release
-    - publish: $(System.DefaultWorkingDirectory)/Project2/AptMgmtPortalAPI/release
+    - publish: $(System.DefaultWorkingDirectory)/CookingPapa/release
       artifact: APIRelease
 
 - stage: BuildClient
@@ -39,7 +39,6 @@ stages:
         cd CookingPapaAngular
         npm install
         ./node_modules/@angular/cli/bin/ng build --prod
-        
     - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
       artifact: ClientRelease
 
@@ -152,22 +151,27 @@ stages:
   jobs:
   - job: 
     steps:
-    - task: DotNetCoreCLI@2
+    # - task: DotNetCoreCLI@2
+    #   inputs:
+    #     command: 'publish'
+    #     publishWebProjects: true
+    #     arguments: 
+    #       --configuration $(buildConfiguration)
+    #       --output $(Build.ArtifactStagingDirectory)/app
+    #     modifyOutputPath: false
+    #     zipAfterPublish: false
+    # - publish: $(Build.ArtifactStagingDirectory)/app
+    #   artifact: app
+    #   displayName: artifact publish app
+    - task: DownloadPipelineArtifact@2
       inputs:
-        command: 'publish'
-        publishWebProjects: true
-        arguments: 
-          --configuration $(buildConfiguration)
-          --output $(Build.ArtifactStagingDirectory)/app
-        modifyOutputPath: false
-        zipAfterPublish: false
-    - publish: $(Build.ArtifactStagingDirectory)/app
-      artifact: app
-      displayName: artifact publish app
+        buildType: 'current'
+        artifactName: 'APIRelease'
+        targetPath: 'release'
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
         azureSubscription: 'Free Trial(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
         appType: 'webApp'
         WebAppName: 'CookingPapaApi'
-        packageForLinux: '$(Build.ArtifactStagingDirectory)/app'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/CookingPapa/release'
