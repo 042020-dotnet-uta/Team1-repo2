@@ -1057,7 +1057,7 @@ namespace CookingPapa.Test
                 Assert.Equal(1, testResult.Recipe.Id);
                 Assert.Equal(1, testResult.User.Id);
             }
-            
+
         }
 
         /// <summary>
@@ -1100,7 +1100,7 @@ namespace CookingPapa.Test
                     RecipeCookTime = 5
                 };
                 await _unitOfWork.Recipes.Add(testRecipe);
-                
+
 
                 var testCookbook = new Cookbook
                 {
@@ -1340,7 +1340,7 @@ namespace CookingPapa.Test
             }
 
         }
-        
+
         /// <summary>
         /// Test 25 -- 
         /// Uses the BusinessL layer to post a recipe to the database.
@@ -1434,7 +1434,7 @@ namespace CookingPapa.Test
             }
 
         }
-        
+
 
         /// <summary>
         /// Test 26 -- 
@@ -1545,8 +1545,8 @@ namespace CookingPapa.Test
                     Username = "testUser",
                     Password = "testPass"
                 };
-                
-                
+
+
 
                 testResult = await businessLogic.CreateUser(testUser);
             }
@@ -1558,6 +1558,90 @@ namespace CookingPapa.Test
                 Assert.Equal("testUser", testResult.Username);
             }
 
+        }
+
+        /// <summary>
+        /// Test 28 -- 
+        /// Uses the business logic to post a review to the database.
+        /// </summary>
+        [Fact]
+        public async void TestBLPostReview()
+        {
+            //Arrange
+            var options = new DbContextOptionsBuilder<CookingpapaContext>()
+                .UseInMemoryDatabase(databaseName: "Test28DB")
+                .Options;
+            RecipeReview testResult;
+            //Act
+            using (var context = new CookingpapaContext(options))
+            {
+                var _unitOfWork = new UnitOfWork(context);
+                var businessLogic = new BusinessL(_unitOfWork, null);
+
+                var testUser = new User
+                {
+                    Email = "e@e.e",
+                    Username = "testUser",
+                    Password = "testPass"
+                };
+                await _unitOfWork.Users.Add(testUser);
+
+                var testOrigin = new RecipeOrigin
+                {
+                    RecipeOriginName = "test"
+                };
+                await _unitOfWork.RecipeOrigins.Add(testOrigin);
+
+                var testRecipe = new Recipe
+                {
+                    RecipeOrigin = testOrigin,
+                    User = testUser,
+                    RecipeName = "testName",
+                    RecipeCookTime = 5,
+                    RecipeInstruction = "do the thing"
+                };
+                await _unitOfWork.Recipes.Add(testRecipe);
+
+                var testIngredient = new RecipeIngredient
+                {
+                    RecipeIngredientName = "TestIngredient"
+                };
+
+                var testMeasurement = new RecipeMeasurement
+                {
+                    RecipeMeasurementName = "TestMeasurement"
+                };
+
+                var testRIG = new RecipeIngredientGroups
+                {
+                    Recipe = testRecipe,
+                    RecipeIngredient = testIngredient,
+                    RecipeMeasurement = testMeasurement,
+                    RecipeIngredientAmount = 5
+                };
+                await _unitOfWork.RecipeIngredientGroups.Add(testRIG);
+                await _unitOfWork.Complete();
+
+                var testRecipeReviewVM = new RecipeReviewVM
+                {
+                    RecipeId = 1,
+                    UserId = 1,
+                    RecipeReviewComment = "test comment",
+                    RecipeReviewId = 1,
+                    RecipeReviewRating = 5
+                };
+
+
+                testResult = await businessLogic.PostRecipeReview(testRecipeReviewVM);
+            }
+
+            //Assert
+            using (var context = new CookingpapaContext(options))
+            {
+                Assert.Equal(1, testResult.Id);
+                Assert.Equal("test comment", testResult.RecipeReviewComment);
+                Assert.Equal(5, testResult.RecipeReviewRating);
+            }
         }
     }
 }
