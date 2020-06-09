@@ -10,37 +10,37 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-# - stage: BuildClient
-#   jobs:
-#     - job: 
-#       steps:
-#       - task: NodeAndNpmTool@1
-#         inputs:
-#           versionSpec: '12.x'
-#           checkLatest: true
-# #install angular cli
-#       - task: Npm@1
-#         displayName: 'Install Angular CLI'
-#         inputs:
-#           command: 'custom'
-#           workingDir: 'CookingPapaAngular'
-#           customCommand: 'install @angular/cli@latest -g'
-# #install angular app dependencies
-#       - task: Npm@1
-#         displayName: 'install project dependencies'
-#         inputs:
-#           command: 'install'
-#           workingDir: 'CookingPapaAngular'
-# #build angular project
-#       - task: AngularCLI@0
-#         displayName: 'build angular project'
-#         inputs:
-#           command: 'custom'
-#           project: 'CookingPapaAngular'
-#           custom: 'build --prod'
-#           DisableAnalytics: false
-#       - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
-#         artifact: ClientRelease
+- stage: BuildClient
+  jobs:
+    - job: 
+      steps:
+      - task: NodeAndNpmTool@1
+        inputs:
+          versionSpec: '12.x'
+          checkLatest: true
+#install angular cli
+      - task: Npm@1
+        displayName: 'Install Angular CLI'
+        inputs:
+          command: 'custom'
+          workingDir: 'CookingPapaAngular'
+          customCommand: 'install @angular/cli@latest -g'
+#install angular app dependencies
+      - task: Npm@1
+        displayName: 'install project dependencies'
+        inputs:
+          command: 'install'
+          workingDir: 'CookingPapaAngular'
+#build angular project
+      - task: AngularCLI@0
+        displayName: 'build angular project'
+        inputs:
+          command: 'custom'
+          project: 'CookingPapaAngular'
+          custom: 'build --prod'
+          DisableAnalytics: false
+      - publish: $(System.DefaultWorkingDirectory)/CookingPapaAngular/dist/CookingPapaAngular
+        artifact: ClientRelease
 
 - stage: BuildAPI
   jobs:
@@ -97,26 +97,26 @@ stages:
       inputs:
         pollingTimeoutSec: '300'
 
-# - stage: DeployClient
-#   jobs:
-#   - job: deploy
-#     steps:
-#     - task: DownloadPipelineArtifact@2
-#       inputs:
-#         buildType: 'current'
-#         artifactName: 'ClientRelease'
-#         path: $(Build.SourcesDirectory)/release
-#     - task: AzureRmWebAppDeployment@4
-#       inputs:
-#         ConnectionType: 'AzureRM'
-#         azureSubscription: 'Free Trial(4)(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
-#         appType: 'webApp'
-#         WebAppName: 'CookingPapaWeb'
-#         packageForLinux: '$(Build.SourcesDirectory)/release'
-#         enableCustomDeployment: true
-#         DeploymentType: 'webDeploy'
-#         TakeAppOfflineFlag: false
-#         RemoveAdditionalFilesFlag: true
+- stage: DeployClient
+  jobs:
+  - job: deploy
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'ClientRelease'
+        path: $(Build.SourcesDirectory)/release
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Free Trial(4)(f4c13e81-6cbe-4949-ab59-f130a8a40d47)'
+        appType: 'webApp'
+        WebAppName: 'CookingPapaWeb'
+        packageForLinux: '$(Build.SourcesDirectory)/release'
+        enableCustomDeployment: true
+        DeploymentType: 'webDeploy'
+        TakeAppOfflineFlag: false
+        RemoveAdditionalFilesFlag: true
 
 - stage: DeployApi
   jobs:
