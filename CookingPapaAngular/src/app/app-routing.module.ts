@@ -19,7 +19,7 @@ const routes: Routes = [
     {path:'search-recipe', component:SearchRecipeComponent},
     {path:'view-cookbook', component:ViewCookbookComponent, canActivate: [AuthGuard]},
     {path: 'profile', component:ProfileComponent, canActivate: [AuthGuard]},
-    {path: 'api-search', component:ApiSearchComponent, canActivate: [AuthGuard]}
+    {path: 'api-search', component:ApiSearchComponent}
 
   ];
   
